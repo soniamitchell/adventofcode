@@ -8,4 +8,4 @@ navbar:
   right:
     - icon: fab fa-github
       text: "GitHub"
-      href: https://github.com/IBAHCM/RPiR/
+      href: https://github.com/soniamitchell/adventofcode/
