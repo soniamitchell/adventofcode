@@ -7,6 +7,7 @@
 #'
 #' @import dplyr
 #' @import here
+#' @import tidyr
 #'
 "_PACKAGE"
 
