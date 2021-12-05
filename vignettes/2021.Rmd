@@ -13,6 +13,8 @@ library(dplyr)
 
 ## Day 1: Sonar Sweep
 
+Link to questions [here](https://adventofcode.com/2021/day/1)
+
 ### Part 1
 
 ```{r day1-1}
@@ -24,6 +26,8 @@ sum(diff(dat) > 0)
 ```
 
 ### Part 2
+
+Link to question [here](https://adventofcode.com/2021/day/1)
 
 ```{r day1-2}
 # Sum depths in each window
@@ -39,6 +43,8 @@ sum(diff(summed) > 0)
 ```
 
 ## Day 2: Dive!
+
+Link to questions [here](https://adventofcode.com/2021/day/2)
 
 ### Part 1
 
@@ -83,6 +89,8 @@ horizontal_position * depth
 ```
 
 ## Day 3: Binary Diagnostic
+
+Link to questions [here](https://adventofcode.com/2021/day/3)
 
 ### Part 1
 
@@ -156,6 +164,8 @@ oxygen_generator_rating * CO2_scrubber_rating
 ```
 
 ## Day 4: Giant Squid
+
+Link to questions [here](https://adventofcode.com/2021/day/4)
 
 ### Part 1
 
@@ -248,6 +258,8 @@ tail(losers)
 ```
 
 ## Day 5: Hydrothermal Venture
+
+Link to questions [here](https://adventofcode.com/2021/day/5)
 
 ### Part 1
 
