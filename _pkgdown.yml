@@ -1,2 +1,11 @@
+title: adventofcode
 url: http://sonia-mitchell.com/adventofcode
 
+navbar:
+  left:
+    -  text: 2021 R solutions
+         href: articles/2021.html
+  right:
+    - icon: fab fa-github
+      text: "GitHub"
+      href: https://github.com/IBAHCM/RPiR/
