@@ -1,0 +1,267 @@
+---
+title: '2021'
+author: "Sonia Mitchell"
+date: "05/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(dplyr)
+```
+
+## Day 1: Sonar Sweep
+
+### Part 1
+
+```{r day1-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day1.txt"))
+
+# Count the number of times the depth increases from the previous measurement
+sum(diff(dat) > 0)
+```
+
+### Part 2
+
+```{r day1-2}
+# Sum depths in each window
+index <- 1
+summed <- c()
+while((index + 2) <= length(dat)) {
+  summed <- c(summed, sum(dat[index:(index + 2)]))
+  index <- index + 1
+}
+
+# Count the number of times the depth increases from the previous measurement
+sum(diff(summed) > 0)
+```
+
+## Day 2: Dive!
+
+### Part 1
+
+```{r day2-1}
+# Read in data
+dat <- read.table(file.path(here(), "inst", "2021", "day2.txt"))
+colnames(dat) <- c("direction", "value")
+
+# Calculate the horizontal position and depth and multiply them together
+summarise_dat <- dat %>% 
+  group_by(direction) %>% 
+  summarise(total = sum(value)) 
+
+horizontal_position <- summarise_dat$total[summarise_dat$direction == "forward"]
+depth <- summarise_dat$total[summarise_dat$direction == "down"] - 
+  summarise_dat$total[summarise_dat$direction == "up"]
+
+horizontal_position * depth
+```
+
+### Part 2
+
+```{r day2-2}
+# Initialise variables
+aim <- 0
+horizontal_position <- 0
+depth <- 0
+
+# Track aim
+for (i in seq_len(nrow(dat))) {
+  if (dat$direction[i] == "down") {
+    aim <- aim  + dat$value[i]
+  } else if (dat$direction[i] == "up") {
+    aim <- aim  - dat$value[i]
+  } else {
+    horizontal_position <- horizontal_position + dat$value[i]
+    depth <- depth + (aim * dat$value[i])
+  }
+}
+
+horizontal_position * depth
+```
+
+## Day 3: Binary Diagnostic
+
+### Part 1
+
+```{r day3-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day3.txt"), what = "character") 
+
+# Number of bits in each binary number
+digits <- nchar(dat[1])
+
+# Calculate gamma and epsilon rates
+gamma_binary <- rep(NA, digits)
+epsilon_binary <- rep(NA, digits)
+
+for (i in seq_len(digits)) {
+  # Extract the i[th] character of each string 
+  character <- vapply(dat, function(x) substr(x, i, i), character(1))
+  # Find most common bit
+  zeroes <- sum(character == "0")
+  ones <- sum(character == "1")
+  gamma_binary[i] <- if_else(zeroes > ones, 0, 1)
+  epsilon_binary[i] <- if_else(zeroes < ones, 0, 1)
+}
+
+gamma_rate <- strtoi(paste(gamma_binary, collapse = ""), base = 2)
+epsilon_rate <- strtoi(paste(epsilon_binary, collapse = ""), base = 2)
+
+# Calculate power consumption
+gamma_rate * epsilon_rate
+```
+
+### Part 2
+
+```{r day3-2}
+rating <- function(dat, type) {
+  # For each bit in a binary string
+  for (i in seq_len(digits)) {
+    # Extract the i[th] character of each string 
+    character <- vapply(dat, function(x) substr(x, i, i), 
+                        character(1))
+    # Find zeroes and ones
+    zeroes <- character == "0"
+    ones <- character == "1"
+    # Find most common bit
+    if (sum(zeroes) > sum(ones)) { 
+      bit_criteria <- which(zeroes)
+    } else if (sum(zeroes) < sum(ones)) { 
+      bit_criteria <- which(ones)
+    } else { 
+      bit_criteria <- which(ones)
+    }
+    # Keep binary strings with most common bit in the ith position
+    if (type == "oxygen") {
+      dat <- dat[bit_criteria]
+    } else if (type == "CO2") {
+      dat <- dat[-bit_criteria]
+    }
+    # If there's only one binary string left, stop
+    if (length(dat) == 1) break
+  }
+  # Return decimal
+  strtoi(paste(dat, collapse = ""), base = 2)
+}
+
+# Calculate oxygen generator and CO2 scrubber ratings
+oxygen_generator_rating <- rating(dat, "oxygen")
+CO2_scrubber_rating <- rating(dat, "CO2")
+
+# Calculate life support rating
+oxygen_generator_rating * CO2_scrubber_rating
+```
+
+## Day 4: Giant Squid
+
+### Part 1
+
+```{r day4-1}
+# Read in data
+raw_numbers <- scan(file.path(here(), "inst", "2021", "day4.txt"), 
+                    what = "character", n = 1) 
+raw_boards <- read.table(file.path(here(), "inst", "2021", "day4.txt"), skip = 1)
+
+# Tidy up data
+numbers <- as.numeric(strsplit(raw_numbers, ",")[[1]])
+
+number_of_boards <- nrow(raw_boards) / 5
+boards <- lapply(seq_len(number_of_boards), function(x) {
+  start <- 1 + (5 * (x - 1))
+  end <- start + 4
+  raw_boards[start:end, ]
+})
+
+update_board <- function(number, board) {
+  check_number <- board == number
+  if (any(check_number, na.rm = TRUE)) {
+    # Mark the number
+    find_number <- which(check_number, arr.ind = TRUE)
+    board[find_number] <- NA
+  }
+  board
+}
+
+check_for_win <- function(board) {
+  check_board <- is.na(board)
+  row_win <- any(rowSums(check_board) == 5)
+  column_win <- any(colSums(check_board) == 5)
+  if_else(row_win | column_win, TRUE, FALSE)
+}
+
+play_bingo <- function(numbers, boards) {
+  # For each number in the bingo call
+  for (this_number in numbers) {
+    # Check each board
+    for (i in seq_along(boards)) {
+      # If the number is on the board, mark it off (as NA) 
+      boards[[i]] <- update_board(this_number, boards[[i]])
+      # Check for win
+      has_won <- check_for_win(boards[[i]])
+      # If this board has won, calculate the winning score
+      if (has_won) 
+        return(sum(boards[[i]], na.rm = TRUE) * this_number)
+    } 
+  }
+}
+
+# Play bingo
+play_bingo(numbers, boards)
+```
+
+### Part 2
+
+```{r day4-2}
+lose_bingo <- function(numbers, boards) {
+  # Initialise objects
+  results <- data.frame(number = numeric(), board = numeric(), score = numeric())
+  remaining_boards <- seq_along(boards)
+  
+  # For each number in the bingo call
+  for (this_number in numbers) {
+    # Check each board
+    for (i in remaining_boards) {
+      # If the number is on the board, mark it off (as NA) 
+      boards[[i]] <- update_board(this_number, boards[[i]])
+      # Check for win
+      has_won <- check_for_win(boards[[i]])
+      # If this board has won, calculate the winning score
+      if (has_won) {
+        score <- sum(boards[[i]], na.rm = TRUE) * this_number
+        results <- rbind(results, 
+                         data.frame(number = this_number, 
+                                    board = i, 
+                                    score = score))
+       remaining_boards <- remaining_boards[-which(remaining_boards == i)]
+      }
+    } 
+  }
+  results
+}
+
+# Play bingo
+losers <- lose_bingo(numbers, boards)
+tail(losers)
+```
+
+## Day 5: Hydrothermal Venture
+
+### Part 1
+
+```{r day5-1}
+# Read in data
+dat <- read.table(file.path(here(), "inst", "2021", "day5.txt"))
+
+#
+```
+
+### Part 2
+
+```{r day5-2}
+# 
+```
+
+
