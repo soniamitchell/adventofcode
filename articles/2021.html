@@ -373,7 +373,7 @@
     <span class="co"># Add one to each point on the line</span>
     <span class="kw">for</span> <span class="op">(</span><span class="va">y</span> <span class="kw">in</span> <span class="va">y_values</span><span class="op">)</span> <span class="va">grid</span><span class="op">[</span><span class="va">this_x</span>, <span class="va">y</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">[</span><span class="va">this_x</span>, <span class="va">y</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
     
-  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">y1</span> <span class="op">==</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y2</span><span class="op">)</span> <span class="op">{</span>   <span class="co"># Vertical line</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">y1</span> <span class="op">==</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y2</span><span class="op">)</span> <span class="op">{</span>
     <span class="co"># Vertical line</span>
     <span class="va">this_y</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y1</span>
     <span class="va">x_values</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x1</span><span class="op">:</span><span class="va">this_line</span><span class="op">$</span><span class="va">x2</span>
@@ -390,7 +390,40 @@
 <h3 id="part-2-4">Part 2<a class="anchor" aria-label="anchor" href="#part-2-4"></a>
 </h3>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># </span></code></pre></div>
+<code class="sourceCode R"><span class="co"># Initialise object</span>
+<span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="va">ylim</span>, ncol <span class="op">=</span> <span class="va">xlim</span><span class="op">)</span>
+
+<span class="co"># Track horizontal, vertical lines, and diagonal lines</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">coordinates</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">this_line</span> <span class="op">&lt;-</span> <span class="va">coordinates</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>
+
+  <span class="kw">if</span> <span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">x1</span> <span class="op">==</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Horizontal line</span>
+    <span class="va">this_x</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x1</span>
+    <span class="va">y_values</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y1</span><span class="op">:</span><span class="va">this_line</span><span class="op">$</span><span class="va">y2</span>
+    <span class="co"># Add one to each point on the line</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="va">y</span> <span class="kw">in</span> <span class="va">y_values</span><span class="op">)</span> <span class="va">grid</span><span class="op">[</span><span class="va">this_x</span>, <span class="va">y</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">[</span><span class="va">this_x</span>, <span class="va">y</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
+    
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">y1</span> <span class="op">==</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y2</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Vertical line</span>
+    <span class="va">this_y</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y1</span>
+    <span class="va">x_values</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x1</span><span class="op">:</span><span class="va">this_line</span><span class="op">$</span><span class="va">x2</span>
+    <span class="co"># Add one to each point on the line</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">x_values</span><span class="op">)</span> <span class="va">grid</span><span class="op">[</span><span class="va">x</span>, <span class="va">this_y</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">[</span><span class="va">x</span>, <span class="va">this_y</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
+    
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">x1</span> <span class="op">-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x2</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">this_line</span><span class="op">$</span><span class="va">y1</span> <span class="op">-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Diagonal line</span>
+    <span class="va">x_values</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">x1</span><span class="op">:</span><span class="va">this_line</span><span class="op">$</span><span class="va">x2</span>
+    <span class="va">y_values</span> <span class="op">&lt;-</span> <span class="va">this_line</span><span class="op">$</span><span class="va">y1</span><span class="op">:</span><span class="va">this_line</span><span class="op">$</span><span class="va">y2</span>
+    <span class="co"># Add one to each point on the line</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">x_values</span><span class="op">)</span><span class="op">)</span> 
+      <span class="va">grid</span><span class="op">[</span><span class="va">x_values</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">y_values</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">grid</span><span class="op">[</span><span class="va">x_values</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">y_values</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="co"># Find points where at least two lines overlap</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">grid</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 21466</span></code></pre>
 </div>
 </div>
   </div>
