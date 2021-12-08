@@ -515,7 +515,7 @@
   <span class="kw">for</span> <span class="op">(</span><span class="va">crab</span> <span class="kw">in</span> <span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="va">fuel_cost</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">crab</span> <span class="op">-</span> <span class="va">position</span><span class="op">)</span>
   <span class="op">}</span>
- <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">lowest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">)</span>
@@ -541,7 +541,7 @@
     <span class="va">distance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">crab</span> <span class="op">-</span> <span class="va">position</span><span class="op">)</span>
     <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="va">fuel_cost</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="va">distance</span><span class="op">)</span>
   <span class="op">}</span>
- <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">position</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
+  <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">position</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">lowest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">)</span>
@@ -551,6 +551,131 @@
 <code class="sourceCode R"><span class="co"># How much fuel must they spend to align to that position?</span>
 <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
 <pre><code><span class="co">## [1] 101268110</span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-8-seven-segment-search">Day 8: Seven Segment Search<a class="anchor" aria-label="anchor" href="#day-8-seven-segment-search"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/8" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-7">Part 1<a class="anchor" aria-label="anchor" href="#part-1-7"></a>
+</h3>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day8.txt"</span><span class="op">)</span>, 
+            what <span class="op">=</span> <span class="st">"character"</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
+
+<span class="co"># Tidy up data</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">"\\| "</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
+  <span class="va">digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">" "</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">digits</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># How many times do digits 1, 4, 7, or 8 (length 2, 4, 3, and 7) appear?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 321</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-7">Part 2<a class="anchor" aria-label="anchor" href="#part-2-7"></a>
+</h3>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Find string in `string_vector` of length `num_characters`</span>
+<span class="va">find_digit</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">string_vector</span>, <span class="va">num_characters</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">string_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">string_vector</span><span class="op">)</span> <span class="op">==</span> <span class="va">num_characters</span><span class="op">)</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="co"># Split string into vector of letters</span>
+<span class="va">deconstruct</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">string</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="co"># Find (1) which string in `unknown_vector` contains all segments (characters)  </span>
+<span class="co"># in `known_string` or (2) which string is the only one that doesn't</span>
+<span class="va">contains_subset</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">unknown_vector</span>, <span class="va">known_string</span>, <span class="va">contains</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">known_segments</span> <span class="op">&lt;-</span> <span class="fu">deconstruct</span><span class="op">(</span><span class="va">known_string</span><span class="op">)</span>
+    <span class="va">unknown_segments</span> <span class="op">&lt;-</span> <span class="fu">deconstruct</span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="va">contains</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">known_segments</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">unknown_segments</span><span class="op">)</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+      <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">known_segments</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">unknown_segments</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+  <span class="va">unknown_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="co"># Find the string in `unknown_vector` whose segments (characters) are a subset of</span>
+<span class="co"># `known_string` </span>
+<span class="va">subset_of</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">unknown_vector</span>, <span class="va">known_string</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">known_segments</span> <span class="op">&lt;-</span> <span class="fu">deconstruct</span><span class="op">(</span><span class="va">known_string</span><span class="op">)</span>
+    <span class="va">unknown_segments</span> <span class="op">&lt;-</span> <span class="fu">deconstruct</span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">unknown_segments</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">known_segments</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="va">unknown_vector</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="co"># Decode each string (digit) in `unknown_vector`</span>
+<span class="va">decode</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">unknown_vector</span>, <span class="va">dictionary</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">code</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Check against each dictionary entry</span>
+    <span class="va">entry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dictionary</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">length_match</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">dictionary</span><span class="op">$</span><span class="va">segments</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+      <span class="va">characters_match</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu">deconstruct</span><span class="op">(</span><span class="va">dictionary</span><span class="op">$</span><span class="va">segments</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> 
+                                <span class="fu">deconstruct</span><span class="op">(</span><span class="va">unknown_vector</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+      <span class="va">entry</span><span class="op">[</span><span class="va">j</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">length_match</span> <span class="op">&amp;&amp;</span> <span class="va">characters_match</span>
+    <span class="op">}</span>
+    <span class="va">code</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">dictionary</span><span class="op">$</span><span class="va">number</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">entry</span><span class="op">)</span><span class="op">]</span>
+  <span class="op">}</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">code</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Determine all of the wire/segment connections </span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">segments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">" \\|"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+  <span class="va">segments</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">segments</span>, <span class="st">" "</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  
+  <span class="co"># Known</span>
+  <span class="va">one</span> <span class="op">&lt;-</span> <span class="fu">find_digit</span><span class="op">(</span><span class="va">segments</span>, <span class="fl">2</span><span class="op">)</span>
+  <span class="va">four</span> <span class="op">&lt;-</span> <span class="fu">find_digit</span><span class="op">(</span><span class="va">segments</span>, <span class="fl">4</span><span class="op">)</span>
+  <span class="va">seven</span> <span class="op">&lt;-</span> <span class="fu">find_digit</span><span class="op">(</span><span class="va">segments</span>, <span class="fl">3</span><span class="op">)</span>
+  <span class="va">eight</span> <span class="op">&lt;-</span> <span class="fu">find_digit</span><span class="op">(</span><span class="va">segments</span>, <span class="fl">7</span><span class="op">)</span>
+  
+  <span class="co"># Remaining segments</span>
+  <span class="va">remaining</span> <span class="op">&lt;-</span> <span class="va">segments</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">segments</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+  <span class="co"># six, nine, zero (6)</span>
+  <span class="va">length_six</span> <span class="op">&lt;-</span> <span class="va">remaining</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">remaining</span><span class="op">)</span> <span class="op">==</span> <span class="fl">6</span><span class="op">)</span><span class="op">]</span>
+  <span class="va">six</span> <span class="op">&lt;-</span> <span class="fu">contains_subset</span><span class="op">(</span><span class="va">length_six</span>, <span class="va">one</span>, <span class="cn">FALSE</span><span class="op">)</span>
+  <span class="va">nine</span> <span class="op">&lt;-</span> <span class="fu">contains_subset</span><span class="op">(</span><span class="va">length_six</span>, <span class="va">four</span>, <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">zero</span> <span class="op">&lt;-</span> <span class="va">length_six</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">length_six</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">six</span>, <span class="va">nine</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+  <span class="co"># two, three, five (5)</span>
+  <span class="va">length_five</span> <span class="op">&lt;-</span> <span class="va">remaining</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">remaining</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span><span class="op">]</span>
+  <span class="va">five</span> <span class="op">&lt;-</span> <span class="fu">subset_of</span><span class="op">(</span><span class="va">length_five</span>, <span class="va">six</span><span class="op">)</span>
+  <span class="va">length_five</span> <span class="op">&lt;-</span> <span class="va">length_five</span><span class="op">[</span><span class="op">!</span><span class="va">length_five</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">five</span><span class="op">]</span>
+  <span class="va">three</span> <span class="op">&lt;-</span> <span class="fu">subset_of</span><span class="op">(</span><span class="va">length_five</span>, <span class="va">nine</span><span class="op">)</span>
+  <span class="va">two</span> <span class="op">&lt;-</span> <span class="va">length_five</span><span class="op">[</span><span class="op">!</span><span class="va">length_five</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">three</span><span class="op">]</span>
+  
+  <span class="co"># Initialise dictionary</span>
+  <span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>number <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, 
+                     segments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">zero</span>, <span class="va">one</span>, <span class="va">two</span>, <span class="va">three</span>, <span class="va">four</span>, 
+                                  <span class="va">five</span>, <span class="va">six</span>, <span class="va">seven</span>, <span class="va">eight</span>, <span class="va">nine</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="co"># Decode the four-digit output values</span>
+  <span class="va">digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">"\\| "</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
+  <span class="va">digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">digits</span>, <span class="st">" "</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+  <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">decode</span><span class="op">(</span><span class="va">digits</span>, <span class="va">dict</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># What do you get if you add up all of the output values?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 1028926</span></code></pre>
 </div>
 </div>
   </div>
