@@ -491,6 +491,68 @@
 <pre><code><span class="co">## [1] "1749945484935"</span></code></pre>
 </div>
 </div>
+<div class="section level2">
+<h2 id="day-7-the-treachery-of-whales">Day 7: The Treachery of Whales<a class="anchor" aria-label="anchor" href="#day-7-the-treachery-of-whales"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/7" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-6">Part 1<a class="anchor" aria-label="anchor" href="#part-1-6"></a>
+</h3>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day7.txt"</span><span class="op">)</span>, 
+            what <span class="op">=</span> <span class="st">"character"</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Initialise objects</span>
+<span class="va">xlim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">xlim</span>, total_fuel_cost <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
+
+<span class="co"># Determine the horizontal position that the crabs can align to using the least </span>
+<span class="co"># fuel possible</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">position</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">xlim</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">crab</span> <span class="kw">in</span> <span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="va">fuel_cost</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">crab</span> <span class="op">-</span> <span class="va">position</span><span class="op">)</span>
+  <span class="op">}</span>
+ <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">lowest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">)</span>
+<span class="va">results</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
+<pre><code><span class="co">## [1] 256</span></code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># How much fuel must they spend to align to that position?</span>
+<span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
+<pre><code><span class="co">## [1] 1464430</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-6">Part 2<a class="anchor" aria-label="anchor" href="#part-2-6"></a>
+</h3>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Initialise objects</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">xlim</span>, total_fuel_cost <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>
+
+<span class="co"># Determine the horizontal position that the crabs can align to using the least </span>
+<span class="co"># fuel possible</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">position</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">xlim</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">crab</span> <span class="kw">in</span> <span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">distance</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">crab</span> <span class="op">-</span> <span class="va">position</span><span class="op">)</span>
+    <span class="va">fuel_cost</span> <span class="op">&lt;-</span> <span class="va">fuel_cost</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="va">distance</span><span class="op">)</span>
+  <span class="op">}</span>
+ <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">position</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fuel_cost</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">lowest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.min</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">)</span>
+<span class="va">results</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
+<pre><code><span class="co">## [1] 489</span></code></pre>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># How much fuel must they spend to align to that position?</span>
+<span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
+<pre><code><span class="co">## [1] 101268110</span></code></pre>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
