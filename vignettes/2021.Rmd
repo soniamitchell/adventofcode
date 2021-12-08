@@ -28,8 +28,6 @@ sum(diff(dat) > 0)
 
 ### Part 2
 
-Link to question [here](https://adventofcode.com/2021/day/1)
-
 ```{r day1-2}
 # Sum depths in each window
 index <- 1
