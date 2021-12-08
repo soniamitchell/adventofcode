@@ -244,7 +244,7 @@ lose_bingo <- function(numbers, boards) {
                          data.frame(number = this_number, 
                                     board = i, 
                                     score = score))
-       remaining_boards <- remaining_boards[-which(remaining_boards == i)]
+        remaining_boards <- remaining_boards[-which(remaining_boards == i)]
       }
     } 
   }
@@ -281,7 +281,7 @@ grid <- matrix(0, nrow = ylim, ncol = xlim)
 # Track horizontal and vertical lines
 for (i in seq_len(nrow(coordinates))) {
   this_line <- coordinates[i, ]
-
+  
   if (this_line$x1 == this_line$x2) {
     # Horizontal line
     this_x <- this_line$x1
@@ -311,7 +311,7 @@ grid <- matrix(0, nrow = ylim, ncol = xlim)
 # Track horizontal, vertical lines, and diagonal lines
 for (i in seq_len(nrow(coordinates))) {
   this_line <- coordinates[i, ]
-
+  
   if (this_line$x1 == this_line$x2) {
     # Horizontal line
     this_x <- this_line$x1
@@ -339,5 +339,72 @@ for (i in seq_len(nrow(coordinates))) {
 # Find points where at least two lines overlap
 sum(grid >= 2)
 ```
+
+## Day 6: Lanternfish
+
+Link to questions [here](https://adventofcode.com/2021/day/6)
+
+### Part 1
+
+```{r day6-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day6.txt"), 
+            what = "character", sep = ",") %>% 
+  as.numeric()
+
+# Initialise variables
+days <- 80
+fish <- dat
+
+# Simulate lanternfish
+for (i in seq_len(days)) {
+  # Find zeroes
+  zeroes <- which(fish == 0)
+  # Subtract 1 from all fish
+  fish <- fish - 1
+  # Reset zeroes to six
+  fish[zeroes] <- 6
+  # Add eights for each zero
+  fish <- c(fish, rep(8, length(zeroes)))
+}
+
+# How many lanternfish would there be after 80 days?
+length(fish)
+```
+
+### Part 2
+
+It takes too much memory to simulate individual fish in a vector, so generate
+a frequency table instead.
+
+```{r day6-2}
+# Initialise variables
+days <- 256
+
+# Generate a frequency table
+fish_counts <- data.frame(age = dat) %>% 
+  # Count fish
+  dplyr::count(age) %>% 
+  # Fill in the missing categories
+  complete(age = 0:8, fill = list(n = 0))
+
+for (i in seq_len(days)) {
+  # Number of zeroes
+  n_zeroes <- fish_counts$n[fish_counts$age == 0]
+  # Subtract 1 from all fish
+  fish_counts$n[1:(nrow(fish_counts) - 1)] <- fish_counts$n[2:nrow(fish_counts)]
+  # Reset zeroes to six
+  age_6 <- which(fish_counts$age == 6)
+  fish_counts$n[age_6] <- fish_counts$n[age_6] + n_zeroes
+  # Add eights for each zero
+  fish_counts$n[which(fish_counts$age == 8)] <- n_zeroes
+}
+
+# How many lanternfish would there be after 256 days?
+sum(fish_counts$n) %>% 
+  format(scientific = FALSE)
+```
+
+
 
 
