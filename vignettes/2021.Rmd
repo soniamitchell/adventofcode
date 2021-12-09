@@ -714,7 +714,7 @@ for (i in seq_len(nrow(lowest_points))) {
 }
 
 # Multiply together the sizes of the three largest basins
-prod(tail(sort(results), 3)) # 148824
+prod(tail(sort(results), 3))
 ```
 
 
