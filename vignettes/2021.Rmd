@@ -631,7 +631,7 @@ sum(lowest_points$risk)
 
 ### Part 2
 
-```{r day9-2, results = "hide"}
+```{r day9-2}
 # Check height is less than 9
 check_height <- function(dat, row, column) {
   if (dat[row, column] < 9) 
@@ -708,7 +708,7 @@ survey <- function(dat, row, column) {
 # Find all of the low points on the heightmap and calculate basin size
 results <- c()
 for (i in seq_len(nrow(lowest_points))) {
-  cat("\r", i, "/", nrow(lowest_points))
+  # cat("\r", i, "/", nrow(lowest_points))
   size <- survey(dat, lowest_points$x[i], lowest_points$y[i])
   results <- c(results, size)
 }
