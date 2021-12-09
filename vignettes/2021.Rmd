@@ -597,9 +597,11 @@ dat <- readLines(file.path(here(), "inst", "2021", "day9.txt")) %>%
   do.call(rbind, .) %>% 
   apply(1, as.numeric)
 
+# Find `height` of adjacent points and if it's lower than all `adjacent_points`, 
+# return risk level
 compare_heights <- function(dat, row, column) {
   height <- dat[row, column]
-  # Find height of adjacent points
+  # Extract adjacent heights
   adjacent_points <- c()
   if (i != 1)
     adjacent_points <- c(adjacent_points, dat[row - 1, column]) # above
@@ -609,7 +611,7 @@ compare_heights <- function(dat, row, column) {
     adjacent_points <- c(adjacent_points, dat[row + 1, column]) # below
   if (j != 1)
     adjacent_points <- c(adjacent_points, dat[row, column - 1]) # left
-  # If `height` is lower than all `adjacent_points`, return risk level
+  # Compare height to adjacent heights
   if (all(height < adjacent_points)) 
     return(data.frame(x = row, y = column, risk = height + 1))
 }
@@ -630,33 +632,36 @@ sum(lowest_points$risk)
 ### Part 2
 
 ```{r day9-2}
-check_depth <- function(dat, row, column) {
+# Check height is less than 9
+check_height <- function(dat, row, column) {
   if (dat[row, column] < 9) 
     return(data.frame(row = row, column = column, height = dat[row, column]))
 }
 
+# Return neighbouring points that have a height less than 9
 check_adjacent <- function(dat, row, column) {
   # Find height of adjacent points
   adjacent_points <- data.frame(row = numeric(), column = numeric(), 
                                 height = numeric())
   # Above
   if (row != 1) 
-    adjacent_points <- rbind(adjacent_points, check_depth(dat, row - 1, column))
+    adjacent_points <- rbind(adjacent_points, check_height(dat, row - 1, column))
   # Right
   if (column != ncol(dat)) 
-    adjacent_points <- rbind(adjacent_points, check_depth(dat, row, column + 1))
+    adjacent_points <- rbind(adjacent_points, check_height(dat, row, column + 1))
   # Below
   if (row != nrow(dat)) 
-    adjacent_points <- rbind(adjacent_points, check_depth(dat, row + 1, column))
+    adjacent_points <- rbind(adjacent_points, check_height(dat, row + 1, column))
   # Left
   if (column != 1) 
-    adjacent_points <- rbind(adjacent_points, check_depth(dat, row, column - 1))
+    adjacent_points <- rbind(adjacent_points, check_height(dat, row, column - 1))
   
   # Return neibouring points that should be checked
   adjacent_points %>% 
     dplyr::filter(height != 9)
 }
 
+# For a particular `lowest_point`, survey the basin and return it's size
 survey <- function(dat, row, column) {
   # Height of lowest point being surveyed
   height <- dat[row, column]
