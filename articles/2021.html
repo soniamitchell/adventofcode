@@ -678,6 +678,385 @@
 <pre><code><span class="co">## [1] 1028926</span></code></pre>
 </div>
 </div>
+<div class="section level2">
+<h2 id="day-9-smoke-basin">Day 9: Smoke Basin<a class="anchor" aria-label="anchor" href="#day-9-smoke-basin"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/9" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-8">Part 1<a class="anchor" aria-label="anchor" href="#part-1-8"></a>
+</h3>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day9.txt"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">.</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">as.numeric</span><span class="op">)</span>
+
+<span class="va">compare_heights</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">height</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span><span class="op">]</span>
+  <span class="co"># Find height of adjacent points</span>
+  <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="va">dat</span><span class="op">[</span><span class="va">row</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">column</span><span class="op">]</span><span class="op">)</span> <span class="co"># above</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">j</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># right</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="va">dat</span><span class="op">[</span><span class="va">row</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">column</span><span class="op">]</span><span class="op">)</span> <span class="co"># below</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">j</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># left</span>
+  <span class="co"># If `height` is lower than all `adjacent_points`, return risk level</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">height</span> <span class="op">&lt;</span> <span class="va">adjacent_points</span><span class="op">)</span><span class="op">)</span> 
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">row</span>, y <span class="op">=</span> <span class="va">column</span>, risk <span class="op">=</span> <span class="va">height</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Find all of the low points on the heightmap and calculate risk level</span>
+<span class="va">lowest_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span>, risk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">lowest_point</span> <span class="op">&lt;-</span> <span class="fu">compare_heights</span><span class="op">(</span><span class="va">dat</span>, <span class="va">i</span>, <span class="va">j</span><span class="op">)</span>
+    <span class="va">lowest_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind.data.frame</a></span><span class="op">(</span><span class="va">lowest_points</span>, <span class="va">lowest_point</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="co"># What is the sum of the risk levels of all low points on your heightmap?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">lowest_points</span><span class="op">$</span><span class="va">risk</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 603</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-8">Part 2<a class="anchor" aria-label="anchor" href="#part-2-8"></a>
+</h3>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">check_depth</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">9</span><span class="op">)</span> 
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>row <span class="op">=</span> <span class="va">row</span>, column <span class="op">=</span> <span class="va">column</span>, height <span class="op">=</span> <span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">check_adjacent</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># Find height of adjacent points</span>
+  <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>row <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span>, column <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span>, 
+                                height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Above</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">row</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span> 
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="fu">check_depth</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">column</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Right</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">column</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> 
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="fu">check_depth</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Below</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">row</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> 
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="fu">check_depth</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">column</span><span class="op">)</span><span class="op">)</span>
+  <span class="co"># Left</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="va">column</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span> 
+    <span class="va">adjacent_points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">adjacent_points</span>, <span class="fu">check_depth</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="co"># Return neibouring points that should be checked</span>
+  <span class="va">adjacent_points</span> <span class="op">%&gt;%</span> 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">height</span> <span class="op">!=</span> <span class="fl">9</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">survey</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># Height of lowest point being surveyed</span>
+  <span class="va">height</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">row</span>, <span class="va">column</span><span class="op">]</span>
+  <span class="co"># Initialise basin dataframe</span>
+  <span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>row <span class="op">=</span> <span class="va">row</span>, column <span class="op">=</span> <span class="va">column</span>, risk <span class="op">=</span> <span class="va">height</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="co"># Find adjacent points with depth less than 9 </span>
+  <span class="va">neighbours</span> <span class="op">&lt;-</span> <span class="fu">check_adjacent</span><span class="op">(</span><span class="va">dat</span>, <span class="va">row</span>, <span class="va">column</span><span class="op">)</span>
+  <span class="co"># Add them to the basin</span>
+  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">neighbours</span> <span class="op">%&gt;%</span> 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>risk <span class="op">=</span> <span class="va">height</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">height</span><span class="op">)</span>
+  <span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">basin</span>, <span class="va">tmp</span><span class="op">)</span>
+  
+  <span class="co"># Check neighbouring points</span>
+  <span class="va">continue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">neighbours</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span>
+  <span class="kw">while</span><span class="op">(</span><span class="va">continue</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">more_neighbours</span> <span class="op">&lt;-</span> <span class="fu">check_adjacent</span><span class="op">(</span><span class="va">dat</span>, 
+                                      <span class="va">neighbours</span><span class="op">$</span><span class="va">row</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, 
+                                      <span class="va">neighbours</span><span class="op">$</span><span class="va">column</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
+    <span class="co"># Remove this point from `neighbours`</span>
+    <span class="va">neighbours</span> <span class="op">&lt;-</span> <span class="va">neighbours</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>, <span class="op">]</span>
+    <span class="co"># Remove new neighbours that are already in the basin</span>
+    <span class="va">more_neighbours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">more_neighbours</span>, <span class="op">-</span><span class="va">height</span><span class="op">)</span>, 
+                               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">basin</span>, <span class="op">-</span><span class="va">risk</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">more_neighbours</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"row"</span>, <span class="st">"column"</span><span class="op">)</span><span class="op">)</span>
+    
+    <span class="co"># If any new neighbours are remaining</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">more_neighbours</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+      <span class="co"># Add them to the basin</span>
+      <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">more_neighbours</span> <span class="op">%&gt;%</span> 
+        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>risk <span class="op">=</span> <span class="va">height</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">height</span><span class="op">)</span>
+      <span class="va">basin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">basin</span>, <span class="va">tmp</span><span class="op">)</span>
+      <span class="co"># And add them to `neighbours` (for checking)</span>
+      <span class="va">neighbours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">neighbours</span>, <span class="va">more_neighbours</span><span class="op">)</span>
+    <span class="op">}</span>
+    
+    <span class="va">continue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">neighbours</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span>
+  <span class="op">}</span>
+  <span class="co"># Return size of basin</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">basin</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Find all of the low points on the heightmap and calculate basin size</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">lowest_points</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\r"</span>, <span class="va">i</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">lowest_points</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">size</span> <span class="op">&lt;-</span> <span class="fu">survey</span><span class="op">(</span><span class="va">dat</span>, <span class="va">lowest_points</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">lowest_points</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">results</span>, <span class="va">size</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<pre><code><span class="co">## </span>
+ <span class="fl">1</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">2</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">3</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">4</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">5</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">6</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">7</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">8</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">9</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">10</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">11</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">12</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">13</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">14</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">15</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">16</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">17</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">18</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">19</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">20</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">21</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">22</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">23</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">24</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">25</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">26</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">27</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">28</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">29</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">30</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">31</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">32</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">33</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">34</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">35</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">36</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">37</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">38</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">39</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">40</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">41</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">42</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">43</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">44</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">45</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">46</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">47</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">48</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">49</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">50</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">51</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">52</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">53</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">54</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">55</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">56</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">57</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">58</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">59</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">60</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">61</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">62</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">63</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">64</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">65</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">66</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">67</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">68</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">69</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">70</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">71</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">72</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">73</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">74</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">75</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">76</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">77</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">78</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">79</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">80</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">81</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">82</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">83</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">84</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">85</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">86</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">87</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">88</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">89</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">90</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">91</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">92</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">93</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">94</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">95</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">96</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">97</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">98</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">99</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">100</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">101</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">102</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">103</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">104</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">105</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">106</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">107</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">108</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">109</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">110</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">111</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">112</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">113</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">114</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">115</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">116</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">117</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">118</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">119</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">120</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">121</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">122</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">123</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">124</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">125</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">126</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">127</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">128</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">129</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">130</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">131</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">132</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">133</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">134</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">135</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">136</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">137</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">138</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">139</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">140</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">141</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">142</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">143</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">144</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">145</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">146</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">147</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">148</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">149</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">150</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">151</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">152</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">153</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">154</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">155</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">156</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">157</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">158</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">159</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">160</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">161</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">162</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">163</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">164</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">165</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">166</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">167</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">168</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">169</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">170</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">171</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">172</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">173</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">174</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">175</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">176</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">177</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">178</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">179</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">180</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">181</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">182</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">183</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">184</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">185</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">186</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">187</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">188</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">189</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">190</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">191</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">192</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">193</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">194</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">195</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">196</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">197</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">198</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">199</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">200</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">201</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">202</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">203</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">204</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">205</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">206</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">207</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">208</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">209</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">210</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">211</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">212</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">213</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">214</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">215</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">216</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">217</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">218</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">219</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">220</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">221</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">222</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">223</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">224</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">225</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">226</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">227</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">228</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">229</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">230</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">231</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">232</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">233</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">234</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">235</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">236</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">237</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">238</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">239</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">240</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">241</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">242</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">243</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">244</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">245</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">246</span> <span class="op">/</span> <span class="fl">247</span>
+ <span class="fl">247</span> <span class="op">/</span> <span class="fl">247</span></code></pre>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Multiply together the sizes of the three largest basins</span>
+<span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="co"># 148824</span></code></pre></div>
+<pre><code><span class="co">## [1] 786780</span></code></pre>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
