@@ -631,7 +631,7 @@ sum(lowest_points$risk)
 
 ### Part 2
 
-```{r day9-2}
+```{r day9-2, results = "hide"}
 # Check height is less than 9
 check_height <- function(dat, row, column) {
   if (dat[row, column] < 9) 
