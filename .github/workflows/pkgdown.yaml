@@ -26,6 +26,12 @@ jobs:
           extra-packages: pkgdown
           needs: website
 
+      - name: Install Julia
+        run: |
+          install.packages(JuliaCall)
+          JuliaCall::julia_setup(installJulia = TRUE)
+        shell: Rscript {0}
+
       - name: Deploy package
         run: |
           git config --local user.name "$GITHUB_ACTOR"

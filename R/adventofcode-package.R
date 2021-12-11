@@ -7,6 +7,7 @@
 #'
 #' @import dplyr
 #' @import here
+#' @import JuliaCall
 #' @import tidyr
 #'
 "_PACKAGE"
