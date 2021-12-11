@@ -3,14 +3,10 @@ url: http://sonia-mitchell.com/adventofcode
 
 navbar:
   left:
-    - text: "R (base)"
-      menu:
-      - text: 2021
-        href: articles/2021.html
-    - text: "Julia"
-      menu:
-      - text: 2020
-        href: articles/2020.html
+    - text: 2021 (R)
+      href: articles/2021.html
+    - text: 2020 (Julia)
+      href: articles/2020.html
   right:
     - icon: fab fa-github
       text: "GitHub"
