@@ -100,32 +100,41 @@
 <span id="cb2-9"><a href="#cb2-9"></a><span class="co"># What do you get if you multiply them together?</span></span>
 <span id="cb2-10"><a href="#cb2-10"></a>numbers[<span class="fl">1</span>] * numbers[<span class="fl">2</span>]</span></code></pre></div>
 <pre><code><span class="co">## 802011.0</span></code></pre>
+<div class="section level4">
+<h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
+</h4>
+<ul>
+<li>
+<strong>Array comprehension</strong> has the following syntax:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span>]</span></code></pre></div>
+<pre><code><span class="co">## 3-element Vector{Int64}:</span>
+<span class="co">##  1</span>
+<span class="co">##  4</span>
+<span class="co">##  9</span></code></pre>
+</div>
 </div>
 <div class="section level3">
 <h3 id="part-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># What is the product of the three entries that sum to 2020?</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">3</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
-<span id="cb4-3"><a href="#cb4-3"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
-<span id="cb4-4"><a href="#cb4-4"></a>ans = numbers[<span class="fl">1</span>] * numbers[<span class="fl">2</span>] * numbers[<span class="fl">3</span>];</span>
-<span id="cb4-5"><a href="#cb4-5"></a>format(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># What is the product of the three entries that sum to 2020?</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">3</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
+<span id="cb6-3"><a href="#cb6-3"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
+<span id="cb6-4"><a href="#cb6-4"></a>ans = numbers[<span class="fl">1</span>] * numbers[<span class="fl">2</span>] * numbers[<span class="fl">3</span>];</span>
+<span id="cb6-5"><a href="#cb6-5"></a>format(ans)</span></code></pre></div>
 <pre><code><span class="co">## "248607374"</span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
-</h3>
-<p><strong>Array comprehension</strong> has the following syntax:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a>[<span class="fl">2</span>x <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">4</span>]</span></code></pre></div>
-<pre><code><span class="co">## 4-element Vector{Int64}:</span>
-<span class="co">##  2</span>
-<span class="co">##  4</span>
-<span class="co">##  6</span>
-<span class="co">##  8</span></code></pre>
-<p><strong>Conditional comprehension</strong> has the following syntax:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1"></a>[<span class="fl">2</span>x <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">4</span> <span class="kw">if</span> x &gt; <span class="fl">2</span>]</span></code></pre></div>
+<div class="section level4">
+<h4 id="notes-1">Notes<a class="anchor" aria-label="anchor" href="#notes-1"></a>
+</h4>
+<ul>
+<li>
+<strong>Conditional comprehension</strong> has the following syntax:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span> <span class="kw">if</span> x &gt; <span class="fl">1</span>]</span></code></pre></div>
 <pre><code><span class="co">## 2-element Vector{Int64}:</span>
-<span class="co">##  6</span>
-<span class="co">##  8</span></code></pre>
+<span class="co">##  4</span>
+<span class="co">##  9</span></code></pre>
+</div>
 </div>
 </div>
 <div class="section level2">
@@ -157,6 +166,14 @@
 <span id="cb11-19"><a href="#cb11-19"></a><span class="co"># How many passwords are valid according to their policies?</span></span>
 <span id="cb11-20"><a href="#cb11-20"></a>sled_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 640</span></code></pre>
+<div class="section level4">
+<h4 id="notes-2">Notes<a class="anchor" aria-label="anchor" href="#notes-2"></a>
+</h4>
+<ul>
+<li><p>The <strong>ternary operator</strong>, <code>?:</code> is related to <code>if-elseif-else</code> syntax and is written as <code>condition ? value_if_true : value_if_false</code>.</p></li>
+<li><p>Julia complains of scoping issues when calling <code>x += 1</code> inside a <code>for</code> loop (if <code>x</code> was defined outside of it). Rather than using <code>global x += 1</code>, putting everything into a function will achieve the expected behaviour.</p></li>
+</ul>
+</div>
 </div>
 <div class="section level3">
 <h3 id="part-2-1">Part 2<a class="anchor" aria-label="anchor" href="#part-2-1"></a>
@@ -179,12 +196,6 @@
 <span id="cb13-16"><a href="#cb13-16"></a><span class="co"># How many passwords are valid according to the new interpretation of the policies?</span></span>
 <span id="cb13-17"><a href="#cb13-17"></a>toboggan_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 472</span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="notes-1">Notes<a class="anchor" aria-label="anchor" href="#notes-1"></a>
-</h3>
-<p>The <strong>ternary operator</strong>, <code>?:</code> is related to <code>if-elseif-else</code> syntax and is written as <code>condition ? value_if_true : value_if_false</code>.</p>
-<p>Julia complains of scoping issues when calling <code>x += 1</code> inside a <code>for</code> loop (if <code>x</code> was defined outside of it). Rather than using <code>global x += 1</code>, putting everything into a function will achieve the expected behaviour.</p>
 </div>
 </div>
   </div>
