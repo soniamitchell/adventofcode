@@ -26,10 +26,10 @@ jobs:
           extra-packages: pkgdown
           needs: website
 
-      - name: Install Julia
+      - name: Set up JuliaCall
         run: |
-          install.packages(JuliaCall)
-          JuliaCall::julia_setup(installJulia = TRUE)
+          library(JuliaCall)
+          julia_setup(installJulia = TRUE)
         shell: Rscript {0}
 
       - name: Deploy package
