@@ -846,7 +846,7 @@ dat <- scan(file.path(here(), "inst", "2021", "day11.txt"),
 find_neighbours <- function(x, y, flashing_now, flashed_previously, octopus) {
   # Index neighbours
   tmp <- rbind(data.frame(row = x - 1, col = (y - 1):(y + 1)), # above
-               data.frame(row = x, col = c(y - 1, y + 1)),     # side
+               data.frame(row = x, col = c(y - 1, y + 1)),     # sides
                data.frame(row = x + 1, col = (y - 1):(y + 1))) # below
   # Remove invalid coordinates
   xlim <- ncol(octopus) + 1
