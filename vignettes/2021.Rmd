@@ -717,9 +717,114 @@ for (i in seq_len(nrow(lowest_points))) {
 prod(tail(sort(results), 3))
 ```
 
+## Day 10: Syntax Scoring
 
+Link to questions [here](https://adventofcode.com/2021/day/10)
 
+### Part 1
 
+```{r day10-1}
+# Read in data
+dat <- readLines(file.path(here(), "inst", "2021", "day10.txt")) 
 
+corrupted_score <- function(character) {
+  score_table <- data.frame(char = c(")", "]", "}", ">"), 
+                            val = c(3, 57, 1197, 25137))
+  score_table$val[which(score_table$char == character)]
+}
 
+total <- 0
+remove_lines <- c()
 
+for (i in seq_along(dat)){
+  expecting <- c()
+  points <- NA
+  check_this <- strsplit(dat[i], "")[[1]]
+  
+  for (j in seq_along(check_this)) {
+    if (check_this[j] == "("){
+      expecting <- c(expecting, ")")
+      
+    } else if (check_this[j] == "[") {
+      expecting <- c(expecting, "]")
+      
+    } else if (check_this[j] == "{") {
+      expecting <- c(expecting, "}")
+      
+    } else if (check_this[j] == "<") {
+      expecting <- c(expecting, ">")
+      
+    } else {
+      # If `check_this` matches the last expected value, remove it 
+      if (check_this[j] == tail(expecting, 1)) {
+        expecting <- expecting[-length(expecting)]
+        
+      } else if (is.na(points)) {
+        # Otherwise add the score to `total`
+        points <- corrupted_score(check_this[j])
+        total <- total + points
+        remove_lines <- c(remove_lines, i)
+        break
+      }
+    }
+  }
+}
+
+# Find the first illegal character in each corrupted line of the navigation 
+# subsystem. What is the total syntax error score for those errors?
+total
+```
+
+### Part 2
+
+```{r day10-2}
+# Remove corrupted lines
+incomplete_lines <- dat[-remove_lines]
+
+incomplete_score <- function(character) {
+  score_table <- data.frame(char = c(")", "]", "}", ">"), 
+                            val = c(1, 2, 3, 4))
+  score_table$val[which(score_table$char == character)]
+}
+
+results <- c()
+for (i in seq_along(incomplete_lines)){
+  expecting <- c()
+  check_this <- strsplit(incomplete_lines[i], "")[[1]]
+  points <- 0
+  
+  for (j in seq_along(check_this)) {
+    if (check_this[j] == "("){
+      expecting <- c(expecting, ")")
+      
+    } else if (check_this[j] == "[") {
+      expecting <- c(expecting, "]")
+      
+    } else if (check_this[j] == "{") {
+      expecting <- c(expecting, "}")
+      
+    } else if (check_this[j] == "<") {
+      expecting <- c(expecting, ">")
+    } else {
+      # If `check_this` matches the last expected value, remove it 
+      if (check_this[j] == tail(expecting, 1)) {
+        expecting <- expecting[-length(expecting)]
+      }
+    }
+  }
+  expecting <- rev(expecting)
+  
+  # Calculate score
+  for (k in seq_along(expecting)) {
+    points <- (points * 5) + incomplete_score(expecting[k])
+  }
+  results <- c(results, points)
+  
+}
+
+# Find the completion string for each incomplete line, score the completion 
+# strings, and sort the scores. What is the middle score?
+index <- ceiling(length(results) / 2)
+value <- sort(results)[index]
+format(value, scientific = FALSE)
+```
