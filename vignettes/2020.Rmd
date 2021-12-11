@@ -27,6 +27,12 @@ here = replace(pwd(), "/vignettes" => "");
 
 Link to questions [here](https://adventofcode.com/2020/day/1)
 
+```{julia day1-0, eval=FALSE}
+using DelimitedFiles
+using Combinatorics
+using Formatting
+```
+
 ### Part 1
 
 ```{julia day1-1}
@@ -51,3 +57,11 @@ numbers = reshape(numbers)[1];
 ans = numbers[1] * numbers[2] * numbers[3];
 format(ans)
 ```
+
+## Day 2: Password Philosophy
+
+Link to questions [here](https://adventofcode.com/2020/day/2)
+
+### Part 1
+
+### Part 2
