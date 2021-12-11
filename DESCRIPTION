@@ -9,6 +9,7 @@ License: GPL-3
 Imports:
     dplyr,
     here,
+    JuliaCall,
     tidyr
 Encoding: UTF-8
 LazyData: true
