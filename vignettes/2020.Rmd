@@ -117,6 +117,11 @@ using DelimitedFiles
 ```{julia day4-1, code=readLines("julia/4-1.jl")}
 ```
 
+### Part 2
+
+```{julia day4-2, code=readLines("julia/4-2.jl")}
+```
+
 ## Day 5: Binary Boarding
 
 Link to questions [here](https://adventofcode.com/2020/day/5)
