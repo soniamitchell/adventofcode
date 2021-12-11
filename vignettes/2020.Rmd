@@ -98,3 +98,8 @@ using DelimitedFiles
 
 ```{julia day3-1, code=readLines("julia/3-1.jl")}
 ```
+
+### Part 2
+
+```{julia day3-2, code=readLines("julia/3-2.jl")}
+```
