@@ -12,6 +12,11 @@ library(dplyr)
 library(tidyr)
 ```
 
+```{r 0-0, eval=FALSE}
+library(dplyr)
+library(tidyr)
+```
+
 ## Day 1: Sonar Sweep
 
 Link to questions [here](https://adventofcode.com/2021/day/1)
