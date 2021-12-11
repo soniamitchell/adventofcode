@@ -3,8 +3,14 @@ url: http://sonia-mitchell.com/adventofcode
 
 navbar:
   left:
-    - text: 2021 R solutions
-      href: articles/2021.html
+    - text: "R (base)"
+      menu:
+      - text: 2021
+        href: articles/2021.html
+    - text: "Julia"
+      menu:
+      - text: 2020
+        href: articles/2020.html
   right:
     - icon: fab fa-github
       text: "GitHub"
