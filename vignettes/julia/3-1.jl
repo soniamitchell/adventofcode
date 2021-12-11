@@ -14,7 +14,7 @@ function trees(x, y, map)
         results += map[ypos][xpos] == only("#") ? 1 : 0
     end
     results
-end
+end;
 
 # Starting at the top-left corner of your map and following a slope of right 3 and down 1, 
 # how many trees would you encounter?
