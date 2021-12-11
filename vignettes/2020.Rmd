@@ -38,23 +38,25 @@ using Formatting
 ```{julia day1-1, code=readLines("julia/1-1.jl")}
 ```
 
+#### Notes
+
+* **Array comprehension** has the following syntax:
+
+```{julia}
+[x^2 for x = 1:3]
+```
+
 ### Part 2
 
 ```{julia day1-2, code=readLines("julia/1-2.jl")}
 ```
 
-### Notes
+#### Notes
 
-**Array comprehension** has the following syntax:
-
-```{julia}
-[2x for x = 1:4]
-```
-
-**Conditional comprehension** has the following syntax:
+* **Conditional comprehension** has the following syntax:
 
 ```{julia}
-[2x for x = 1:4 if x > 2]
+[x^2 for x = 1:3 if x > 1]
 ```
 
 ## Day 2: Password Philosophy
@@ -70,16 +72,16 @@ using DelimitedFiles
 ```{julia day2-1, code=readLines("julia/2-1.jl")}
 ```
 
+#### Notes
+
+* The **ternary operator**, `?:` is related to `if-elseif-else` syntax and is 
+written as `condition ? value_if_true : value_if_false`.
+
+* Julia complains of scoping issues when calling `x += 1` inside a `for` loop (if
+`x` was defined outside of it). Rather than using `global x += 1`, putting 
+everything into a function will achieve the expected behaviour.
+
 ### Part 2
 
 ```{julia day2-1, code=readLines("julia/2-2.jl")}
 ```
-
-### Notes
-
-The **ternary operator**, `?:` is related to `if-elseif-else` syntax and is 
-written as `condition ? value_if_true : value_if_false`.
-
-Julia complains of scoping issues when calling `x += 1` inside a `for` loop (if
-`x` was defined outside of it). Rather than using `global x += 1`, putting 
-everything into a function will achieve the expected behaviour.
