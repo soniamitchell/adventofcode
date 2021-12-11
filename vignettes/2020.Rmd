@@ -85,3 +85,16 @@ everything into a function will achieve the expected behaviour.
 
 ```{julia day2-1, code=readLines("julia/2-2.jl")}
 ```
+
+## Day 3: Toboggan Trajectory
+
+Link to questions [here](https://adventofcode.com/2020/day/3)
+
+```{julia day3-0, eval=FALSE}
+using DelimitedFiles
+```
+
+### Part 1
+
+```{julia day3-1, code=readLines("julia/3-1.jl")}
+```
