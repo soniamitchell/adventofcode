@@ -61,4 +61,10 @@ Link to questions [here](https://adventofcode.com/2020/day/2)
 
 ### Part 1
 
+```{julia day2-1, code=readLines("julia/2-1.jl")}
+```
+
 ### Part 2
+
+```{julia day2-1, code=readLines("julia/2-2.jl")}
+```
