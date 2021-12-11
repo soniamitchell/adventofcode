@@ -27,18 +27,6 @@ here = replace(pwd(), "/vignettes" => "");
 
 Link to questions [here](https://adventofcode.com/2020/day/1)
 
-Array comprehension:
-
-```{julia}
-[2x for x = 1:4]
-```
-
-Conditional comprehension:
-
-```{julia}
-[2x for x = 1:4 if x > 2]
-```
-
 ```{julia day1-0, eval=FALSE}
 using DelimitedFiles
 using Combinatorics
@@ -55,9 +43,27 @@ using Formatting
 ```{julia day1-2, code=readLines("julia/1-2.jl")}
 ```
 
+### Notes
+
+**Array comprehension** has the following syntax:
+
+```{julia}
+[2x for x = 1:4]
+```
+
+**Conditional comprehension** has the following syntax:
+
+```{julia}
+[2x for x = 1:4 if x > 2]
+```
+
 ## Day 2: Password Philosophy
 
 Link to questions [here](https://adventofcode.com/2020/day/2)
+
+```{julia day2-0, eval=FALSE}
+using DelimitedFiles
+```
 
 ### Part 1
 
@@ -68,3 +74,12 @@ Link to questions [here](https://adventofcode.com/2020/day/2)
 
 ```{julia day2-1, code=readLines("julia/2-2.jl")}
 ```
+
+### Notes
+
+The **ternary operator**, `?:` is related to `if-elseif-else` syntax and is 
+written as `condition ? value_if_true : value_if_false`.
+
+Julia complains of scoping issues when calling `x += 1` inside a `for` loop (if
+`x` was defined outside of it). Rather than using `global x += 1`, putting 
+everything into a function will achieve the expected behaviour.
