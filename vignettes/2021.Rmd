@@ -898,7 +898,7 @@ count <- 0
 # Given the starting energy levels of the dumbo octopuses in your cavern, 
 # simulate 100 steps. 
 for (i in 1:100) {
-  cat("\r", i, "of 100")
+  # cat("\r", i, "of 100")
   data <- timestep(octopus)
   octopus <- data$octopus
   count <- count + data$latest_flashes
@@ -916,7 +916,7 @@ count <- 1
 
 # What is the first step during which all octopuses flash?
 while (sum(octopus) != 0) {
-  cat("\r", count)
+  # cat("\r", count)
   data <- timestep(octopus)
   octopus <- data$octopus
   count <- count + 1
