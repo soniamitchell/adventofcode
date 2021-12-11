@@ -221,13 +221,26 @@
 <span id="cb16-14"><a href="#cb16-14"></a>        results += map[ypos][xpos] == only(<span class="st">"#"</span>) ? <span class="fl">1</span> : <span class="fl">0</span></span>
 <span id="cb16-15"><a href="#cb16-15"></a>    <span class="kw">end</span></span>
 <span id="cb16-16"><a href="#cb16-16"></a>    results</span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="kw">end</span></span></code></pre></div>
-<pre><code><span class="co">## trees (generic function with 1 method)</span></code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and down 1, </span></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="co"># how many trees would you encounter?</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="kw">end</span>;</span>
+<span id="cb16-18"><a href="#cb16-18"></a></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and down 1, </span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co"># how many trees would you encounter?</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
 <pre><code><span class="co">## 237</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2-2"></a>
+</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Determine the number of trees you would encounter if, for each of the following slopes, </span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># you start at the top-left corner and traverse the map all the way to the bottom:</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>iterate = [[<span class="fl">1</span>,<span class="fl">1</span>], [<span class="fl">3</span>,<span class="fl">1</span>], [<span class="fl">5</span>,<span class="fl">1</span>], [<span class="fl">7</span>,<span class="fl">1</span>], [<span class="fl">1</span>,<span class="fl">2</span>]];</span>
+<span id="cb18-5"><a href="#cb18-5"></a>results = [trees(iterate[x][<span class="fl">1</span>], iterate[x][<span class="fl">2</span>], dat) <span class="kw">for</span> x <span class="kw">in</span> eachindex(iterate)];</span>
+<span id="cb18-6"><a href="#cb18-6"></a></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co"># What do you get if you multiply together the number of trees encountered on each of the </span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co"># listed slopes?</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>prod(results)</span></code></pre></div>
+<pre><code><span class="co">## 2106818610</span></code></pre>
 </div>
 </div>
   </div>
