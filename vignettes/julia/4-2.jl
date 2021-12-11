@@ -30,7 +30,7 @@ function checkfields(passports)
         end
     end
     counter
-end
+end;
 
 # How many passports are valid?
 checkfields(passports)
