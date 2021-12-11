@@ -232,14 +232,13 @@
 <h3 id="part-2-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2-2"></a>
 </h3>
 <div class="sourceCode" id="cb18"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Determine the number of trees you would encounter if, for each of the following slopes, </span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># you start at the top-left corner and traverse the map all the way to the bottom:</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a></span>
-<span id="cb18-4"><a href="#cb18-4"></a>iterate = [[<span class="fl">1</span>,<span class="fl">1</span>], [<span class="fl">3</span>,<span class="fl">1</span>], [<span class="fl">5</span>,<span class="fl">1</span>], [<span class="fl">7</span>,<span class="fl">1</span>], [<span class="fl">1</span>,<span class="fl">2</span>]];</span>
-<span id="cb18-5"><a href="#cb18-5"></a>results = [trees(iterate[x][<span class="fl">1</span>], iterate[x][<span class="fl">2</span>], dat) <span class="kw">for</span> x <span class="kw">in</span> eachindex(iterate)];</span>
-<span id="cb18-6"><a href="#cb18-6"></a></span>
-<span id="cb18-7"><a href="#cb18-7"></a><span class="co"># What do you get if you multiply together the number of trees encountered on each of the </span></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co"># listed slopes?</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a>prod(results)</span></code></pre></div>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># you start at the top-left corner and traverse the map all the way to the bottom</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>iterate = [[<span class="fl">1</span>,<span class="fl">1</span>], [<span class="fl">3</span>,<span class="fl">1</span>], [<span class="fl">5</span>,<span class="fl">1</span>], [<span class="fl">7</span>,<span class="fl">1</span>], [<span class="fl">1</span>,<span class="fl">2</span>]];</span>
+<span id="cb18-4"><a href="#cb18-4"></a>results = [trees(iterate[x][<span class="fl">1</span>], iterate[x][<span class="fl">2</span>], dat) <span class="kw">for</span> x <span class="kw">in</span> eachindex(iterate)];</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># What do you get if you multiply together the number of trees encountered on each of the </span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co"># listed slopes?</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>prod(results)</span></code></pre></div>
 <pre><code><span class="co">## 2106818610</span></code></pre>
 </div>
 </div>
@@ -287,6 +286,19 @@
 <span id="cb21-34"><a href="#cb21-34"></a>passports = parsepassports(dat);</span>
 <span id="cb21-35"><a href="#cb21-35"></a>countpassports(passports)</span></code></pre></div>
 <pre><code><span class="co">## 182</span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-5-binary-boarding">Day 5: Binary Boarding<a class="anchor" aria-label="anchor" href="#day-5-binary-boarding"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2020/day/5" class="external-link">here</a></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1"></a>using DelimitedFiles</span></code></pre></div>
+<div class="section level3">
+<h3 id="part-1-4">Part 1<a class="anchor" aria-label="anchor" href="#part-1-4"></a>
+</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Read in data</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>path = joinpath(here, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day5.txt"</span>);</span>
+<span id="cb24-3"><a href="#cb24-3"></a>dat = readlines(path);</span></code></pre></div>
 </div>
 </div>
   </div>
