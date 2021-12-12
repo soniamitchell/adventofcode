@@ -1117,7 +1117,7 @@
   <span class="co"># Remove routes where small caves were more than one cave was visited more </span>
   <span class="co"># than once</span>
   <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">test</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>
     <span class="va">unfinished</span> <span class="op">&lt;-</span> <span class="va">unfinished</span><span class="op">[</span><span class="op">-</span><span class="va">index</span>, <span class="op">]</span>
   
   <span class="co"># Add completed routes to `complete`</span>
