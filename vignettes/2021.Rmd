@@ -1016,7 +1016,7 @@ while (nrow(unfinished) != 0) {
   # Remove routes where small caves were more than one cave was visited more 
   # than once
   index <- which(test > 1)
-  if (length(index) > 1)
+  if (length(index) > 0)
     unfinished <- unfinished[-index, ]
   
   # Add completed routes to `complete`
