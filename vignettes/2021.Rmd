@@ -1013,8 +1013,7 @@ while (nrow(unfinished) != 0) {
     duplicates <- x[duplicated(unlist(x))]
     islower <- grepl("^[[:lower:]]+$", duplicates)
     sum(islower)}) 
-  # Remove routes where small caves were more than one cave was visited more 
-  # than once
+  # Remove routes where more than one small cave was visited more than once
   index <- which(test > 1)
   if (length(index) > 0)
     unfinished <- unfinished[-index, ]
