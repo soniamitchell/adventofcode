@@ -1023,7 +1023,7 @@ while (nrow(unfinished) != 0) {
                                dplyr::filter(unfinished, 
                                              get(last_step) == "end"))
   
-  # Remove completed rows from `unfinished`
+  # Remove completed routes from `unfinished`
   unfinished <- dplyr::filter(unfinished, get(last_step) != "end")
 }
 
