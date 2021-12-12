@@ -941,24 +941,16 @@ Link to questions [here](https://adventofcode.com/2021/day/12)
 dat <- read.table(file.path(here(), "inst", "2021", "day12.txt"), sep = "-")
 
 # Tidy up data
-dat <- dat %>% 
-  dplyr::mutate(from = dplyr::case_when(V1 == "start" ~ V1,
-                                        V2 == "start" ~ V2,
-                                        V1 == "end" ~ V2,
-                                        V2 == "end" ~ V1,
-                                        T ~ V1),
-                to = dplyr::case_when(V2 == "start" ~ V1,
-                                      V1 == "start" ~ V2,
-                                      V1 == "end" ~ V1,
-                                      V2 == "end" ~ V2,
-                                      T ~ V2)) %>% 
-  dplyr::select(-V1, -V2)
-
+dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) %>% 
+  dplyr::rename(from = V1, 
+                to = V2) %>% 
+  dplyr::filter(from != "end",
+                to != "start")
+  
 # Get name of adjacent caves
 get_next <- function(cave, dat) {
-  to <- dat %>% dplyr::filter(from == cave, to != "start")
-  from <- dat %>% dplyr::filter(to == cave, from != "start")
-  unique(c(to$to, from$from))
+  tmp <- dat %>% dplyr::filter(from == cave, to != "start")
+  tmp$to
 }
 
 # Initialise routes
@@ -1002,22 +994,8 @@ length(completed_routes)
 
 ### Part 2
 
-Rather than replacing the small caves test:
-
-```{r, eval=FALSE}
-duplicates <- c(x, this_route)[duplicated(c(x, this_route))]
-if (!(x %in% this_route)) c(this_route, x) 
-```
-
-with:
-
-```{r, eval=FALSE}
-duplicates <- c(x, this_route)[duplicated(c(x, this_route))]
-test <- vapply(vector, function(x) grepl("^[[:lower:]]+$", x), logical(1))
-if (sum(test) <= 1) c(this_route, x) 
-```
-
-the code needs re-written for computational efficiency.
+We have to use a different method for Part 2, since it takes too long to 
+calculate the number of routes.
 
 ```{r day12-2}
 # Initialise routes
