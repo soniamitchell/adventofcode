@@ -1020,12 +1020,12 @@ while (nrow(unfinished) != 0) {
     unfinished <- unfinished[-index, ]
   
   # Add completed routes to `complete`
-  complete <- dplyr::bind_rows(
-    dplyr::filter(unfinished, dplyr::all_of(get(last_step)) == "end"), complete)
+  complete <- dplyr::bind_rows(complete,
+                               dplyr::filter(unfinished, 
+                                             get(last_step) == "end"))
   
   # Remove completed rows from `unfinished`
-  unfinished <- dplyr::filter(unfinished, 
-                              dplyr::all_of(get(last_step)) != "end")
+  unfinished <- dplyr::filter(unfinished, get(last_step) != "end")
 }
 
 # If we visit a single small cave twice, how many paths through this cave 
