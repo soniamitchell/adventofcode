@@ -946,12 +946,6 @@ dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) %>%
                 to = V2) %>% 
   dplyr::filter(from != "end",
                 to != "start")
-  
-# Get name of adjacent caves
-get_next <- function(cave, dat) {
-  tmp <- dat %>% dplyr::filter(from == cave, to != "start")
-  tmp$to
-}
 
 # Initialise routes
 completed_routes <- list()
@@ -964,13 +958,13 @@ while (length(unfinished_routes) > 0) {
   this_route <- unfinished_routes[[1]]
   this_cave <- tail(this_route, 1)
   
-  # Record next step(s) of the route if:
-  next_steps <- get_next(this_cave, dat)
+  # Record next step(s) of the route
+  next_steps <- dplyr::filter(dat, from == this_cave, to != "start")$to
   
   # If the exit has been found, move the route to `completed_routes`
   if ("end" %in% next_steps) {
     completed_routes <- c(completed_routes, list(c(this_route, "end")))
-    next_steps <- next_steps[-which(next_steps == "end")]
+    next_steps <- setdiff(next_steps, "end")
   }
   
   # If the cave is small and has already been visited, ignore it
@@ -999,16 +993,103 @@ calculate the number of routes.
 
 ```{r day12-2}
 # Initialise routes
-completed_routes <- list()
-unfinished_routes <- filter(dat, from == "start") 
-unfinished_routes <- lapply(seq_len(nrow(unfinished_routes)), 
-                            function(x) unname(unlist(unfinished_routes[x,])))
+unfinished <- dplyr::filter(dat, from == "start") 
+complete <- data.frame()
 
+first <- TRUE
 # Plot routes through cave system
-
+while (nrow(unfinished) != 0) {
+  if (first) {
+    last_step <- "to"
+    first <- FALSE
+  }
+  
+  # Record next step(s) of the route
+  unfinished <- dplyr::left_join(unfinished, dat, 
+                                 by = setNames("from", last_step))
+  
+  # Extract column name of the last step
+  last_step <- tail(names(unfinished), 1)
+  
+  # For each unfinished route, count the number of small caves that were 
+  # visited more than once
+  test <- apply(unfinished, 1, function(x) {
+    duplicates <- x[duplicated(unlist(x))]
+    islower <- grepl("^[[:lower:]]+$", duplicates)
+    sum(islower)}) 
+  # Remove routes where small caves were more than one cave was visited more 
+  # than once
+  index <- which(test > 1)
+  if (length(index) > 1)
+    unfinished <- unfinished[-index, ]
+  
+  # Add completed routes to `complete`
+  complete <- dplyr::bind_rows(
+    dplyr::filter(unfinished, dplyr::all_of(get(last_step)) == "end"), complete)
+  
+  # Remove completed rows from `unfinished`
+  unfinished <- dplyr::filter(unfinished, 
+                              dplyr::all_of(get(last_step)) != "end")
+}
 
 # If we visit a single small cave twice, how many paths through this cave 
 # system are there?
-length(completed_routes)
+nrow(complete)
 ```
 
+## Day 13: 
+
+Link to questions [here](https://adventofcode.com/2021/day/13)
+
+### Part 1
+
+```{r day13-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day13.txt"))
+
+# 
+```
+
+### Part 2
+
+```{r day13-2}
+# 
+```
+
+## Day 14: 
+
+Link to questions [here](https://adventofcode.com/2021/day/14)
+
+### Part 1
+
+```{r day14-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day14.txt"))
+
+# 
+```
+
+### Part 2
+
+```{r day14-2}
+# 
+```
+
+## Day 15: 
+
+Link to questions [here](https://adventofcode.com/2021/day/15)
+
+### Part 1
+
+```{r day15-1}
+# Read in data
+dat <- scan(file.path(here(), "inst", "2021", "day15.txt"))
+
+# 
+```
+
+### Part 2
+
+```{r day15-2}
+# 
+```
