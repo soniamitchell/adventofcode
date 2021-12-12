@@ -1048,12 +1048,6 @@
                 to <span class="op">=</span> <span class="va">V2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">from</span> <span class="op">!=</span> <span class="st">"end"</span>,
                 <span class="va">to</span> <span class="op">!=</span> <span class="st">"start"</span><span class="op">)</span>
-  
-<span class="co"># Get name of adjacent caves</span>
-<span class="va">get_next</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">cave</span>, <span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">from</span> <span class="op">==</span> <span class="va">cave</span>, <span class="va">to</span> <span class="op">!=</span> <span class="st">"start"</span><span class="op">)</span>
-  <span class="va">tmp</span><span class="op">$</span><span class="va">to</span>
-<span class="op">}</span>
 
 <span class="co"># Initialise routes</span>
 <span class="va">completed_routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
@@ -1066,13 +1060,13 @@
   <span class="va">this_route</span> <span class="op">&lt;-</span> <span class="va">unfinished_routes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
   <span class="va">this_cave</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">this_route</span>, <span class="fl">1</span><span class="op">)</span>
   
-  <span class="co"># Record next step(s) of the route if:</span>
-  <span class="va">next_steps</span> <span class="op">&lt;-</span> <span class="fu">get_next</span><span class="op">(</span><span class="va">this_cave</span>, <span class="va">dat</span><span class="op">)</span>
+  <span class="co"># Record next step(s) of the route</span>
+  <span class="va">next_steps</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">from</span> <span class="op">==</span> <span class="va">this_cave</span>, <span class="va">to</span> <span class="op">!=</span> <span class="st">"start"</span><span class="op">)</span><span class="op">$</span><span class="va">to</span>
   
   <span class="co"># If the exit has been found, move the route to `completed_routes`</span>
   <span class="kw">if</span> <span class="op">(</span><span class="st">"end"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">next_steps</span><span class="op">)</span> <span class="op">{</span>
     <span class="va">completed_routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">completed_routes</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">this_route</span>, <span class="st">"end"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">next_steps</span> <span class="op">&lt;-</span> <span class="va">next_steps</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">next_steps</span> <span class="op">==</span> <span class="st">"end"</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">next_steps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">next_steps</span>, <span class="st">"end"</span><span class="op">)</span>
   <span class="op">}</span>
   
   <span class="co"># If the cave is small and has already been visited, ignore it</span>
@@ -1100,18 +1094,45 @@
 <p>We have to use a different method for Part 2, since it takes too long to calculate the number of routes.</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Initialise routes</span>
-<span class="va">completed_routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">unfinished_routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">from</span> <span class="op">==</span> <span class="st">"start"</span><span class="op">)</span> 
-<span class="va">unfinished_routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">unfinished_routes</span><span class="op">)</span><span class="op">)</span>, 
-                            <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">unfinished_routes</span><span class="op">[</span><span class="va">x</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">unfinished</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">from</span> <span class="op">==</span> <span class="st">"start"</span><span class="op">)</span> 
+<span class="va">complete</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">last_step</span> <span class="op">&lt;-</span> <span class="st">"to"</span>
 
 <span class="co"># Plot routes through cave system</span>
-
+<span class="kw">while</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">unfinished</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># Record next step(s) of the route</span>
+  <span class="va">unfinished</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">unfinished</span>, <span class="va">dat</span>, 
+                                 by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="st">"from"</span>, <span class="va">last_step</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="co"># Extract column name of the last step</span>
+  <span class="va">last_step</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">unfinished</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
+  
+  <span class="co"># For each unfinished route, count the number of small caves that were </span>
+  <span class="co"># visited more than once</span>
+  <span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">unfinished</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">duplicates</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html" class="external-link">duplicated</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">islower</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^[[:lower:]]+$"</span>, <span class="va">duplicates</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">islower</span><span class="op">)</span><span class="op">}</span><span class="op">)</span> 
+  <span class="co"># Remove routes where small caves were more than one cave was visited more </span>
+  <span class="co"># than once</span>
+  <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">test</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="va">unfinished</span> <span class="op">&lt;-</span> <span class="va">unfinished</span><span class="op">[</span><span class="op">-</span><span class="va">index</span>, <span class="op">]</span>
+  
+  <span class="co"># Add completed routes to `complete`</span>
+  <span class="va">complete</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">unfinished</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">last_step</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="st">"end"</span><span class="op">)</span>, <span class="va">complete</span><span class="op">)</span>
+  
+  <span class="co"># Remove completed rows from `unfinished`</span>
+  <span class="va">unfinished</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">unfinished</span>, 
+                              <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="va">last_step</span><span class="op">)</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"end"</span><span class="op">)</span>
+<span class="op">}</span>
 
 <span class="co"># If we visit a single small cave twice, how many paths through this cave </span>
 <span class="co"># system are there?</span>
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">completed_routes</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 0</span></code></pre>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">complete</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 104834</span></code></pre>
 </div>
 </div>
   </div>
