@@ -972,26 +972,24 @@ while (length(unfinished_routes) > 0) {
   this_route <- unfinished_routes[[1]]
   this_cave <- tail(this_route, 1)
   
-  # If the exit has been found, move the route to `completed_routes`
-  if (this_cave == "end") {
-    completed_routes <- c(completed_routes, list(this_route))
-    unfinished_routes <- unfinished_routes[-1]
-    next
-  }
-  
   # Record next step(s) of the route if:
   next_steps <- get_next(this_cave, dat)
-  add_these <- lapply(next_steps, function(x) {
-    if (grepl("^[[:upper:]]+$", x)) { # the cave is large
-      c(this_route, x)
-    } else { # or the cave is small 
-      duplicates <- c(x, this_route)[duplicated(c(x, this_route))]
-      if (!(x %in% this_route)) c(this_route, x) 
-    }
-  })
-  # Tidy up `add_these`
-  remove_null <- lapply(add_these, is.null) %>% unlist() %>% which()
-  if (length(remove_null) > 0) add_these <- add_these[-remove_null]
+  
+  # If the exit has been found, move the route to `completed_routes`
+  if ("end" %in% next_steps) {
+    completed_routes <- c(completed_routes, list(c(this_route, "end")))
+    next_steps <- next_steps[-which(next_steps == "end")]
+  }
+  
+  # If the cave is small and has already been visited, ignore it
+  small <- next_steps[vapply(next_steps, function(x) 
+    grepl("^[[:lower:]]+$", x), logical(1))]
+  big <- setdiff(next_steps, small)
+  next_steps <- c(setdiff(small, this_route), big)
+  
+  # Record next step(s) of the route
+  add_these <- lapply(next_steps, function(x) c(this_route, x))
+  
   # Record steps and tidy up
   unfinished_routes <- c(unfinished_routes, add_these)
   unfinished_routes <- unfinished_routes[-1]
