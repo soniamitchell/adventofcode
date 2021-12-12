@@ -996,14 +996,10 @@ calculate the number of routes.
 unfinished <- dplyr::filter(dat, from == "start") 
 complete <- data.frame()
 
-first <- TRUE
+last_step <- "to"
+
 # Plot routes through cave system
 while (nrow(unfinished) != 0) {
-  if (first) {
-    last_step <- "to"
-    first <- FALSE
-  }
-  
   # Record next step(s) of the route
   unfinished <- dplyr::left_join(unfinished, dat, 
                                  by = setNames("from", last_step))
