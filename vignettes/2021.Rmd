@@ -930,7 +930,7 @@ while (sum(octopus) != 0) {
 count
 ```
 
-Day 12: Passage Pathing
+## Day 12: Passage Pathing
 
 Link to questions [here](https://adventofcode.com/2021/day/12)
 
