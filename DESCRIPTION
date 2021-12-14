@@ -8,6 +8,7 @@ Description: Advent of code solutions in R
 License: GPL-3
 Imports:
     dplyr,
+    ggplot2,
     here,
     JuliaCall,
     tidyr

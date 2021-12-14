@@ -6,6 +6,7 @@
 #' @keywords internal
 #'
 #' @import dplyr
+#' @import ggplot2
 #' @import here
 #' @import JuliaCall
 #' @import tidyr
