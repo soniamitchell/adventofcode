@@ -1031,3 +1031,95 @@ while (nrow(unfinished) != 0) {
 # system are there?
 nrow(complete)
 ```
+
+## Day 13: Transparent Origami
+
+Link to questions [here](https://adventofcode.com/2021/day/13)
+
+### Part 1
+
+```{r day13-1}
+# Read in data
+dat <- read.table(file.path(here(), "inst", "2021", "day13.txt"), sep = "-")
+
+# Tidy up data
+dots <- dat %>% 
+  dplyr::filter(!grepl("^fold", V1)) %>% 
+  tidyr::separate(V1, c("y", "x"), convert = TRUE) %>% 
+  dplyr::mutate(x = x + 1,
+                y = y + 1) %>% 
+  dplyr::select(x, y)
+
+xlim <- max(dots$x)
+ylim <- max(dots$y)
+
+instructions <- dplyr::filter(dat, grepl("^fold", V1)) %>% 
+  dplyr::mutate(V1 = gsub("^.*([a-z]=[0-9]*)$", "\\1", V1)) %>% 
+  tidyr::separate(V1, c("axis", "value")) %>% 
+  dplyr::mutate(value = as.numeric(value) + 1)
+
+# Generate grid of dots
+paper <- matrix(FALSE, nrow = xlim, ncol = ylim)
+for (i in seq_len(nrow(dots))) paper[dots$x[i], dots$y[i]] <- TRUE
+
+# Make a vertical fold
+fold_left <- function(grid, value) {
+  left <- grid[, 1:(value - 1)]
+  right <- grid[, (value + 1):ncol(grid)] 
+  pad <- matrix(0, nrow = nrow(grid), ncol = abs(ncol(left) - ncol(right)))
+  if (ncol(right) < ncol(left)) {
+    right <- cbind(right, pad)
+  } else if (ncol(right) > ncol(left)) {
+    left <- cbind(pad, left)
+  }
+  left | right[, ncol(right):1]
+}
+
+# Make first fold
+results <- fold_left(paper, instructions[1,]$value)
+
+# How many dots are visible after completing just the first fold instruction on 
+# your transparent paper?
+sum(results > 0)
+```
+
+### Part 2
+
+```{r dat13-2}
+# Make a horizontal fold
+fold_up <- function(grid, value) {
+  upper <- grid[1:(value - 1), ]
+  lower <- grid[(value + 1):nrow(grid), ] 
+  pad <- matrix(FALSE, nrow = abs(nrow(upper) - nrow(lower)), ncol = ncol(upper))
+  if (nrow(upper) < nrow(lower)) {
+    upper <- rbind(pad, upper)
+  } else if (nrow(upper) > nrow(lower)) {
+    lower <- rbind(lower, pad)
+  }
+  upper | lower[nrow(lower):1, ]
+}
+
+fold_this <- paper
+
+# Finish folding the transparent paper according to the instructions. The 
+# manual says the code is always eight capital letters.
+for (i in seq_len(nrow(instructions))) {
+  if (instructions$axis[i] == "x") {
+    fold_this <- fold_left(fold_this, instructions$value[i]) 
+    
+  } else if(instructions$axis[i] == "y") {
+    fold_this <- fold_up(fold_this, instructions$value[i]) 
+  }
+}
+
+# What code do you use to activate the infrared thermal imaging camera system?
+coords <- which(fold_this, arr.ind = TRUE) %>% 
+  as.data.frame() %>% 
+  dplyr::mutate(value = 1, 
+                row = max(row) - row)
+
+ggplot2::ggplot(coords, ggplot2::aes(x = col, y = row, fill = value)) +
+  ggplot2::geom_tile() +
+  ggplot2::coord_fixed()
+```
+
