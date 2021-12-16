@@ -39,7 +39,9 @@ path_finder <- function(start, end, reference, max, total = 0) {
 
   for(x in next_steps) {
     if (nrow(x) == 0) {
+      # If index is not in the `grid`, ignore it
       next
+
     } else {
       # Calculate new total
       total <- total + x$value
