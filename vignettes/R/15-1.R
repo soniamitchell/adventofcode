@@ -28,7 +28,7 @@ grid <- expand.grid(row = seq_len(nrow(dat)), col = seq_len(ncol(dat))) %>%
 
 # Functions ---------------------------------------------------------------
 
-path_finder <- function(start, end, reference, total = 0) {
+path_finder <- function(start, end, reference, max, total = 0) {
   # Get adjacent grid squares
   above <- dplyr::filter(grid, row == (start[1] - 1), col == start[2])
   below <- dplyr::filter(grid, row == (start[1] + 1), col == start[2])
@@ -38,18 +38,25 @@ path_finder <- function(start, end, reference, total = 0) {
   next_steps <- list(above, below, left, right)
 
   for(x in next_steps) {
-    # Calculate new total
-    total <- total + x$value
-    # Has the `end` been found? - if the grid coordinate doesn't exist then
-    # FALSE, otherwise check if it matches `end`
-    ended <- dplyr::if_else(nrow(x) == 0, FALSE, all(c(x$row, x$col) == end))
-
-    # If an end has been found then return `total`, otherwise keep going
-    if (ended) {
-      return(total)
-
+    if (nrow(x) == 0) {
+      next
     } else {
-      path_finder(c(x$row, x$col), end, reference, total)
+      # Calculate new total
+      total <- total + x$value
+      # Has the `end` been found? - if the grid coordinate doesn't exist then
+      # FALSE, otherwise check if it matches `end`
+      ended <- dplyr::if_else(nrow(x) == 0, FALSE, all(c(x$row, x$col) == end))
+
+      # If an end has been found then return `total`, otherwise keep going
+      if (ended) {
+        max <- min(max, total)
+
+      } else if (total > max) {
+        next
+
+      } else {
+        path_finder(c(x$row, x$col), end, reference, max, total)
+      }
     }
   }
 }
@@ -59,5 +66,10 @@ path_finder <- function(start, end, reference, total = 0) {
 # What is the lowest total risk of any path from the top left to the bottom right?
 start <- c(1, 1)
 end <- c(100, 100)
+max <- sum(dat[1,] + sum(dat[, ncol(dat)]))
 
-tmp <- path_finder(start, end, grid)
+tmp <- path_finder(start, end, grid, max)
+
+
+
+
