@@ -1231,6 +1231,247 @@
 <p><img src="2021_files/figure-html/dat13-2-1.png" width="700"></p>
 </div>
 </div>
+<div class="section level2">
+<h2 id="day-14-extended-polymerization">Day 14: Extended Polymerization<a class="anchor" aria-label="anchor" href="#day-14-extended-polymerization"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/14" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-13">Part 1<a class="anchor" aria-label="anchor" href="#part-1-13"></a>
+</h3>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in polymer template</span>
+<span class="va">template</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day14.txt"</span><span class="op">)</span>, 
+                 what <span class="op">=</span> <span class="st">"character"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
+
+<span class="co"># Read in pair insertion rules</span>
+<span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day14.txt"</span><span class="op">)</span>, 
+              what <span class="op">=</span> <span class="st">"character"</span>, sep <span class="op">=</span> <span class="st">"\n"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>V1 <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">V1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pair"</span>, <span class="st">"insert"</span><span class="op">)</span>, <span class="st">" -&gt; "</span><span class="op">)</span>
+
+<span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">template</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+
+<span class="co"># Apply 10 steps of pair insertion to the polymer template and find the most </span>
+<span class="co"># and least common elements in the result</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="st">""</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\r"</span>, <span class="va">i</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rules</span><span class="op">$</span><span class="va">pair</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">:</span><span class="op">(</span><span class="va">j</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">index</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">]</span>, <span class="va">rules</span><span class="op">$</span><span class="va">insert</span><span class="op">[</span><span class="va">index</span><span class="op">]</span><span class="op">)</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+      <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="op">}</span></code></pre></div>
+<pre><code><span class="co">## </span>
+ <span class="fl">1</span>
+ <span class="fl">2</span>
+ <span class="fl">3</span>
+ <span class="fl">4</span>
+ <span class="fl">5</span>
+ <span class="fl">6</span>
+ <span class="fl">7</span>
+ <span class="fl">8</span>
+ <span class="fl">9</span>
+ <span class="fl">10</span></code></pre>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What do you get if you take the quantity of the most common element and </span>
+<span class="co"># subtract the quantity of the least common element?</span>
+<span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 2027</span></code></pre>
+<div class="section level4">
+<h4 id="alternative-solution">Alternative solution<a class="anchor" aria-label="anchor" href="#alternative-solution"></a>
+</h4>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">template</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> 
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\r"</span>, <span class="va">i</span><span class="op">)</span>
+  <span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">x</span><span class="op">:</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>pair <span class="op">=</span> <span class="va">.</span><span class="op">)</span>
+  
+  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">pairs</span>, <span class="va">rules</span>, 
+                                  by <span class="op">=</span> <span class="st">"pair"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">pair</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span>, <span class="st">"(?&lt;=[A-Z])"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">unite</a></span><span class="op">(</span><span class="va">string</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">insert</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">""</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">string</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="op">}</span></code></pre></div>
+<pre><code><span class="co">## </span>
+ <span class="fl">1</span>
+ <span class="fl">2</span>
+ <span class="fl">3</span>
+ <span class="fl">4</span>
+ <span class="fl">5</span>
+ <span class="fl">6</span>
+ <span class="fl">7</span>
+ <span class="fl">8</span>
+ <span class="fl">9</span>
+ <span class="fl">10</span></code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 2027</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="part-2-13">Part 2<a class="anchor" aria-label="anchor" href="#part-2-13"></a>
+</h3>
+<p>Part 1 is too slow to use the same method with part 2.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-15-chiton">Day 15: Chiton<a class="anchor" aria-label="anchor" href="#day-15-chiton"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/15" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-14">Part 1<a class="anchor" aria-label="anchor" href="#part-1-14"></a>
+</h3>
+</div>
+<div class="section level3">
+<h3 id="part-2-14">Part 2<a class="anchor" aria-label="anchor" href="#part-2-14"></a>
+</h3>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-16-packet-decoder">Day 16: Packet Decoder<a class="anchor" aria-label="anchor" href="#day-16-packet-decoder"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/16" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-15">Part 1<a class="anchor" aria-label="anchor" href="#part-1-15"></a>
+</h3>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-17-trick-shot">Day 17: Trick Shot<a class="anchor" aria-label="anchor" href="#day-17-trick-shot"></a>
+</h2>
+<p>Link to questions <a href="https://adventofcode.com/2021/day/17" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-16">Part 1<a class="anchor" aria-label="anchor" href="#part-1-16"></a>
+</h3>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day17.txt"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Extract target coordinates</span>
+<span class="va">xrange</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"^.*x=(.*)\\.\\.(.*),.*$"</span>, <span class="st">"\\1 \\2"</span>, <span class="va">dat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">yrange</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"^.*y=(.*)\\.\\.(.*)$"</span>, <span class="st">"\\1 \\2"</span>, <span class="va">dat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">" "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="co"># Move one step</span>
+<span class="va">move</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">status</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">status</span><span class="op">$</span><span class="va">x</span> <span class="op">+</span> <span class="va">status</span><span class="op">$</span><span class="va">vx</span>
+  <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">status</span><span class="op">$</span><span class="va">y</span> <span class="op">+</span> <span class="va">status</span><span class="op">$</span><span class="va">vy</span>
+
+  <span class="va">vx</span> <span class="op">&lt;-</span> <span class="va">status</span><span class="op">$</span><span class="va">vx</span>
+  <span class="va">vy</span> <span class="op">&lt;-</span> <span class="va">status</span><span class="op">$</span><span class="va">vy</span>
+  <span class="va">vx</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">vx</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">vx</span> <span class="op">-</span> <span class="fl">1</span>,
+                       <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">vx</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="va">vx</span> <span class="op">+</span> <span class="fl">1</span>, <span class="va">vx</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">vy</span> <span class="op">&lt;-</span> <span class="va">vy</span> <span class="op">-</span> <span class="fl">1</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, vx <span class="op">=</span> <span class="va">vx</span>, vy <span class="op">=</span> <span class="va">vy</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">launch</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">trial</span>, <span class="va">xrange</span>, <span class="va">yrange</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">continue</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
+  <span class="va">step</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+  <span class="kw">while</span> <span class="op">(</span><span class="va">continue</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">update</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">move</span><span class="op">(</span><span class="op">)</span>
+    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>trial <span class="op">=</span> <span class="va">n</span>, step <span class="op">=</span> <span class="va">step</span>, <span class="va">update</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">foundtarget</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">update</span><span class="op">$</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">update</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;=</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&amp;</span>
+                                    <span class="va">update</span><span class="op">$</span><span class="va">y</span> <span class="op">&gt;=</span> <span class="va">yrange</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&amp;</span> <span class="va">update</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;=</span> <span class="va">yrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
+                                  <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>
+    <span class="va">overshot</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">update</span><span class="op">$</span><span class="va">x</span> <span class="op">&gt;</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">|</span> <span class="va">update</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;</span> <span class="va">yrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
+                               <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>
+    <span class="va">continue</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">foundtarget</span> <span class="op">|</span> <span class="va">overshot</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="va">step</span> <span class="op">&lt;-</span> <span class="va">step</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span>
+  <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>hit <span class="op">=</span> <span class="va">foundtarget</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Run simulation ----------------------------------------------------------</span>
+
+<span class="va">start</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">velocity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">trial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>trial <span class="op">=</span> <span class="va">n</span>,
+                      step <span class="op">=</span> <span class="fl">0</span>,
+                      x <span class="op">=</span> <span class="va">start</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
+                      y <span class="op">=</span> <span class="va">start</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
+                      vx <span class="op">=</span> <span class="va">velocity</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
+                      vy <span class="op">=</span> <span class="va">velocity</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+
+  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">launch</span><span class="op">(</span><span class="va">trial</span>, <span class="va">n</span>, <span class="va">xrange</span>, <span class="va">yrange</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">results</span>, <span class="va">.</span><span class="op">)</span>
+
+  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">n</span> <span class="op">+</span> <span class="fl">1</span>
+
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">results</span>, <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">x</span> <span class="op">&lt;</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">velocity</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">velocity</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">results</span>, <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">x</span> <span class="op">&gt;</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">velocity</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">velocity</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="va">velocity</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">velocity</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, group <span class="op">=</span> <span class="va">trial</span>, colour <span class="op">=</span> <span class="va">trial</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">xrange</span>, <span class="va">results</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">yrange</span>, <span class="va">results</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, xmax <span class="op">=</span> <span class="va">xrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
+                     ymin <span class="op">=</span> <span class="va">yrange</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, ymax <span class="op">=</span> <span class="va">yrange</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,
+                     fill <span class="op">=</span> <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="2021_files/figure-html/dat17-1-1.png" width="700"></p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Find the initial velocity that causes the probe to reach the highest y</span>
+<span class="co"># position and still eventually be within the target area after any step</span>
+<span class="va">this_trial</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hit</span> <span class="op">==</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">trial</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Initial y velocity</span>
+<span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">trial</span> <span class="op">==</span> <span class="va">this_trial</span>,
+                <span class="va">step</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">vy</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 79</span></code></pre>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What is the highest y position it reaches on this trajectory?</span>
+<span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">trial</span> <span class="op">==</span> <span class="va">this_trial</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 3160</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-15">Part 2<a class="anchor" aria-label="anchor" href="#part-2-15"></a>
+</h3>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
