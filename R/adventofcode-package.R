@@ -9,6 +9,7 @@
 #' @import ggplot2
 #' @import here
 #' @import JuliaCall
+#' @import stringr
 #' @import tidyr
 #'
 "_PACKAGE"

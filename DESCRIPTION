@@ -11,6 +11,7 @@ Imports:
     ggplot2,
     here,
     JuliaCall,
+    stringr,
     tidyr
 Encoding: UTF-8
 LazyData: true
