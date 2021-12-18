@@ -5,15 +5,12 @@ date: "05/12/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(docstring)
 library(here)
-library(dplyr)
-library(tidyr)
-```
-
-```{r 0-0, eval=FALSE}
-library(dplyr)
+library(stringr)
 library(tidyr)
 ```
 
@@ -59,8 +56,8 @@ colnames(dat) <- c("direction", "value")
 
 # Calculate the horizontal position and depth and multiply them together
 summarise_dat <- dat %>% 
-  group_by(direction) %>% 
-  summarise(total = sum(value)) 
+  dplyr::group_by(direction) %>% 
+  dplyr::summarise(total = sum(value)) 
 
 horizontal_position <- summarise_dat$total[summarise_dat$direction == "forward"]
 depth <- summarise_dat$total[summarise_dat$direction == "down"] - 
@@ -129,6 +126,8 @@ gamma_rate * epsilon_rate
 ### Part 2
 
 ```{r day3-2}
+# Define functions --------------------------------------------------------
+
 rating <- function(dat, type) {
   # For each bit in a binary string
   for (i in seq_len(digits)) {
@@ -159,6 +158,8 @@ rating <- function(dat, type) {
   strtoi(paste(dat, collapse = ""), base = 2)
 }
 
+# Run simulation ----------------------------------------------------------
+
 # Calculate oxygen generator and CO2 scrubber ratings
 oxygen_generator_rating <- rating(dat, "oxygen")
 CO2_scrubber_rating <- rating(dat, "CO2")
@@ -174,7 +175,8 @@ Link to questions [here](https://adventofcode.com/2021/day/4)
 ### Part 1
 
 ```{r day4-1}
-# Read in data
+# Read in data ------------------------------------------------------------
+
 raw_numbers <- scan(file.path(here(), "inst", "2021", "day4.txt"), 
                     what = "character", n = 1) 
 raw_boards <- read.table(file.path(here(), "inst", "2021", "day4.txt"), skip = 1)
@@ -188,6 +190,8 @@ boards <- lapply(seq_len(number_of_boards), function(x) {
   end <- start + 4
   raw_boards[start:end, ]
 })
+
+# Define functions --------------------------------------------------------
 
 update_board <- function(number, board) {
   check_number <- board == number
@@ -222,7 +226,8 @@ play_bingo <- function(numbers, boards) {
   }
 }
 
-# Play bingo
+# Play bingo --------------------------------------------------------------
+-
 play_bingo(numbers, boards)
 ```
 
@@ -493,19 +498,30 @@ sum(results)
 ### Part 2
 
 ```{r day8-2}
-# Find string in `string_vector` of length `num_characters`
+# Define functions --------------------------------------------------------
+
 find_digit <- function(string_vector, num_characters) {
+  #' Find string in `string_vector` of length `num_characters`
+  
   string_vector[which(nchar(string_vector) == num_characters)]
 }
 
-# Split string into vector of letters
 deconstruct <- function(string) {
+  #' Split string into vector of letters
+  
   strsplit(string, "")[[1]]
 }
 
-# Find (1) which string in `unknown_vector` contains all segments (characters)  
-# in `known_string` or (2) which string is the only one that doesn't
 contains_subset <- function(unknown_vector, known_string, contains = TRUE) {
+  #' contains_subset
+  #' 
+  #' Find (1) which string in `unknown_vector` contains all segments  
+  #' (characters) in `known_string` or (2) which string is the only one that 
+  #' doesn't
+  #' @param unknown_vector an unknown vector
+  #' @param known_string a known string
+  #' @param contains (optional) default is `TRUE`
+  
   results <- c()
   for (i in seq_along(unknown_vector)) {
     known_segments <- deconstruct(known_string)
@@ -519,9 +535,10 @@ contains_subset <- function(unknown_vector, known_string, contains = TRUE) {
   unknown_vector[which(results)]
 }
 
-# Find the string in `unknown_vector` whose segments (characters) are a subset of
-# `known_string` 
 subset_of <- function(unknown_vector, known_string) {
+  #' Find the string in `unknown_vector` whose segments (characters) are a 
+  #' subset of `known_string` 
+  
   results <- c()
   for (i in seq_along(unknown_vector)) {
     known_segments <- deconstruct(known_string)
@@ -531,8 +548,9 @@ subset_of <- function(unknown_vector, known_string) {
   unknown_vector[which(results)]
 }
 
-# Decode each string (digit) in `unknown_vector`
 decode <- function(unknown_vector, dictionary) {
+  #' Decode each string (digit) in `unknown_vector`
+  
   code <- c()
   for (i in seq_along(unknown_vector)) {
     # Check against each dictionary entry
@@ -547,6 +565,8 @@ decode <- function(unknown_vector, dictionary) {
   }
   as.numeric(paste(code, collapse = ""))
 }
+
+# Run simulation ----------------------------------------------------------
 
 # Determine all of the wire/segment connections 
 results <- c()
@@ -596,15 +616,19 @@ Link to questions [here](https://adventofcode.com/2021/day/9)
 ### Part 1
 
 ```{r day9-1}
-# Read in data
+# Read in data ------------------------------------------------------------
+
 dat <- readLines(file.path(here(), "inst", "2021", "day9.txt")) %>% 
   strsplit("") %>% 
   do.call(rbind, .) %>% 
   apply(1, as.numeric)
 
-# Find `height` of adjacent points and if it's lower than all `adjacent_points`, 
-# return risk level
+# Define functions --------------------------------------------------------
+
 compare_heights <- function(dat, row, column) {
+  #' Find `height` of adjacent points and if it's lower than all 
+  #' `adjacent_points`, return risk level
+  
   height <- dat[row, column]
   # Extract adjacent heights
   adjacent_points <- c()
@@ -620,6 +644,8 @@ compare_heights <- function(dat, row, column) {
   if (all(height < adjacent_points)) 
     return(data.frame(x = row, y = column, risk = height + 1))
 }
+
+# Run simulation ----------------------------------------------------------
 
 # Find all of the low points on the heightmap and calculate risk level
 lowest_points <- data.frame(x = numeric(), y = numeric(), risk = numeric())
@@ -637,28 +663,29 @@ sum(lowest_points$risk)
 ### Part 2
 
 ```{r day9-2}
-# Check height is less than 9
+# Define functions --------------------------------------------------------
+
 check_height <- function(dat, row, column) {
+  #' Check height is less than 9
+  
   if (dat[row, column] < 9) 
     return(data.frame(row = row, column = column, height = dat[row, column]))
 }
 
-# Return neighbouring points that have a height less than 9
 check_adjacent <- function(dat, row, column) {
+  #' Return neighbouring points that have a height less than 9
+  
   # Find height of adjacent points
   adjacent_points <- data.frame(row = numeric(), column = numeric(), 
                                 height = numeric())
-  # Above
-  if (row != 1) 
+  
+  if (row != 1)            # Above
     adjacent_points <- rbind(adjacent_points, check_height(dat, row - 1, column))
-  # Right
-  if (column != ncol(dat)) 
+  if (column != ncol(dat)) # Right
     adjacent_points <- rbind(adjacent_points, check_height(dat, row, column + 1))
-  # Below
-  if (row != nrow(dat)) 
+  if (row != nrow(dat))    # Below
     adjacent_points <- rbind(adjacent_points, check_height(dat, row + 1, column))
-  # Left
-  if (column != 1) 
+  if (column != 1)         # Left
     adjacent_points <- rbind(adjacent_points, check_height(dat, row, column - 1))
   
   # Return neibouring points that should be checked
@@ -666,8 +693,9 @@ check_adjacent <- function(dat, row, column) {
     dplyr::filter(height != 9)
 }
 
-# For a particular `lowest_point`, survey the basin and return it's size
 survey <- function(dat, row, column) {
+  #' For a particular `lowest_point`, survey the basin and return it's size
+  
   # Height of lowest point being surveyed
   height <- dat[row, column]
   # Initialise basin dataframe
@@ -710,6 +738,8 @@ survey <- function(dat, row, column) {
   nrow(basin)
 }
 
+# Run simulation ----------------------------------------------------------
+
 # Find all of the low points on the heightmap and calculate basin size
 results <- c()
 for (i in seq_len(nrow(lowest_points))) {
@@ -729,7 +759,8 @@ Link to questions [here](https://adventofcode.com/2021/day/10)
 ### Part 1
 
 ```{r day10-1}
-# Read in data
+# Read in data ------------------------------------------------------------
+
 dat <- readLines(file.path(here(), "inst", "2021", "day10.txt")) 
 
 corrupted_score <- function(character) {
@@ -737,6 +768,8 @@ corrupted_score <- function(character) {
                             val = c(3, 57, 1197, 25137))
   score_table$val[which(score_table$char == character)]
 }
+
+# Run simulation ----------------------------------------------------------
 
 total <- 0
 remove_lines <- c()
@@ -841,12 +874,15 @@ Link to questions [here](https://adventofcode.com/2021/day/11)
 ### Part 1
 
 ```{r day11-1}
-# Read in data
+# Read in data ------------------------------------------------------------
+
 dat <- scan(file.path(here(), "inst", "2021", "day11.txt"), 
             what = "character") %>% 
   strsplit("") %>% 
   do.call(rbind, .) %>% 
   apply(1, as.numeric)
+
+# Define functions --------------------------------------------------------
 
 find_neighbours <- function(x, y, flashing_now, flashed_previously, octopus) {
   # Index neighbours
@@ -896,6 +932,8 @@ timestep <- function(octopus) {
   # Latest flashes
   list(octopus = octopus, latest_flashes = nrow(done))
 }
+
+# Run simulation ----------------------------------------------------------
 
 octopus <- dat
 count <- 0
@@ -1039,7 +1077,8 @@ Link to questions [here](https://adventofcode.com/2021/day/13)
 ### Part 1
 
 ```{r day13-1}
-# Read in data
+# Read in data ------------------------------------------------------------
+
 dat <- read.table(file.path(here(), "inst", "2021", "day13.txt"), sep = "-")
 
 # Tidy up data
@@ -1062,8 +1101,11 @@ instructions <- dplyr::filter(dat, grepl("^fold", V1)) %>%
 paper <- matrix(FALSE, nrow = xlim, ncol = ylim)
 for (i in seq_len(nrow(dots))) paper[dots$x[i], dots$y[i]] <- TRUE
 
-# Make a vertical fold
+# Define functions --------------------------------------------------------
+
 fold_left <- function(grid, value) {
+  #' Make a vertical fold
+  
   left <- grid[, 1:(value - 1)]
   right <- grid[, (value + 1):ncol(grid)] 
   pad <- matrix(0, nrow = nrow(grid), ncol = abs(ncol(left) - ncol(right)))
@@ -1074,6 +1116,8 @@ fold_left <- function(grid, value) {
   }
   left | right[, ncol(right):1]
 }
+
+# Run simulation ----------------------------------------------------------
 
 # Make first fold
 results <- fold_left(paper, instructions[1,]$value)
@@ -1086,8 +1130,11 @@ sum(results > 0)
 ### Part 2
 
 ```{r dat13-2}
-# Make a horizontal fold
+# Define functions --------------------------------------------------------
+
 fold_up <- function(grid, value) {
+  #' Make a horizontal fold
+
   upper <- grid[1:(value - 1), ]
   lower <- grid[(value + 1):nrow(grid), ] 
   pad <- matrix(FALSE, nrow = abs(nrow(upper) - nrow(lower)), ncol = ncol(upper))
@@ -1098,6 +1145,8 @@ fold_up <- function(grid, value) {
   }
   upper | lower[nrow(lower):1, ]
 }
+
+# Run simulation ----------------------------------------------------------
 
 fold_this <- paper
 
@@ -1130,6 +1179,8 @@ Link to questions [here](https://adventofcode.com/2021/day/14)
 ### Part 1
 
 ```{r dat14-1}
+# Read in data ------------------------------------------------------------
+
 # Read in polymer template
 template <- scan(file.path(here(), "inst", "2021", "day14.txt"), 
                  what = "character", n = 1) 
@@ -1139,6 +1190,8 @@ rules <- scan(file.path(here(), "inst", "2021", "day14.txt"),
               what = "character", sep = "\n", skip = 2) %>% 
   data.frame(V1 = .) %>% 
   tidyr::separate(V1, c("pair", "insert"), " -> ")
+
+# Run simulation ----------------------------------------------------------
 
 current_string <- strsplit(template, "")[[1]]
 
@@ -1231,6 +1284,12 @@ Link to questions [here](https://adventofcode.com/2021/day/16)
 
 Link to questions [here](https://adventofcode.com/2021/day/17)
 
+### Test run
+
+```{r dat17-t, code=readLines("R/17-t.R")}
+
+```
+
 ### Part 1
 
 ```{r dat17-1, code=readLines("R/17-1.R")}
@@ -1239,6 +1298,16 @@ Link to questions [here](https://adventofcode.com/2021/day/17)
 
 ### Part 2
 
-```{r dat17-2}
+```{r dat17-2, code=readLines("R/17-2.R")}
+
+```
+
+## Day 18: Snailfish
+
+Link to questions [here](https://adventofcode.com/2021/day/18)
+
+### Part 1
+
+```{r dat18-1}
 
 ```

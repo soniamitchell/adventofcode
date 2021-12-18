@@ -7,6 +7,7 @@ Authors@R: c(person("Sonia", "Mitchell", email = "sonia.mitchell@glasgow.ac.uk",
 Description: Advent of code solutions in R
 License: GPL-3
 Imports:
+    docstring,
     dplyr,
     ggplot2,
     here,

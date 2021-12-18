@@ -11,6 +11,10 @@ yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
 
 # Move one step
 move <- function(status) {
+  #' Move one step
+  #'
+  #' @param status last step
+
   x <- status$x + status$vx
   y <- status$y + status$vy
 
@@ -24,11 +28,13 @@ move <- function(status) {
 }
 
 launch <- function(df, trial, xrange, yrange) {
+  #' Launch probe until target is hit or overshot
+
   continue <- TRUE
   step <- 1
   while (continue) {
-    update <- tail(df, 1) %>% move()
-    df <- rbind(df, mutate(trial = n, step = step, update))
+    update <- move(tail(df, 1))
+    df <- rbind(df, mutate(trial = trial, step = step, update))
     foundtarget <- dplyr::if_else(update$x >= xrange[1] & update$x <= xrange[2] &
                                     update$y >= yrange[1] & update$y <= yrange[2],
                                   TRUE, FALSE)
@@ -37,13 +43,13 @@ launch <- function(df, trial, xrange, yrange) {
     continue <- dplyr::if_else(foundtarget | overshot, FALSE, TRUE)
     step <- step + 1
   }
-  df %>% mutate(hit = foundtarget)
+  mutate(df, hit = foundtarget)
 }
 
 # Run simulation ----------------------------------------------------------
 
 start <- c(0, 0)
-velocity <- c(1,1)
+velocity <- c(0, 1)
 n <- 1
 
 results <- data.frame()
@@ -69,16 +75,6 @@ for (i in 1:120) {
     velocity[2] <- velocity[2] + 1
   }
 }
-
-results %>%
-  ggplot2::ggplot(ggplot2::aes(x = x, y = y, group = trial, colour = trial)) +
-  ggplot2::theme_bw() + ggplot2::geom_point() + ggplot2::geom_line() +
-  ggplot2::scale_x_continuous(limits = range(c(xrange, results$x))) +
-  ggplot2::scale_y_continuous(limits = range(c(yrange, results$y))) +
-  ggplot2::geom_rect(xmin = xrange[1], xmax = xrange[2],
-                     ymin = yrange[1], ymax = yrange[2],
-                     fill = "transparent", color = "red", size = 1.5) +
-  ggplot2::coord_fixed()
 
 # Find the initial velocity that causes the probe to reach the highest y
 # position and still eventually be within the target area after any step
