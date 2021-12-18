@@ -1246,39 +1246,15 @@ freq <- table(current_string)
 max(freq) - min(freq)
 ```
 
-### Part 2
-
 Part 1 is too slow to use the same method with part 2.
-
-```{r dat14-2}
-
-```
 
 ## Day 15: Chiton
 
 Link to questions [here](https://adventofcode.com/2021/day/15)
 
-### Part 1
-
-```{r dat15-1}
-
-```
-
-### Part 2
-
-```{r dat15-2}
-
-```
-
 ## Day 16: Packet Decoder
 
 Link to questions [here](https://adventofcode.com/2021/day/16)
-
-### Part 1
-
-```{r dat16-1}
-
-```
 
 ## Day 17: Trick Shot
 
@@ -1306,8 +1282,3 @@ Link to questions [here](https://adventofcode.com/2021/day/17)
 
 Link to questions [here](https://adventofcode.com/2021/day/18)
 
-### Part 1
-
-```{r dat18-1}
-
-```

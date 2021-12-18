@@ -1,3 +1,12 @@
+# Read in data ------------------------------------------------------------
+dat <- readLines(file.path(here(), "inst", "2021", "day17.txt"))
+
+# Extract target coordinates
+xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) %>%
+  strsplit(" ") %>% .[[1]] %>% as.numeric()
+yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
+  strsplit(" ") %>% .[[1]] %>% as.numeric()
+
 # Define functions --------------------------------------------------------
 
 possible_x <- function(range, min_v, max_v) {

@@ -2,6 +2,11 @@
 
 dat = "target area: x=20..30, y=-10..-5"
 
+xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) %>%
+  strsplit(" ") %>% .[[1]] %>% as.numeric()
+yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
+  strsplit(" ") %>% .[[1]] %>% as.numeric()
+
 start <- c(0, 0)
 velocity <- c(6, 9)
 n <- 1
