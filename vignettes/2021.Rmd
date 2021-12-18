@@ -1284,15 +1284,15 @@ Link to questions [here](https://adventofcode.com/2021/day/16)
 
 Link to questions [here](https://adventofcode.com/2021/day/17)
 
-### Test run
-
-```{r dat17-t, code=readLines("R/17-t.R")}
-
-```
-
 ### Part 1
 
 ```{r dat17-1, code=readLines("R/17-1.R")}
+
+```
+
+### Test run
+
+```{r dat17-t, code=readLines("R/17-t.R")}
 
 ```
 
