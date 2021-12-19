@@ -1282,3 +1282,8 @@ Link to questions [here](https://adventofcode.com/2021/day/17)
 
 Link to questions [here](https://adventofcode.com/2021/day/18)
 
+### Part 1
+
+```{r dat18-1, code=readLines("R/18-1.R")}
+
+```
