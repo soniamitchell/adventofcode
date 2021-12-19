@@ -1710,6 +1710,208 @@
 <h2 id="day-18-snailfish">Day 18: Snailfish<a class="anchor" aria-label="anchor" href="#day-18-snailfish"></a>
 </h2>
 <p>Link to questions <a href="https://adventofcode.com/2021/day/18" class="external-link">here</a></p>
+<div class="section level3">
+<h3 id="part-1-15">Part 1<a class="anchor" aria-label="anchor" href="#part-1-15"></a>
+</h3>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
+
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day18.txt"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="va">explode</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Function to check for and carry out explosion</span>
+
+  <span class="va">count</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+  <span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+  <span class="va">left</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+  <span class="va">right</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+
+  <span class="co"># Check for explosion</span>
+  <span class="kw">while</span><span class="op">(</span><span class="va">i</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="st">"["</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">count</span> <span class="op">&lt;-</span> <span class="va">count</span> <span class="op">+</span> <span class="fl">1</span>
+
+    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"[0-9]"</span>, <span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+
+      <span class="kw">if</span> <span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span> <span class="op">+</span> <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">","</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"[0-9]"</span>, <span class="va">dat</span><span class="op">[</span><span class="va">i</span> <span class="op">+</span> <span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">count</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">right</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"[0-9]"</span>, <span class="va">dat</span><span class="op">[</span><span class="op">(</span><span class="va">i</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">2</span>
+        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">right</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="va">right</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+        <span class="va">left</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"[0-9]"</span>, <span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
+        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">left</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="va">left</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+        <span class="kw">break</span>
+      <span class="op">}</span>
+
+    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="st">"]"</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">count</span> <span class="op">&lt;-</span> <span class="va">count</span> <span class="op">-</span> <span class="fl">1</span>
+    <span class="op">}</span>
+    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
+  <span class="op">}</span>
+
+  <span class="co"># Explode</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">left</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">right</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>
+
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">left</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dat</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">right</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">right</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span> <span class="op">+</span> <span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">i</span><span class="op">:</span><span class="op">(</span><span class="va">i</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span>
+
+  <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">right</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">i</span><span class="op">:</span><span class="op">(</span><span class="va">i</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">left</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span>
+
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dat</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">left</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">left</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">right</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">right</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span> <span class="op">+</span> <span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">i</span><span class="op">:</span><span class="op">(</span><span class="va">i</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">tmp</span><span class="op">[</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">split</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Function to check for and carry out split</span>
+
+  <span class="co"># Check for split</span>
+  <span class="va">index</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"[0-9]"</span>, <span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">index</span> <span class="op">&lt;-</span> <span class="va">i</span>
+      <span class="kw">break</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="co"># Split</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span>
+
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="va">left</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">index</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">right</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">(</span><span class="va">index</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">]</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">index</span><span class="op">]</span><span class="op">)</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"["</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="va">tmp</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">","</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="va">tmp</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="st">"]"</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">left</span>, <span class="va">tmp</span>, <span class="va">right</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">reduce_snailfish</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Function to reduce a snailfish number</span>
+
+  <span class="va">try_this</span> <span class="op">&lt;-</span> <span class="va">dat</span>
+  <span class="va">continue</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
+  <span class="va">it_split</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
+
+  <span class="kw">while</span> <span class="op">(</span><span class="va">continue</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">explode</span><span class="op">(</span><span class="va">try_this</span><span class="op">)</span>
+    <span class="va">it_exploded</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span>
+
+    <span class="kw">if</span> <span class="op">(</span><span class="va">it_exploded</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">try_this</span> <span class="op">&lt;-</span> <span class="va">result</span>
+      <span class="va">it_split</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span>
+    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+      <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">try_this</span><span class="op">)</span>
+      <span class="va">it_split</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span>
+
+      <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">it_exploded</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">it_split</span><span class="op">)</span> <span class="op">{</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">try_this</span><span class="op">)</span>
+      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+        <span class="va">try_this</span> <span class="op">&lt;-</span> <span class="va">result</span>
+      <span class="op">}</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="va">add_snailfish</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">first</span>, <span class="va">second</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Add snailfish numbers</span>
+  <span class="co">#'</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">first</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
+    <span class="va">first</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">first</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"["</span>, <span class="va">first</span>, <span class="st">","</span>, <span class="va">second</span>, <span class="st">"]"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu">reduce_snailfish</span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">check_magnitude</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">answer</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Function to check magnitude of answer</span>
+
+  <span class="kw">while</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">answer</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">count</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+    <span class="va">depth</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+    <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">answer</span><span class="op">)</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+      <span class="kw">if</span> <span class="op">(</span><span class="va">answer</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="st">"["</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">count</span> <span class="op">&lt;-</span> <span class="va">count</span> <span class="op">+</span> <span class="fl">1</span>
+
+      <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">answer</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">==</span> <span class="st">"]"</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">count</span> <span class="op">&lt;-</span> <span class="va">count</span> <span class="op">-</span> <span class="fl">1</span>
+      <span class="op">}</span>
+      <span class="va">depth</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">count</span>
+    <span class="op">}</span>
+
+    <span class="va">deepest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">depth</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span>
+
+    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu">R.utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/R.utils/man/seqToIntervals.html" class="external-link">seqToIntervals</a></span><span class="op">(</span><span class="va">deepest</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">from</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+      <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
+
+    <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="va">index</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">first</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">answer</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span>
+      <span class="va">second</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">answer</span><span class="op">[</span><span class="va">j</span> <span class="op">+</span> <span class="fl">2</span><span class="op">]</span><span class="op">)</span>
+
+      <span class="va">answer</span> <span class="op">&lt;-</span> <span class="va">answer</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">j</span><span class="op">:</span><span class="op">(</span><span class="va">j</span> <span class="op">+</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+      <span class="va">answer</span><span class="op">[</span><span class="va">j</span> <span class="op">-</span> <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">first</span> <span class="op">+</span> <span class="va">second</span>
+    <span class="op">}</span>
+  <span class="op">}</span>
+
+  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">answer</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Run simulation ----------------------------------------------------------</span>
+
+<span class="va">first</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">add_snailfish</span><span class="op">(</span><span class="va">first</span>, <span class="va">dat</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+  <span class="va">first</span> <span class="op">&lt;-</span> <span class="va">result</span>
+<span class="op">}</span>
+
+<span class="co"># Add up all of the snailfish numbers from the homework assignment in the</span>
+<span class="co"># order they appear. What is the magnitude of the final sum?</span>
+
+<span class="fu">check_magnitude</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 4116</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-14">Part 2<a class="anchor" aria-label="anchor" href="#part-2-14"></a>
+</h3>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What is the largest magnitude of any sum of two different snailfish numbers</span>
+<span class="co"># from the homework assignment?</span>
+
+<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">combinations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span>, <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Var1</span> <span class="op">!=</span> <span class="va">Var2</span><span class="op">)</span>
+<span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">combinations</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># cat("\r", i, "of", nrow(combinations))</span>
+  <span class="va">first</span> <span class="op">&lt;-</span> <span class="va">combinations</span><span class="op">$</span><span class="va">Var1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+  <span class="va">second</span> <span class="op">&lt;-</span> <span class="va">combinations</span><span class="op">$</span><span class="va">Var2</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+  <span class="va">results</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">add_snailfish</span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">first</span><span class="op">]</span>, <span class="va">dat</span><span class="op">[</span><span class="va">second</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+    <span class="fu">check_magnitude</span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 4638</span></code></pre>
+</div>
 </div>
   </div>
 
