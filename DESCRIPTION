@@ -12,6 +12,7 @@ Imports:
     ggplot2,
     here,
     JuliaCall,
+    R.utils,
     stringr,
     tidyr
 Encoding: UTF-8

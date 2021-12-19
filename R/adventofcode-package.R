@@ -10,6 +10,7 @@
 #' @import ggplot2
 #' @import here
 #' @import JuliaCall
+#' @import R.utils
 #' @import stringr
 #' @import tidyr
 #'
