@@ -10,6 +10,7 @@ Imports:
     docstring,
     dplyr,
     ggplot2,
+    gtools,
     here,
     JuliaCall,
     R.utils,

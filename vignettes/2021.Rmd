@@ -9,7 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(docstring)
+library(gtools)
+library(ggplot2)
 library(here)
+library(R.utils)
 library(stringr)
 library(tidyr)
 ```
@@ -228,7 +231,7 @@ play_bingo <- function(numbers, boards) {
 
 # Play bingo --------------------------------------------------------------
 -
-play_bingo(numbers, boards)
+  play_bingo(numbers, boards)
 ```
 
 ### Part 2
@@ -1134,7 +1137,7 @@ sum(results > 0)
 
 fold_up <- function(grid, value) {
   #' Make a horizontal fold
-
+  
   upper <- grid[1:(value - 1), ]
   lower <- grid[(value + 1):nrow(grid), ] 
   pad <- matrix(FALSE, nrow = abs(nrow(upper) - nrow(lower)), ncol = ncol(upper))
@@ -1292,4 +1295,40 @@ Link to questions [here](https://adventofcode.com/2021/day/18)
 
 ```{r dat18-2, code=readLines("R/18-2.R")}
 
+```
+
+## Day 19: Beacon Scanner
+
+Link to questions [here](https://adventofcode.com/2021/day/19)
+
+### Part 1
+
+```{r dat19-1, code=readLines("R/19-1.R")}
+
+```
+
+### Part 2
+
+```{r dat19-2}
+manhattan <- function(a, b) {
+  abs(a - b) %>% sum()
+}
+
+index <- seq_len(nrow(scanners)) - 1
+combinations <- t(combn(index, 2))
+
+res <- lapply(seq_len(nrow(combinations)), function(x) {
+  first <- combinations[x, 1]
+  second <- combinations[x, 2]
+  a <- scanners %>% 
+    dplyr::filter(beacon == first) %>% 
+    dplyr::select(-beacon) %>% unlist()
+  b <- scanners %>% 
+    dplyr::filter(beacon == second) %>% 
+    dplyr::select(-beacon) %>% unlist()
+  manhattan(a, b)
+}) %>% unlist()
+
+# What is the largest Manhattan distance between any two scanners?
+max(res)
 ```
