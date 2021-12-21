@@ -83,6 +83,7 @@ scanners <- data.frame(beacon = 0, x = 0, y = 0, z = 0)
 while(nrow(scanners) != length(scans)) {
   results <- list()
 
+  # Compare each scanner output to that of scanner 0
   for (i in tail(seq_along(scans), -1)) {
 
     # cat("\r", i, "of", length(scans), "-",
