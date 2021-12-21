@@ -101,7 +101,8 @@ while(nrow(scanners) != length(scans)) {
       transformed_scanner <- transform_all(scanner_i, this_transformation)
 
       # Try subtracting each beacon coordinate in `scanner_zero` from each
-      # beacon coordinate in `transform` (transformation of `scanner_i`)
+      # beacon coordinate in `transformed_scanner` (transformation of
+      # `scanner_i`)
       subtract <- lapply(seq_len(nrow(scanner_zero)), function(x)
         apply(transformed_scanner, 1, function(y) y - scanner_zero[x, ]) %>%
           t()) %>%
