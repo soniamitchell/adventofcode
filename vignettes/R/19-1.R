@@ -111,6 +111,7 @@ while(nrow(scanners) != length(scans)) {
         dplyr::group_by(unscramble) %>%
         dplyr::summarize(n = n())
 
+      # If 12 or more matches are found, record the scanner position
       if (max(subtract$n) >= 12) {
         this_coordinate <- subtract %>%
           dplyr::filter(n == max(n)) %>%
