@@ -1,11 +1,12 @@
 # Read in data ------------------------------------------------------------
-dat <- readLines(here("inst", "2021", "day17.txt"))
+dat <- here("inst", "2021", "day17.txt") |>
+  readLines()
 
 # Extract target coordinates
-xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
-yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
+xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) |>
+  strsplit(" ") |> unlist() |> as.numeric()
+yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) |>
+  strsplit(" ") |> unlist() |> as.numeric()
 
 # Define functions --------------------------------------------------------
 
@@ -63,8 +64,8 @@ possible_y <- function(range, min_v, max_v) {
 # Initialise variables ----------------------------------------------------
 
 # Minimum x_velocity (when x_velocity = i, distance in x axis = cumsum(1:i))
-xv_min <- optimize(function(x) abs(max(cumsum(1:x)) - xrange[1]), 1:10) %>%
-  .$minimum %>% round()
+xv_min <- optimize(function(x) abs(max(cumsum(1:x)) - xrange[1]), 1:10) |>
+  purrr::pluck("minimum") |> round()
 
 # Which velocities might hit the target?
 poss_xv <- possible_x(range = xrange,
@@ -75,7 +76,7 @@ poss_yv <- possible_y(range = yrange,
                       min_v = -2500,
                       max_v = 500)
 
-velocities <- expand.grid(poss_xv, poss_yv) %>%
+velocities <- expand.grid(poss_xv, poss_yv) |>
   dplyr::rename(xv = Var1, yv = Var2)
 
 start <- c(0, 0)
@@ -116,7 +117,7 @@ results <- lapply(seq_len(nrow(velocities)), function(i) {
   trajectory <- cbind.data.frame(x = x, y = y)
 
   # Check whether points have hit the target
-  hit <- trajectory %>%
+  hit <- trajectory |>
     dplyr::filter(between(x, xrange[1], xrange[2]),
                   between(y, yrange[1], yrange[2]))
 
@@ -128,23 +129,23 @@ results <- lapply(seq_len(nrow(velocities)), function(i) {
     out <- NULL
   }
   out
-}) %>%
-  do.call(rbind, .)
+}) |>
+  do.call(what = rbind)
 
 # Find the initial velocity that causes the probe to reach the highest y
 # position and still eventually be within the target area after any step
-results %>%
+results |>
   dplyr::filter(y_max == max(y_max))
 
 # What is the highest y position it reaches on this trajectory?
-results %>%
-  dplyr::filter(y_max == max(y_max)) %>%
-  dplyr::pull(y_max) %>%
+results |>
+  dplyr::filter(y_max == max(y_max)) |>
+  dplyr::pull(y_max) |>
   unique()
 
 # How many distinct initial velocity values cause the probe to be within the
 # target area after any step?
-results %>%
-  dplyr::select(xv, yv) %>%
-  unique() %>%
+results |>
+  dplyr::select(xv, yv) |>
+  unique() |>
   nrow()

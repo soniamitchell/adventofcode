@@ -1,6 +1,7 @@
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(here("inst", "2021", "day18.txt"))
+dat <- here("inst", "2021", "day18.txt") |>
+  readLines()
 
 # Define functions --------------------------------------------------------
 
@@ -118,9 +119,9 @@ add_snailfish <- function(first, second) {
   if (length(first) > 1)
     first <- paste(first, collapse = "")
 
-  paste0("[", first, ",", second, "]") %>%
-    strsplit("") %>%
-    .[[1]] %>%
+  paste0("[", first, ",", second, "]") |>
+    strsplit("") |>
+    unlist() |>
     reduce_snailfish()
 }
 
@@ -142,9 +143,9 @@ check_magnitude <- function(answer) {
 
     deepest <- which(depth == max(depth))
 
-    index <- R.utils::seqToIntervals(deepest) %>%
-      data.frame() %>%
-      dplyr::pull(from) %>%
+    index <- R.utils::seqToIntervals(deepest) |>
+      data.frame() |>
+      dplyr::pull(from) |>
       rev() + 1
 
     for (j in index) {

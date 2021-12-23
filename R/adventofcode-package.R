@@ -8,11 +8,10 @@
 #' @import docstring
 #' @import dplyr
 #' @import ggplot2
-#' @import gtools
 #' @import here
 #' @import JuliaCall
 #' @import R.utils
-#' @import stringr
+#' @import purrr
 #' @import tidyr
 #'
 "_PACKAGE"

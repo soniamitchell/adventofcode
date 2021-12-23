@@ -1,6 +1,8 @@
 # Read in data ------------------------------------------------------------
-dat <- readLines(here("inst", "2021", "day19.txt")) %>%
-  data.frame(data = .)
+dat <- here("inst", "2021", "day19.txt") |>
+  readLines() |>
+  data.frame() |>
+  setNames("data")
 
 start <- grep("scanner", dat$data)
 end <- c(tail(start - 1, -1), nrow(dat))
@@ -11,9 +13,9 @@ scans <- lapply(seq_along(start), function(x) {
   index <- which(tmp == "")
   if (length(index) != 0)
     tmp <- tmp[-index]
-  out <- data.frame(data = tmp) %>%
-    tidyr::separate(col = data, into = c("d1", "d2", "d3"), sep = ",") %>%
-    dplyr::mutate_if(is.character, as.numeric) %>%
+  out <- data.frame(data = tmp) |>
+    tidyr::separate(col = data, into = c("d1", "d2", "d3"), sep = ",") |>
+    dplyr::mutate_if(is.character, as.numeric) |>
     as.matrix()
   colnames(out) <- NULL
   out
@@ -37,7 +39,7 @@ flip <- function(x) {
 
   vec <- if(is.vector(x)) x else tail(x, 1)
   vec <- c(-vec[1], -vec[2], vec[3])
-  rbind(x, vec) %>%
+  rbind(x, vec) |>
     unname()
 }
 
@@ -46,19 +48,19 @@ reorient <- function(x) {
 
   vec <- if(is.vector(x)) x else tail(x, 1)
   vec <- c(vec[3], vec[1], vec[2])
-  rbind(x, vec) %>%
+  rbind(x, vec) |>
     unname()
 }
 
 spin_and_flip <- function(x) {
-  x %>% spin() %>% flip() %>% spin()
+  x |> spin() |> flip() |> spin()
 }
 
 get_combinations <- function(x) {
-  x %>% spin_and_flip() %>%
-    reorient() %>%
-    spin_and_flip() %>%
-    reorient() %>%
+  x |> spin_and_flip() |>
+    reorient() |>
+    spin_and_flip() |>
+    reorient() |>
     spin_and_flip()
 }
 
@@ -71,8 +73,8 @@ transform <- function(coordinate, transformation) {
 
 transform_all <- function(scanner_output, transformation) {
   lapply(seq_len(nrow(scanner_output)), function(x)
-    transform(scanner_output[x, ], transformation)) %>%
-    do.call(rbind, .)
+    transform(scanner_output[x, ], transformation)) |>
+    do.call(what = rbind)
 }
 
 # Assemble the full map of beacons ----------------------------------------
@@ -104,20 +106,20 @@ while(nrow(scanners) != length(scans)) {
       # beacon coordinate in `transformed_scanner` (transformation of
       # `scanner_i`)
       subtract <- lapply(seq_len(nrow(scanner_zero)), function(x)
-        apply(transformed_scanner, 1, function(y) y - scanner_zero[x, ]) %>%
-          t()) %>%
-        do.call(rbind.data.frame, .) %>%
-        tidyr::unite(unscramble) %>%
-        dplyr::group_by(unscramble) %>%
+        apply(transformed_scanner, 1, function(y) y - scanner_zero[x, ]) |>
+          t()) |>
+        do.call(what = rbind.data.frame) |>
+        tidyr::unite(unscramble) |>
+        dplyr::group_by(unscramble) |>
         dplyr::summarize(n = n())
 
       # If 12 or more matches are found, record the scanner position
       if (max(subtract$n) >= 12) {
-        this_coordinate <- subtract %>%
-          dplyr::filter(n == max(n)) %>%
-          tidyr::separate(unscramble, c("x", "y", "z"), sep = "_") %>%
-          dplyr::select(-n) %>%
-          data.frame() %>%
+        this_coordinate <- subtract |>
+          dplyr::filter(n == max(n)) |>
+          tidyr::separate(unscramble, c("x", "y", "z"), sep = "_") |>
+          dplyr::select(-n) |>
+          data.frame() |>
           dplyr::mutate_if(is.character, as.numeric)
 
         colnames(this_coordinate) <- c("x", "y", "z")
@@ -140,8 +142,8 @@ while(nrow(scanners) != length(scans)) {
       data.frame(from = results[[x]]$scanner1,
                  to = results[[x]]$scanner2)
     }
-  ) %>%
-    do.call(rbind, .)
+  ) |>
+    do.call(what = rbind)
 
   # Append new beacon coordinates to scanner outputs
   for (k in seq_len(nrow(relatives))) {
@@ -152,21 +154,23 @@ while(nrow(scanners) != length(scans)) {
     to <- relatives$to[k] + 1
 
     # Transform `to` scanner coordinates relative to `from` scanner coordinates
-    transformed_to <- transform_all(scans[[to]], tmp$transformation) %>%
-      apply(1, function(x) x - tmp$beacon) %>%
-      do.call(rbind, .)
+    transformed_to <- transform_all(scans[[to]], tmp$transformation) |>
+      apply(1, function(x) x - tmp$beacon) |>
+      do.call(what = rbind)
     colnames(transformed_to) <- c("X1", "X2", "X3")
 
     # Add beacon coordinates to `from` scanner
-    scans[[from]] <- transformed_to %>%
+    scans[[from]] <- transformed_to |>
       dplyr::anti_join(data.frame(scans[[from]]),
-                       by = c("X1", "X2", "X3")) %>%
-      as.matrix() %>%
-      rbind(scans[[from]], .) %>%
+                       by = c("X1", "X2", "X3")) |>
+      as.matrix() |>
+      rbind(scans[[from]]) |>
       unique()
   }
   nrow(scanners) != length(scans)
 }
 
 # How many beacons are there?
-scans[[1]] %>% unique() %>% nrow()
+scans[[1]] |>
+  unique() |>
+  nrow()

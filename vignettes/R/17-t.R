@@ -2,10 +2,14 @@
 
 dat = "target area: x=20..30, y=-10..-5"
 
-xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
-yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
+xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) |>
+  strsplit(" ") |>
+  unlist() |>
+  as.numeric()
+yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) |>
+  strsplit(" ") |>
+  unlist() |>
+  as.numeric()
 
 start <- c(0, 0)
 velocity <- c(6, 9)
@@ -20,11 +24,11 @@ trial <- data.frame(trial = n,
                     vx = velocity[1],
                     vy = velocity[2])
 
-results <- launch(trial, n, xrange, yrange) %>%
-  rbind(results, .)
+results <- launch(trial, n, xrange, yrange) |>
+  rbind(what = results)
 
-results %>%
-  dplyr::filter(hit == TRUE) %>%
+results |>
+  dplyr::filter(hit == TRUE) |>
   ggplot2::ggplot(ggplot2::aes(x = x, y = y, group = n, colour = n)) +
   ggplot2::theme_bw() + ggplot2::geom_point() + ggplot2::geom_line() +
   ggplot2::scale_x_continuous(limits = range(c(xrange, results$x))) +

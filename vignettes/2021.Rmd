@@ -7,14 +7,14 @@ output: html_document
 
 ```{r setup, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(dplyr)
-library(docstring)
-library(gtools)
-library(ggplot2)
+
 library(here)
-library(R.utils)
-library(stringr)
+library(docstring)
+library(dplyr)
 library(tidyr)
+library(purrr)
+library(R.utils)
+library(ggplot2)
 ```
 
 ## Day 1: Sonar Sweep
@@ -58,8 +58,8 @@ dat <- read.table(here("inst", "2021", "day2.txt"))
 colnames(dat) <- c("direction", "value")
 
 # Calculate the horizontal position and depth and multiply them together
-summarise_dat <- dat %>% 
-  dplyr::group_by(direction) %>% 
+summarise_dat <- dat |> 
+  dplyr::group_by(direction) |> 
   dplyr::summarise(total = sum(value)) 
 
 horizontal_position <- summarise_dat$total[summarise_dat$direction == "forward"]
@@ -115,8 +115,8 @@ for (i in seq_len(digits)) {
   # Find most common bit
   zeroes <- sum(character == "0")
   ones <- sum(character == "1")
-  gamma_binary[i] <- if_else(zeroes > ones, 0, 1)
-  epsilon_binary[i] <- if_else(zeroes < ones, 0, 1)
+  gamma_binary[i] <- dplyr::if_else(zeroes > ones, 0, 1)
+  epsilon_binary[i] <- dplyr::if_else(zeroes < ones, 0, 1)
 }
 
 gamma_rate <- strtoi(paste(gamma_binary, collapse = ""), base = 2)
@@ -179,10 +179,9 @@ Link to questions [here](https://adventofcode.com/2021/day/4)
 
 ```{r day4-1}
 # Read in data ------------------------------------------------------------
-
-raw_numbers <- scan(here("inst", "2021", "day4.txt"), 
-                    what = "character", n = 1) 
-raw_boards <- read.table(file.path(here(), "inst", "2021", "day4.txt"), skip = 1)
+path <- here("inst", "2021", "day4.txt")
+raw_numbers <- path |> scan(what = "character", n = 1) 
+raw_boards <- path |> read.table(skip = 1)
 
 # Tidy up data
 numbers <- as.numeric(strsplit(raw_numbers, ",")[[1]])
@@ -230,8 +229,8 @@ play_bingo <- function(numbers, boards) {
 }
 
 # Play bingo --------------------------------------------------------------
--
-  play_bingo(numbers, boards)
+
+play_bingo(numbers, boards)
 ```
 
 ### Part 2
@@ -277,14 +276,14 @@ Link to questions [here](https://adventofcode.com/2021/day/5)
 
 ```{r day5-1}
 # Read in data
-dat <- read.table(here("inst", "2021", "day5.txt"))
+dat <- here("inst", "2021", "day5.txt") |> read.table()
 
 # Tidy up data
-coordinates <- dat %>% 
-  select(-V2) %>% 
-  separate(V1, c("x1", "y1")) %>% 
-  separate(V3, c("x2", "y2")) %>% 
-  mutate(across(everything(), as.numeric))
+coordinates <- dat |> 
+  dplyr::select(-V2) |> 
+  tidyr::separate(V1, c("x1", "y1")) |> 
+  tidyr::separate(V3, c("x2", "y2")) |> 
+  dplyr::mutate(dplyr::across(dplyr::everything(), as.numeric))
 
 # Initialise object
 xlim <- max(c(coordinates$x1, coordinates$x2))
@@ -361,8 +360,8 @@ Link to questions [here](https://adventofcode.com/2021/day/6)
 
 ```{r day6-1}
 # Read in data
-dat <- scan(here("inst", "2021", "day6.txt"), 
-            what = "character", sep = ",") %>% 
+dat <- here("inst", "2021", "day6.txt") |> 
+  scan(what = "character", sep = ",") |> 
   as.numeric()
 
 # Initialise variables
@@ -395,11 +394,9 @@ a frequency table instead.
 days <- 256
 
 # Generate a frequency table
-fish_counts <- data.frame(age = dat) %>% 
-  # Count fish
-  dplyr::count(age) %>% 
-  # Fill in the missing categories
-  complete(age = 0:8, fill = list(n = 0))
+fish_counts <- data.frame(age = dat) |> 
+  dplyr::count(age) |>                     # Count fish
+  complete(age = 0:8, fill = list(n = 0))  # Fill in the missing categories
 
 for (i in seq_len(days)) {
   # Number of zeroes
@@ -414,7 +411,7 @@ for (i in seq_len(days)) {
 }
 
 # How many lanternfish would there be after 256 days?
-sum(fish_counts$n) %>% 
+sum(fish_counts$n) |> 
   format(scientific = FALSE)
 ```
 
@@ -426,8 +423,8 @@ Link to questions [here](https://adventofcode.com/2021/day/7)
 
 ```{r day7-1}
 # Read in data
-dat <- scan(here("inst", "2021", "day7.txt"), 
-            what = "character", sep = ",") %>% 
+dat <- here("inst", "2021", "day7.txt") |>
+  scan(what = "character", sep = ",") |> 
   as.numeric()
 
 # Initialise objects
@@ -483,8 +480,8 @@ Link to questions [here](https://adventofcode.com/2021/day/8)
 
 ```{r day8-1}
 # Read in data
-dat <- scan(here("inst", "2021", "day8.txt"), 
-            what = "character", sep = "\n")
+dat <- here("inst", "2021", "day8.txt") |> 
+  scan(what = "character", sep = "\n")
 
 # Tidy up data
 results <- c()
@@ -621,9 +618,10 @@ Link to questions [here](https://adventofcode.com/2021/day/9)
 ```{r day9-1}
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(here("inst", "2021", "day9.txt")) %>% 
-  strsplit("") %>% 
-  do.call(rbind, .) %>% 
+dat <- here("inst", "2021", "day9.txt") |> 
+  readLines() |> 
+  strsplit("") |> 
+  do.call(what = "rbind") |> 
   apply(1, as.numeric)
 
 # Define functions --------------------------------------------------------
@@ -692,7 +690,7 @@ check_adjacent <- function(dat, row, column) {
     adjacent_points <- rbind(adjacent_points, check_height(dat, row, column - 1))
   
   # Return neibouring points that should be checked
-  adjacent_points %>% 
+  adjacent_points |> 
     dplyr::filter(height != 9)
 }
 
@@ -706,8 +704,8 @@ survey <- function(dat, row, column) {
   # Find adjacent points with depth less than 9 
   neighbours <- check_adjacent(dat, row, column)
   # Add them to the basin
-  tmp <- neighbours %>% 
-    dplyr::mutate(risk = height + 1) %>% 
+  tmp <- neighbours |> 
+    dplyr::mutate(risk = height + 1) |> 
     dplyr::select(-height)
   basin <- rbind(basin, tmp)
   
@@ -721,14 +719,14 @@ survey <- function(dat, row, column) {
     neighbours <- neighbours[-1, ]
     # Remove new neighbours that are already in the basin
     more_neighbours <- setdiff(dplyr::select(more_neighbours, -height), 
-                               dplyr::select(basin, -risk)) %>% 
+                               dplyr::select(basin, -risk)) |> 
       dplyr::left_join(more_neighbours, by = c("row", "column"))
     
     # If any new neighbours are remaining
     if (nrow(more_neighbours) > 0) {
       # Add them to the basin
-      tmp <- more_neighbours %>% 
-        dplyr::mutate(risk = height + 1) %>% 
+      tmp <- more_neighbours |> 
+        dplyr::mutate(risk = height + 1) |> 
         dplyr::select(-height)
       basin <- rbind(basin, tmp)
       # And add them to `neighbours` (for checking)
@@ -764,7 +762,8 @@ Link to questions [here](https://adventofcode.com/2021/day/10)
 ```{r day10-1}
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(here("inst", "2021", "day10.txt")) 
+dat <- here("inst", "2021", "day10.txt") |> 
+  readLines() 
 
 corrupted_score <- function(character) {
   score_table <- data.frame(char = c(")", "]", "}", ">"), 
@@ -879,10 +878,10 @@ Link to questions [here](https://adventofcode.com/2021/day/11)
 ```{r day11-1}
 # Read in data ------------------------------------------------------------
 
-dat <- scan(here("inst", "2021", "day11.txt"), 
-            what = "character") %>% 
-  strsplit("") %>% 
-  do.call(rbind, .) %>% 
+dat <- here("inst", "2021", "day11.txt") |> 
+  scan(what = "character") |> 
+  strsplit("") |> 
+  do.call(what = rbind) |> 
   apply(1, as.numeric)
 
 # Define functions --------------------------------------------------------
@@ -898,10 +897,10 @@ find_neighbours <- function(x, y, flashing_now, flashed_previously, octopus) {
   tmp <- dplyr::filter(tmp, row != 0, col != 0, row != xlim, col != ylim)
   # Add to `neighbours`, remove duplicates, and remove those that are flashing 
   # now or have flashed previously
-  tmp %>% 
-    unique() %>% 
-    anti_join(data.frame(flashing_now), by = c("row", "col")) %>% 
-    anti_join(data.frame(flashed_previously), by = c("row", "col")) %>% 
+  tmp |> 
+    unique() |> 
+    dplyr::anti_join(data.frame(flashing_now), by = c("row", "col")) |> 
+    dplyr::anti_join(data.frame(flashed_previously), by = c("row", "col")) |> 
     as.matrix()
 }
 
@@ -979,12 +978,13 @@ Link to questions [here](https://adventofcode.com/2021/day/12)
 
 ```{r day12-1}
 # Read in data
-dat <- read.table(here("inst", "2021", "day12.txt"), sep = "-")
+dat <- here("inst", "2021", "day12.txt") |> 
+  read.table(sep = "-")
 
 # Tidy up data
-dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) %>% 
+dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) |> 
   dplyr::rename(from = V1, 
-                to = V2) %>% 
+                to = V2) |> 
   dplyr::filter(from != "end",
                 to != "start")
 
@@ -1082,22 +1082,23 @@ Link to questions [here](https://adventofcode.com/2021/day/13)
 ```{r day13-1}
 # Read in data ------------------------------------------------------------
 
-dat <- read.table(here("inst", "2021", "day13.txt"), sep = "-")
+dat <- here("inst", "2021", "day13.txt") |> 
+  read.table(sep = "-")
 
 # Tidy up data
-dots <- dat %>% 
-  dplyr::filter(!grepl("^fold", V1)) %>% 
-  tidyr::separate(V1, c("y", "x"), convert = TRUE) %>% 
+dots <- dat |> 
+  dplyr::filter(!grepl("^fold", V1)) |> 
+  tidyr::separate(V1, c("y", "x"), convert = TRUE) |> 
   dplyr::mutate(x = x + 1,
-                y = y + 1) %>% 
+                y = y + 1) |> 
   dplyr::select(x, y)
 
 xlim <- max(dots$x)
 ylim <- max(dots$y)
 
-instructions <- dplyr::filter(dat, grepl("^fold", V1)) %>% 
-  dplyr::mutate(V1 = gsub("^.*([a-z]=[0-9]*)$", "\\1", V1)) %>% 
-  tidyr::separate(V1, c("axis", "value")) %>% 
+instructions <- dplyr::filter(dat, grepl("^fold", V1)) |> 
+  dplyr::mutate(V1 = gsub("^.*([a-z]=[0-9]*)$", "\\1", V1)) |> 
+  tidyr::separate(V1, c("axis", "value")) |> 
   dplyr::mutate(value = as.numeric(value) + 1)
 
 # Generate grid of dots
@@ -1165,14 +1166,16 @@ for (i in seq_len(nrow(instructions))) {
 }
 
 # What code do you use to activate the infrared thermal imaging camera system?
-coords <- which(fold_this, arr.ind = TRUE) %>% 
-  as.data.frame() %>% 
+coords <- which(fold_this, arr.ind = TRUE) |> 
+  as.data.frame() |> 
   dplyr::mutate(value = 1, 
                 row = max(row) - row)
 
 ggplot2::ggplot(coords, ggplot2::aes(x = col, y = row, fill = value)) +
-  ggplot2::geom_tile() +
-  ggplot2::coord_fixed()
+  ggplot2::geom_tile(fill = "goldenrod2") +
+  ggplot2::coord_fixed() + 
+  ggplot2::theme_void() +
+  ggplot2::theme(legend.position = "none")
 ```
 
 ## Day 14: Extended Polymerization
@@ -1185,14 +1188,16 @@ Link to questions [here](https://adventofcode.com/2021/day/14)
 # Read in data ------------------------------------------------------------
 
 # Read in polymer template
-template <- scan(here("inst", "2021", "day14.txt"), 
-                 what = "character", n = 1) 
+path <- here("inst", "2021", "day14.txt")
+template <- path |> 
+  scan(what = "character", n = 1) 
 
 # Read in pair insertion rules
-rules <- scan(file.path(here(), "inst", "2021", "day14.txt"), 
-              what = "character", sep = "\n", skip = 2) %>% 
-  data.frame(V1 = .) %>% 
-  tidyr::separate(V1, c("pair", "insert"), " -> ")
+rules <- path |> 
+  scan(what = "character", sep = "\n", skip = 2) |> 
+  data.frame() |> 
+  setNames("x") |> 
+  tidyr::separate(x, c("pair", "insert"), " -> ")
 
 # Run simulation ----------------------------------------------------------
 
@@ -1230,16 +1235,17 @@ current_string <- strsplit(template, "")[[1]]
 for (i in 1:10) {
   cat("\r", i)
   pairs <- vapply(seq_len(length(current_string) - 1), function(x) 
-    paste(current_string[x:(x + 1)], collapse = ""), character(1)) %>% 
-    data.frame(pair = .)
-  
-  next_string <- dplyr::left_join(pairs, rules, 
-                                  by = "pair") %>% 
-    tidyr::separate(pair, c("first", "last"), "(?<=[A-Z])") %>% 
-    tidyr::unite(string, c(first, insert), sep = "", na.rm = TRUE) %>% 
-    dplyr::select(string) %>% 
-    unlist() %>% 
-    paste(collapse = "") %>% 
+    paste(current_string[x:(x + 1)], collapse = ""), character(1)) |> 
+    data.frame() |> 
+    setNames("pair") 
+    
+    next_string <- dplyr::left_join(pairs, rules, 
+                                    by = "pair") |> 
+    tidyr::separate(pair, c("first", "last"), "(?<=[A-Z])") |> 
+    tidyr::unite(string, c(first, insert), sep = "", na.rm = TRUE) |> 
+    dplyr::select(string) |> 
+    unlist() |> 
+    paste(collapse = "") |> 
     paste0(tail(current_string, 1, collapse = ""))
   
   current_string <- strsplit(next_string, "")[[1]]
@@ -1311,7 +1317,8 @@ Link to questions [here](https://adventofcode.com/2021/day/19)
 
 ```{r dat19-2}
 manhattan <- function(a, b) {
-  abs(a - b) %>% sum()
+  abs(a - b) |> 
+    sum()
 }
 
 index <- seq_len(nrow(scanners)) - 1
@@ -1320,14 +1327,14 @@ combinations <- t(combn(index, 2))
 res <- lapply(seq_len(nrow(combinations)), function(x) {
   first <- combinations[x, 1]
   second <- combinations[x, 2]
-  a <- scanners %>% 
-    dplyr::filter(beacon == first) %>% 
-    dplyr::select(-beacon) %>% unlist()
-  b <- scanners %>% 
-    dplyr::filter(beacon == second) %>% 
-    dplyr::select(-beacon) %>% unlist()
+  a <- scanners |> 
+    dplyr::filter(beacon == first) |> 
+    dplyr::select(-beacon) |> unlist()
+  b <- scanners |> 
+    dplyr::filter(beacon == second) |> 
+    dplyr::select(-beacon) |> unlist()
   manhattan(a, b)
-}) %>% unlist()
+}) |> unlist()
 
 # What is the largest Manhattan distance between any two scanners?
 max(res)
@@ -1345,10 +1352,11 @@ Link to questions [here](https://adventofcode.com/2021/day/2)
 
 ```{r dat21-1}
 # Read in data ------------------------------------------------------------
-dat <- readLines(here("inst", "2021", "day21.txt"))
+dat <- here("inst", "2021", "day21.txt") |> 
+  readLines()
 
-start <- dat %>% vapply(function(x) gsub(".*([0-9])$", "\\1", x),
-                        character(1)) %>%
+start <- dat |> vapply(function(x) gsub(".*([0-9])$", "\\1", x),
+                       character(1)) |>
   as.numeric()
 
 # Play a practice game using the deterministic 100-sided die --------------

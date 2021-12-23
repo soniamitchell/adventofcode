@@ -1,11 +1,16 @@
 # Read in data ------------------------------------------------------------
-dat <- readLines(here("inst", "2021", "day17.txt"))
+dat <- here("inst", "2021", "day17.txt") |>
+  readLines()
 
 # Extract target coordinates
-xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
-yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) %>%
-  strsplit(" ") %>% .[[1]] %>% as.numeric()
+xrange <- gsub("^.*x=(.*)\\.\\.(.*),.*$", "\\1 \\2", dat) |>
+  strsplit(" ") |>
+  unlist() |>
+  as.numeric()
+yrange <- gsub("^.*y=(.*)\\.\\.(.*)$", "\\1 \\2", dat) |>
+  strsplit(" ") |>
+  unlist() |>
+  as.numeric()
 
 # Define functions --------------------------------------------------------
 
@@ -35,9 +40,10 @@ launch <- function(df, trial, xrange, yrange) {
   while (continue) {
     update <- move(tail(df, 1))
     df <- rbind(df, mutate(trial = trial, step = step, update))
-    foundtarget <- dplyr::if_else(update$x >= xrange[1] & update$x <= xrange[2] &
-                                    update$y >= yrange[1] & update$y <= yrange[2],
-                                  TRUE, FALSE)
+    foundtarget <- dplyr::if_else(
+      update$x >= xrange[1] & update$x <= xrange[2] &
+        update$y >= yrange[1] & update$y <= yrange[2],
+      TRUE, FALSE)
     overshot <- dplyr::if_else(update$x > xrange[2] | update$y < yrange[2],
                                TRUE, FALSE)
     continue <- dplyr::if_else(foundtarget | overshot, FALSE, TRUE)
@@ -62,8 +68,7 @@ for (i in 1:120) {
                       vx = velocity[1],
                       vy = velocity[2])
 
-  results <- launch(trial, n, xrange, yrange) %>%
-    rbind(results, .)
+  results <- rbind(results, launch(trial, n, xrange, yrange))
 
   n <- n + 1
 
@@ -78,21 +83,21 @@ for (i in 1:120) {
 
 # Find the initial velocity that causes the probe to reach the highest y
 # position and still eventually be within the target area after any step
-this_trial <- results %>%
-  dplyr::filter(hit == T) %>%
-  dplyr::filter(y == max(y)) %>%
-  dplyr::pull(trial) %>%
+this_trial <- results |>
+  dplyr::filter(hit == T) |>
+  dplyr::filter(y == max(y)) |>
+  dplyr::pull(trial) |>
   unique()
 
 # Initial y velocity
-results %>%
+results |>
   dplyr::filter(trial == this_trial,
-                step == 0) %>%
+                step == 0) |>
   dplyr::pull(vy)
 
 # What is the highest y position it reaches on this trajectory?
-results %>%
-  dplyr::filter(trial == this_trial) %>%
-  dplyr::filter(y == max(y)) %>%
-  dplyr::pull(y) %>%
+results |>
+  dplyr::filter(trial == this_trial) |>
+  dplyr::filter(y == max(y)) |>
+  dplyr::pull(y) |>
   unique()
