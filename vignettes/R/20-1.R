@@ -69,6 +69,9 @@ enhance_image <- function(input, n, algorithm) {
   odd <- TRUE
   first <- head(algorithm, 1)
   second <- tail(algorithm, 1)
+
+  # When the first element of the algorithm doesn't match the last one, change
+  # the composition of the image border with each iteration
   correction <- first != second
 
   for (i in seq_len(n)) {
@@ -84,12 +87,6 @@ enhance_image <- function(input, n, algorithm) {
 }
 
 # Run simulation ----------------------------------------------------------
-
-"........." |> strsplit("") |> unlist() |> pix2bin()
-"#########" |> strsplit("") |> unlist() |> pix2bin()
-
-head(algorithm, 1) # 0 is indexed at 1
-tail(algorithm, 1)
 
 # Start with the original input image and apply the image enhancement
 # algorithm twice, being careful to account for the infinite size of the
