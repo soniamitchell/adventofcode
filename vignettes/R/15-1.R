@@ -1,9 +1,9 @@
 # Read in data ------------------------------------------------------------
 
-# dat <- scan(here("inst", "2021", "day15.txt"),
-#             what = "character") %>%
-#   strsplit("") %>%
-#   do.call(rbind, .) %>%
+# dat <- scan(here("inst", "data", "2021", "day15.txt"),
+#             what = "character") |>
+#   strsplit("") |>
+#   do.call(rbind, .) |>
 #   apply(1, as.numeric)
 
 dat <- scan(text = "1163751742
@@ -15,15 +15,15 @@ dat <- scan(text = "1163751742
 1359912421
 3125421639
 1293138521
-2311944581", what = "character") %>%
-  strsplit("") %>%
-  do.call(rbind, .) %>%
+2311944581", what = "character") |>
+  strsplit("") |>
+  do.call(rbind, .) |>
   apply(1, as.numeric)
 
 # Tidy up data ------------------------------------------------------------
 
-grid <- expand.grid(row = seq_len(nrow(dat)), col = seq_len(ncol(dat))) %>%
-  dplyr::arrange(row, col) %>%
+grid <- expand.grid(row = seq_len(nrow(dat)), col = seq_len(ncol(dat))) |>
+  dplyr::arrange(row, col) |>
   dplyr::mutate(value = dat[cbind(row, col)])
 
 # Functions ---------------------------------------------------------------
