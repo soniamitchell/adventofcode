@@ -1359,3 +1359,9 @@ min(score1, score2) * i * 3
 ```
 
 ## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
+
+### Part 1
+
+```{r dat22-1, code=readLines("R/22-1.R")}
+
+```
