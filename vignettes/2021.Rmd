@@ -5,16 +5,18 @@ date: "05/12/2021"
 output: html_document
 ---
 
-```{r setup, message=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
 
-library(here)
+```{r libraries, message=FALSE}
 library(docstring)
 library(dplyr)
-library(tidyr)
+library(ggplot2)
+library(here)
 library(purrr)
 library(R.utils)
-library(ggplot2)
+library(tidyr)
 ```
 
 ## Day 1: [Sonar Sweep](https://adventofcode.com/2021/day/1)
@@ -1214,9 +1216,9 @@ for (i in 1:10) {
     paste(current_string[x:(x + 1)], collapse = ""), character(1)) |> 
     data.frame() |> 
     setNames("pair") 
-    
-    next_string <- dplyr::left_join(pairs, rules, 
-                                    by = "pair") |> 
+  
+  next_string <- dplyr::left_join(pairs, rules, 
+                                  by = "pair") |> 
     tidyr::separate(pair, c("first", "last"), "(?<=[A-Z])") |> 
     tidyr::unite(string, c(first, insert), sep = "", na.rm = TRUE) |> 
     dplyr::select(string) |> 
