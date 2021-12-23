@@ -1,0 +1,101 @@
+# Read in data ------------------------------------------------------------
+path <- here("inst", "2021", "day20.txt")
+algorithm <- path |>
+  readLines(n = 1) |>
+  strsplit("") |>
+  unlist()
+
+input <- path |>
+  scan(what = "character", skip = 2) |>
+  vapply(function(x) as.data.frame(strsplit(x, "")[[1]]),
+         data.frame(1)) |>
+  do.call(what = rbind) |>
+  unname()
+
+# Define functions --------------------------------------------------------
+
+pix2bin <- function(pixels) {
+  #' Convert matrix of input pixels into a decimal number
+
+  tmp <- pixels |>
+    t() |>
+    matrix(nrow = 1)
+  as.numeric(tmp == "#") |>
+    paste(collapse = "") |>
+    strtoi(base = 2)
+}
+
+get_pixels <- function(input, coord) {
+  rows <- (coord[1] - 1):(coord[1] + 1)
+  cols <- (coord[2] - 1):(coord[2] + 1)
+  input[rows, cols]
+}
+
+scan_input <- function(input, pad) {
+
+  with_buffer <- rbind(pad, pad, input, pad, pad)
+  with_buffer <- cbind(pad, pad, with_buffer, pad, pad) |> unname()
+
+  index <- 2:(ncol(with_buffer) - 1)
+  input_coords <- lapply(index, function(x) cbind(x = x, y = index)) |>
+    do.call(what = rbind.data.frame)
+
+  lapply(seq_len(nrow(input_coords)), function(x) {
+    index <- with_buffer |>
+      get_pixels(unlist(input_coords[x, ])) |>
+      pix2bin()
+    data.frame(index = index,
+               x = input_coords$x[x] - 1,
+               y = input_coords$y[x] - 1)
+  }) |>
+    do.call(what = rbind)
+}
+
+output_pixel <- function(values, algorithm) {
+  values |>
+    dplyr::rowwise() |>
+    dplyr::mutate(pixel = dplyr::nth(algorithm, index + 1)) |>
+    dplyr::select(-index) |>
+    data.frame()
+}
+
+generate_image <- function(values) {
+  matrix(values$pixel, ncol = max(values$y), nrow = max(values$x),
+         byrow = TRUE)
+}
+
+enhance_image <- function(input, n, algorithm) {
+  img <- input
+  odd <- TRUE
+  first <- head(algorithm, 1)
+  second <- tail(algorithm, 1)
+  correction <- first != second
+
+  for (i in seq_len(n)) {
+    if (correction)
+      pad <- ifelse(odd, second, first)
+    img <- img |>
+      scan_input(pad) |>
+      output_pixel(algorithm) |>
+      generate_image()
+    odd <- !odd
+  }
+  img
+}
+
+# Run simulation ----------------------------------------------------------
+
+"........." |> strsplit("") |> unlist() |> pix2bin()
+"#########" |> strsplit("") |> unlist() |> pix2bin()
+
+head(algorithm, 1) # 0 is indexed at 1
+tail(algorithm, 1)
+
+# Start with the original input image and apply the image enhancement
+# algorithm twice, being careful to account for the infinite size of the
+# images
+
+img <- enhance_image(input, 2, algorithm)
+
+# How many pixels are lit in the resulting image?
+sum(img == "#")

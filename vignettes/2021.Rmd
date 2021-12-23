@@ -1308,6 +1308,12 @@ max(res)
 
 ## Day 20: [Trench Map](https://adventofcode.com/2021/day/20)
 
+### Part 1
+
+```{r dat20-1, code=readLines("R/20-1.R")}
+
+```
+
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/2)
 
 ### Part 1
