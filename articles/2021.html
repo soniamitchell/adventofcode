@@ -2300,6 +2300,70 @@
 <div class="section level2">
 <h2 id="day-22-reactor-reboot">Day 22: <a href="https://adventofcode.com/2021/day/22" class="external-link">Reactor Reboot</a><a class="anchor" aria-label="anchor" href="#day-22-reactor-reboot"></a>
 </h2>
+<div class="section level3">
+<h3 id="part-1-19">Part 1<a class="anchor" aria-label="anchor" href="#part-1-19"></a>
+</h3>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
+
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day22.txt"</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="va">tidy_day22</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">limit</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">out</span> <span class="op">&lt;-</span> <span class="va">dat</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> |&gt;
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"on"</span>, <span class="st">"x"</span><span class="op">)</span>, <span class="st">" "</span><span class="op">)</span> |&gt;
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>on <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">on</span> <span class="op">==</span> <span class="st">"on"</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, \<span class="op">(</span><span class="va">z</span><span class="op">)</span>
+                     <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"^.*=(-?\\d*\\.\\.-?\\d*)$"</span>, <span class="st">"\\1"</span>, <span class="va">z</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span><span class="op">)</span>, <span class="st">"\\.\\."</span><span class="op">)</span> |&gt;
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span><span class="op">)</span>, <span class="st">"\\.\\."</span><span class="op">)</span> |&gt;
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">z</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"z1"</span>, <span class="st">"z2"</span><span class="op">)</span>, <span class="st">"\\.\\."</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">is.character</span>, <span class="va">as.numeric</span><span class="op">)</span>
+
+  <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/missing.html" class="external-link">missing</a></span><span class="op">(</span><span class="va">limit</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">limit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_if</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">is.numeric</span>, \<span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="va">z</span> <span class="op">+</span> <span class="va">limit</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">get_indices</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">reactor</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">reactor</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">x1</span><span class="op">:</span><span class="va">df</span><span class="op">$</span><span class="va">x2</span>, <span class="va">df</span><span class="op">$</span><span class="va">y1</span><span class="op">:</span><span class="va">df</span><span class="op">$</span><span class="va">y2</span>, <span class="va">df</span><span class="op">$</span><span class="va">z1</span><span class="op">:</span><span class="va">df</span><span class="op">$</span><span class="va">z2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">$</span><span class="va">on</span>
+  <span class="va">reactor</span>
+<span class="op">}</span>
+
+<span class="co"># Run simulation ----------------------------------------------------------</span>
+
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tidy_day22</span><span class="op">(</span><span class="va">dat</span>, <span class="fl">50</span><span class="op">)</span>
+
+<span class="co"># Execute the reboot steps</span>
+
+<span class="va">reactor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></span><span class="op">(</span><span class="cn">FALSE</span>, dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">101</span>, <span class="fl">101</span>, <span class="fl">101</span><span class="op">)</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co"># Are any coordintes outside the range?</span>
+  <span class="va">test</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> |&gt;
+    <span class="op">{</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html" class="external-link">between</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">reactor</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">}</span><span class="op">(</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="op">)</span>
+
+  <span class="kw">if</span> <span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">reactor</span> <span class="op">&lt;-</span> <span class="fu">get_indices</span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>, <span class="va">reactor</span><span class="op">)</span>
+  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
+    <span class="kw">next</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+
+<span class="co"># Considering only cubes in the region x=-50..50,y=-50..50,z=-50..50, how many</span>
+<span class="co"># cubes are on?</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">reactor</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 644257</span></code></pre>
+</div>
 </div>
   </div>
 
