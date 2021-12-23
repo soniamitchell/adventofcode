@@ -25,7 +25,7 @@ Link to questions [here](https://adventofcode.com/2021/day/1)
 
 ```{r day1-1}
 # Read in data
-dat <- scan(file.path(here(), "inst", "2021", "day1.txt"))
+dat <- scan(here("inst", "2021", "day1.txt"))
 
 # Count the number of times the depth increases from the previous measurement
 sum(diff(dat) > 0)
@@ -54,7 +54,7 @@ Link to questions [here](https://adventofcode.com/2021/day/2)
 
 ```{r day2-1}
 # Read in data
-dat <- read.table(file.path(here(), "inst", "2021", "day2.txt"))
+dat <- read.table(here("inst", "2021", "day2.txt"))
 colnames(dat) <- c("direction", "value")
 
 # Calculate the horizontal position and depth and multiply them together
@@ -100,7 +100,7 @@ Link to questions [here](https://adventofcode.com/2021/day/3)
 
 ```{r day3-1}
 # Read in data
-dat <- scan(file.path(here(), "inst", "2021", "day3.txt"), what = "character") 
+dat <- scan(here("inst", "2021", "day3.txt"), what = "character") 
 
 # Number of bits in each binary number
 digits <- nchar(dat[1])
@@ -180,7 +180,7 @@ Link to questions [here](https://adventofcode.com/2021/day/4)
 ```{r day4-1}
 # Read in data ------------------------------------------------------------
 
-raw_numbers <- scan(file.path(here(), "inst", "2021", "day4.txt"), 
+raw_numbers <- scan(here("inst", "2021", "day4.txt"), 
                     what = "character", n = 1) 
 raw_boards <- read.table(file.path(here(), "inst", "2021", "day4.txt"), skip = 1)
 
@@ -277,7 +277,7 @@ Link to questions [here](https://adventofcode.com/2021/day/5)
 
 ```{r day5-1}
 # Read in data
-dat <- read.table(file.path(here(), "inst", "2021", "day5.txt"))
+dat <- read.table(here("inst", "2021", "day5.txt"))
 
 # Tidy up data
 coordinates <- dat %>% 
@@ -361,7 +361,7 @@ Link to questions [here](https://adventofcode.com/2021/day/6)
 
 ```{r day6-1}
 # Read in data
-dat <- scan(file.path(here(), "inst", "2021", "day6.txt"), 
+dat <- scan(here("inst", "2021", "day6.txt"), 
             what = "character", sep = ",") %>% 
   as.numeric()
 
@@ -426,7 +426,7 @@ Link to questions [here](https://adventofcode.com/2021/day/7)
 
 ```{r day7-1}
 # Read in data
-dat <- scan(file.path(here(), "inst", "2021", "day7.txt"), 
+dat <- scan(here("inst", "2021", "day7.txt"), 
             what = "character", sep = ",") %>% 
   as.numeric()
 
@@ -483,7 +483,7 @@ Link to questions [here](https://adventofcode.com/2021/day/8)
 
 ```{r day8-1}
 # Read in data
-dat <- scan(file.path(here(), "inst", "2021", "day8.txt"), 
+dat <- scan(here("inst", "2021", "day8.txt"), 
             what = "character", sep = "\n")
 
 # Tidy up data
@@ -621,7 +621,7 @@ Link to questions [here](https://adventofcode.com/2021/day/9)
 ```{r day9-1}
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(file.path(here(), "inst", "2021", "day9.txt")) %>% 
+dat <- readLines(here("inst", "2021", "day9.txt")) %>% 
   strsplit("") %>% 
   do.call(rbind, .) %>% 
   apply(1, as.numeric)
@@ -764,7 +764,7 @@ Link to questions [here](https://adventofcode.com/2021/day/10)
 ```{r day10-1}
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(file.path(here(), "inst", "2021", "day10.txt")) 
+dat <- readLines(here("inst", "2021", "day10.txt")) 
 
 corrupted_score <- function(character) {
   score_table <- data.frame(char = c(")", "]", "}", ">"), 
@@ -879,7 +879,7 @@ Link to questions [here](https://adventofcode.com/2021/day/11)
 ```{r day11-1}
 # Read in data ------------------------------------------------------------
 
-dat <- scan(file.path(here(), "inst", "2021", "day11.txt"), 
+dat <- scan(here("inst", "2021", "day11.txt"), 
             what = "character") %>% 
   strsplit("") %>% 
   do.call(rbind, .) %>% 
@@ -979,7 +979,7 @@ Link to questions [here](https://adventofcode.com/2021/day/12)
 
 ```{r day12-1}
 # Read in data
-dat <- read.table(file.path(here(), "inst", "2021", "day12.txt"), sep = "-")
+dat <- read.table(here("inst", "2021", "day12.txt"), sep = "-")
 
 # Tidy up data
 dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) %>% 
@@ -1082,7 +1082,7 @@ Link to questions [here](https://adventofcode.com/2021/day/13)
 ```{r day13-1}
 # Read in data ------------------------------------------------------------
 
-dat <- read.table(file.path(here(), "inst", "2021", "day13.txt"), sep = "-")
+dat <- read.table(here("inst", "2021", "day13.txt"), sep = "-")
 
 # Tidy up data
 dots <- dat %>% 
@@ -1185,7 +1185,7 @@ Link to questions [here](https://adventofcode.com/2021/day/14)
 # Read in data ------------------------------------------------------------
 
 # Read in polymer template
-template <- scan(file.path(here(), "inst", "2021", "day14.txt"), 
+template <- scan(here("inst", "2021", "day14.txt"), 
                  what = "character", n = 1) 
 
 # Read in pair insertion rules
@@ -1345,7 +1345,7 @@ Link to questions [here](https://adventofcode.com/2021/day/2)
 
 ```{r dat21-1}
 # Read in data ------------------------------------------------------------
-dat <- readLines(file.path(here(), "inst", "2021", "day21.txt"))
+dat <- readLines(here("inst", "2021", "day21.txt"))
 
 start <- dat %>% vapply(function(x) gsub(".*([0-9])$", "\\1", x),
                         character(1)) %>%

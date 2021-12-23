@@ -1,5 +1,5 @@
 # Read in data ------------------------------------------------------------
-dat <- readLines(file.path(here(), "inst", "2021", "day19.txt")) %>%
+dat <- readLines(here("inst", "2021", "day19.txt")) %>%
   data.frame(data = .)
 
 start <- grep("scanner", dat$data)

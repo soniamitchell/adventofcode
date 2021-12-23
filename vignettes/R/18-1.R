@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-dat <- readLines(file.path(here(), "inst", "2021", "day18.txt"))
+dat <- readLines(here("inst", "2021", "day18.txt"))
 
 # Define functions --------------------------------------------------------
 

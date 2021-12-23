@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-# dat <- scan(file.path(here(), "inst", "2021", "day15.txt"),
+# dat <- scan(here("inst", "2021", "day15.txt"),
 #             what = "character") %>%
 #   strsplit("") %>%
 #   do.call(rbind, .) %>%
