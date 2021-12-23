@@ -8,11 +8,11 @@
 #' @import docstring
 #' @import dplyr
 #' @import ggplot2
-#' @import here
+#' @importFrom here here
 #' @import JuliaCall
-#' @import R.utils
-#' @import purrr
-#' @import tidyr
+#' @importFrom purrr pluck
+#' @importFrom R.utils seqToIntervals
+#' @importFrom tidyr separate unite
 #'
 "_PACKAGE"
 
