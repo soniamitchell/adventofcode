@@ -1357,3 +1357,5 @@ while (all(c(score1, score2) < 1000)) {
 
 min(score1, score2) * i * 3
 ```
+
+## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
