@@ -23,7 +23,8 @@ library(ggplot2)
 
 ```{r day1-1}
 # Read in data
-dat <- scan(here("inst", "2021", "day1.txt"))
+dat <- here("inst", "2021", "day1.txt") |> 
+  scan()
 
 # Count the number of times the depth increases from the previous measurement
 sum(diff(dat) > 0)
@@ -50,7 +51,8 @@ sum(diff(summed) > 0)
 
 ```{r day2-1}
 # Read in data
-dat <- read.table(here("inst", "2021", "day2.txt"))
+dat <- here("inst", "2021", "day2.txt") |> 
+  read.table()
 colnames(dat) <- c("direction", "value")
 
 # Calculate the horizontal position and depth and multiply them together
@@ -94,7 +96,8 @@ horizontal_position * depth
 
 ```{r day3-1}
 # Read in data
-dat <- scan(here("inst", "2021", "day3.txt"), what = "character") 
+dat <- here("inst", "2021", "day3.txt") |> 
+  scan(what = "character") 
 
 # Number of bits in each binary number
 digits <- nchar(dat[1])
@@ -172,8 +175,8 @@ oxygen_generator_rating * CO2_scrubber_rating
 ```{r day4-1}
 # Read in data ------------------------------------------------------------
 path <- here("inst", "2021", "day4.txt")
-raw_numbers <- path |> scan(what = "character", n = 1) 
-raw_boards <- path |> read.table(skip = 1)
+raw_numbers <- scan(path, what = "character", n = 1) 
+raw_boards <- read.table(path, skip = 1)
 
 # Tidy up data
 numbers <- as.numeric(strsplit(raw_numbers, ",")[[1]])
@@ -266,7 +269,8 @@ tail(losers)
 
 ```{r day5-1}
 # Read in data
-dat <- here("inst", "2021", "day5.txt") |> read.table()
+dat <- here("inst", "2021", "day5.txt") |> 
+  read.table()
 
 # Tidy up data
 coordinates <- dat |> 
