@@ -90,15 +90,15 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/R.utils" class="external-link">R.utils</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></code></pre></div>
 <div class="section level2">
-<h2 id="day-1-sonar-sweep">Day 1: Sonar Sweep<a class="anchor" aria-label="anchor" href="#day-1-sonar-sweep"></a>
+<h2 id="day-1-sonar-sweep">Day 1: <a href="https://adventofcode.com/2021/day/1" class="external-link">Sonar Sweep</a><a class="anchor" aria-label="anchor" href="#day-1-sonar-sweep"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/1" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day1.txt"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day1.txt"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Count the number of times the depth increases from the previous measurement</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
@@ -122,15 +122,15 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-2-dive">Day 2: Dive!<a class="anchor" aria-label="anchor" href="#day-2-dive"></a>
+<h2 id="day-2-dive">Day 2: <a href="https://adventofcode.com/2021/day/2" class="external-link">Dive!</a><a class="anchor" aria-label="anchor" href="#day-2-dive"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/2" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1-1"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day2.txt"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day2.txt"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"direction"</span>, <span class="st">"value"</span><span class="op">)</span>
 
 <span class="co"># Calculate the horizontal position and depth and multiply them together</span>
@@ -171,15 +171,15 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-3-binary-diagnostic">Day 3: Binary Diagnostic<a class="anchor" aria-label="anchor" href="#day-3-binary-diagnostic"></a>
+<h2 id="day-3-binary-diagnostic">Day 3: <a href="https://adventofcode.com/2021/day/3" class="external-link">Binary Diagnostic</a><a class="anchor" aria-label="anchor" href="#day-3-binary-diagnostic"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/3" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-2">Part 1<a class="anchor" aria-label="anchor" href="#part-1-2"></a>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day3.txt"</span><span class="op">)</span>, what <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span> 
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day3.txt"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span> 
 
 <span class="co"># Number of bits in each binary number</span>
 <span class="va">digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
@@ -253,17 +253,16 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-4-giant-squid">Day 4: Giant Squid<a class="anchor" aria-label="anchor" href="#day-4-giant-squid"></a>
+<h2 id="day-4-giant-squid">Day 4: <a href="https://adventofcode.com/2021/day/4" class="external-link">Giant Squid</a><a class="anchor" aria-label="anchor" href="#day-4-giant-squid"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/4" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-3">Part 1<a class="anchor" aria-label="anchor" href="#part-1-3"></a>
 </h3>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day4.txt"</span><span class="op">)</span>
-<span class="va">raw_numbers</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
-<span class="va">raw_boards</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span>skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">raw_numbers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="va">path</span>, what <span class="op">=</span> <span class="st">"character"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> 
+<span class="va">raw_boards</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="va">path</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
 <span class="co"># Tidy up data</span>
 <span class="va">numbers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">raw_numbers</span>, <span class="st">","</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
@@ -359,15 +358,15 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-5-hydrothermal-venture">Day 5: Hydrothermal Venture<a class="anchor" aria-label="anchor" href="#day-5-hydrothermal-venture"></a>
+<h2 id="day-5-hydrothermal-venture">Day 5: <a href="https://adventofcode.com/2021/day/5" class="external-link">Hydrothermal Venture</a><a class="anchor" aria-label="anchor" href="#day-5-hydrothermal-venture"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/5" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-4">Part 1<a class="anchor" aria-label="anchor" href="#part-1-4"></a>
 </h3>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day5.txt"</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day5.txt"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Tidy up data</span>
 <span class="va">coordinates</span> <span class="op">&lt;-</span> <span class="va">dat</span> |&gt; 
@@ -446,9 +445,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-6-lanternfish">Day 6: Lanternfish<a class="anchor" aria-label="anchor" href="#day-6-lanternfish"></a>
+<h2 id="day-6-lanternfish">Day 6: <a href="https://adventofcode.com/2021/day/6" class="external-link">Lanternfish</a><a class="anchor" aria-label="anchor" href="#day-6-lanternfish"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/6" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-5">Part 1<a class="anchor" aria-label="anchor" href="#part-1-5"></a>
 </h3>
@@ -510,9 +508,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-7-the-treachery-of-whales">Day 7: The Treachery of Whales<a class="anchor" aria-label="anchor" href="#day-7-the-treachery-of-whales"></a>
+<h2 id="day-7-the-treachery-of-whales">Day 7: <a href="https://adventofcode.com/2021/day/7" class="external-link">The Treachery of Whales</a><a class="anchor" aria-label="anchor" href="#day-7-the-treachery-of-whales"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/7" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-6">Part 1<a class="anchor" aria-label="anchor" href="#part-1-6"></a>
 </h3>
@@ -572,9 +569,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-8-seven-segment-search">Day 8: Seven Segment Search<a class="anchor" aria-label="anchor" href="#day-8-seven-segment-search"></a>
+<h2 id="day-8-seven-segment-search">Day 8: <a href="https://adventofcode.com/2021/day/8" class="external-link">Seven Segment Search</a><a class="anchor" aria-label="anchor" href="#day-8-seven-segment-search"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/8" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-7">Part 1<a class="anchor" aria-label="anchor" href="#part-1-7"></a>
 </h3>
@@ -712,9 +708,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-9-smoke-basin">Day 9: Smoke Basin<a class="anchor" aria-label="anchor" href="#day-9-smoke-basin"></a>
+<h2 id="day-9-smoke-basin">Day 9: <a href="https://adventofcode.com/2021/day/9" class="external-link">Smoke Basin</a><a class="anchor" aria-label="anchor" href="#day-9-smoke-basin"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/9" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-8">Part 1<a class="anchor" aria-label="anchor" href="#part-1-8"></a>
 </h3>
@@ -859,9 +854,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-10-syntax-scoring">Day 10: Syntax Scoring<a class="anchor" aria-label="anchor" href="#day-10-syntax-scoring"></a>
+<h2 id="day-10-syntax-scoring">Day 10: <a href="https://adventofcode.com/2021/day/10" class="external-link">Syntax Scoring</a><a class="anchor" aria-label="anchor" href="#day-10-syntax-scoring"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/10" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-9">Part 1<a class="anchor" aria-label="anchor" href="#part-1-9"></a>
 </h3>
@@ -978,9 +972,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-11-dumbo-octopus">Day 11: Dumbo Octopus<a class="anchor" aria-label="anchor" href="#day-11-dumbo-octopus"></a>
+<h2 id="day-11-dumbo-octopus">Day 11: <a href="https://adventofcode.com/2021/day/11" class="external-link">Dumbo Octopus</a><a class="anchor" aria-label="anchor" href="#day-11-dumbo-octopus"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/11" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-10">Part 1<a class="anchor" aria-label="anchor" href="#part-1-10"></a>
 </h3>
@@ -1082,9 +1075,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-12-passage-pathing">Day 12: Passage Pathing<a class="anchor" aria-label="anchor" href="#day-12-passage-pathing"></a>
+<h2 id="day-12-passage-pathing">Day 12: <a href="https://adventofcode.com/2021/day/12" class="external-link">Passage Pathing</a><a class="anchor" aria-label="anchor" href="#day-12-passage-pathing"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/12" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-11">Part 1<a class="anchor" aria-label="anchor" href="#part-1-11"></a>
 </h3>
@@ -1186,9 +1178,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-13-transparent-origami">Day 13: Transparent Origami<a class="anchor" aria-label="anchor" href="#day-13-transparent-origami"></a>
+<h2 id="day-13-transparent-origami">Day 13: <a href="https://adventofcode.com/2021/day/13" class="external-link">Transparent Origami</a><a class="anchor" aria-label="anchor" href="#day-13-transparent-origami"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/13" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-12">Part 1<a class="anchor" aria-label="anchor" href="#part-1-12"></a>
 </h3>
@@ -1294,9 +1285,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-14-extended-polymerization">Day 14: Extended Polymerization<a class="anchor" aria-label="anchor" href="#day-14-extended-polymerization"></a>
+<h2 id="day-14-extended-polymerization">Day 14: <a href="https://adventofcode.com/2021/day/14" class="external-link">Extended Polymerization</a><a class="anchor" aria-label="anchor" href="#day-14-extended-polymerization"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/14" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-13">Part 1<a class="anchor" aria-label="anchor" href="#part-1-13"></a>
 </h3>
@@ -1397,19 +1387,16 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-15-chiton">Day 15: Chiton<a class="anchor" aria-label="anchor" href="#day-15-chiton"></a>
+<h2 id="day-15-chiton">Day 15: <a href="https://adventofcode.com/2021/day/15" class="external-link">Chiton</a><a class="anchor" aria-label="anchor" href="#day-15-chiton"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/15" class="external-link">here</a></p>
 </div>
 <div class="section level2">
-<h2 id="day-16-packet-decoder">Day 16: Packet Decoder<a class="anchor" aria-label="anchor" href="#day-16-packet-decoder"></a>
+<h2 id="day-16-packet-decoder">Day 16: <a href="https://adventofcode.com/2021/day/16" class="external-link">Packet Decoder</a><a class="anchor" aria-label="anchor" href="#day-16-packet-decoder"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/16" class="external-link">here</a></p>
 </div>
 <div class="section level2">
-<h2 id="day-17-trick-shot">Day 17: Trick Shot<a class="anchor" aria-label="anchor" href="#day-17-trick-shot"></a>
+<h2 id="day-17-trick-shot">Day 17: <a href="https://adventofcode.com/2021/day/17" class="external-link">Trick Shot</a><a class="anchor" aria-label="anchor" href="#day-17-trick-shot"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/17" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-14">Part 1<a class="anchor" aria-label="anchor" href="#part-1-14"></a>
 </h3>
@@ -1726,9 +1713,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-18-snailfish">Day 18: Snailfish<a class="anchor" aria-label="anchor" href="#day-18-snailfish"></a>
+<h2 id="day-18-snailfish">Day 18: <a href="https://adventofcode.com/2021/day/18" class="external-link">Snailfish</a><a class="anchor" aria-label="anchor" href="#day-18-snailfish"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/18" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-15">Part 1<a class="anchor" aria-label="anchor" href="#part-1-15"></a>
 </h3>
@@ -1934,9 +1920,8 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-19-beacon-scanner">Day 19: Beacon Scanner<a class="anchor" aria-label="anchor" href="#day-19-beacon-scanner"></a>
+<h2 id="day-19-beacon-scanner">Day 19: <a href="https://adventofcode.com/2021/day/19" class="external-link">Beacon Scanner</a><a class="anchor" aria-label="anchor" href="#day-19-beacon-scanner"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/19" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-16">Part 1<a class="anchor" aria-label="anchor" href="#part-1-16"></a>
 </h3>
@@ -2149,18 +2134,129 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="day-20-trench-map">Day 20: Trench Map<a class="anchor" aria-label="anchor" href="#day-20-trench-map"></a>
+<h2 id="day-20-trench-map">Day 20: <a href="https://adventofcode.com/2021/day/20" class="external-link">Trench Map</a><a class="anchor" aria-label="anchor" href="#day-20-trench-map"></a>
 </h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/20" class="external-link">here</a></p>
-</div>
-<div class="section level2">
-<h2 id="day-21-dirac-dice">Day 21: Dirac Dice<a class="anchor" aria-label="anchor" href="#day-21-dirac-dice"></a>
-</h2>
-<p>Link to questions <a href="https://adventofcode.com/2021/day/2" class="external-link">here</a></p>
 <div class="section level3">
 <h3 id="part-1-17">Part 1<a class="anchor" aria-label="anchor" href="#part-1-17"></a>
 </h3>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day20.txt"</span><span class="op">)</span>
+<span class="va">algorithm</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">input</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,
+         <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="va">pix2bin</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pixels</span><span class="op">)</span> <span class="op">{</span>
+  <span class="co">#' Convert matrix of input pixels into a decimal number</span>
+
+  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">pixels</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">tmp</span> <span class="op">==</span> <span class="st">"#"</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/strtoi.html" class="external-link">strtoi</a></span><span class="op">(</span>base <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">get_pixels</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">coord</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">rows</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">coord</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="va">coord</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">cols</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">coord</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="op">(</span><span class="va">coord</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">input</span><span class="op">[</span><span class="va">rows</span>, <span class="va">cols</span><span class="op">]</span>
+<span class="op">}</span>
+
+<span class="va">scan_input</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">pad</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">with_buffer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">pad</span>, <span class="va">pad</span>, <span class="va">input</span>, <span class="va">pad</span>, <span class="va">pad</span><span class="op">)</span>
+  <span class="va">with_buffer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">pad</span>, <span class="va">pad</span>, <span class="va">with_buffer</span>, <span class="va">pad</span>, <span class="va">pad</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="op">)</span>
+
+  <span class="va">index</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">with_buffer</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="va">input_coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">index</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">index</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind.data.frame</span><span class="op">)</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">input_coords</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">index</span> <span class="op">&lt;-</span> <span class="va">with_buffer</span> |&gt;
+      <span class="fu">get_pixels</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">input_coords</span><span class="op">[</span><span class="va">x</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span> |&gt;
+      <span class="fu">pix2bin</span><span class="op">(</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>index <span class="op">=</span> <span class="va">index</span>,
+               x <span class="op">=</span> <span class="va">input_coords</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">x</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span>,
+               y <span class="op">=</span> <span class="va">input_coords</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">x</span><span class="op">]</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="op">}</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">output_pixel</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">values</span>, <span class="va">algorithm</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">values</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rowwise.html" class="external-link">rowwise</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>pixel <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/nth.html" class="external-link">nth</a></span><span class="op">(</span><span class="va">algorithm</span>, <span class="va">index</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">index</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">generate_image</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">values</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">pixel</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,
+         byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">enhance_image</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">n</span>, <span class="va">algorithm</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">img</span> <span class="op">&lt;-</span> <span class="va">input</span>
+  <span class="va">odd</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
+  <span class="va">first</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">algorithm</span>, <span class="fl">1</span><span class="op">)</span>
+  <span class="va">second</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">algorithm</span>, <span class="fl">1</span><span class="op">)</span>
+  <span class="va">correction</span> <span class="op">&lt;-</span> <span class="va">first</span> <span class="op">!=</span> <span class="va">second</span>
+
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="va">correction</span><span class="op">)</span>
+      <span class="va">pad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">odd</span>, <span class="va">second</span>, <span class="va">first</span><span class="op">)</span>
+    <span class="va">img</span> <span class="op">&lt;-</span> <span class="va">img</span> |&gt;
+      <span class="fu">scan_input</span><span class="op">(</span><span class="va">pad</span><span class="op">)</span> |&gt;
+      <span class="fu">output_pixel</span><span class="op">(</span><span class="va">algorithm</span><span class="op">)</span> |&gt;
+      <span class="fu">generate_image</span><span class="op">(</span><span class="op">)</span>
+    <span class="va">odd</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="va">odd</span>
+  <span class="op">}</span>
+  <span class="va">img</span>
+<span class="op">}</span>
+
+<span class="co"># Run simulation ----------------------------------------------------------</span>
+
+<span class="st">"........."</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">pix2bin</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 0</span></code></pre>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="st">"#########"</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">pix2bin</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 511</span></code></pre>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">algorithm</span>, <span class="fl">1</span><span class="op">)</span> <span class="co"># 0 is indexed at 1</span></code></pre></div>
+<pre><code><span class="co">## [1] "#"</span></code></pre>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">algorithm</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "."</span></code></pre>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Start with the original input image and apply the image enhancement</span>
+<span class="co"># algorithm twice, being careful to account for the infinite size of the</span>
+<span class="co"># images</span>
+
+<span class="va">img</span> <span class="op">&lt;-</span> <span class="fu">enhance_image</span><span class="op">(</span><span class="va">input</span>, <span class="fl">2</span>, <span class="va">algorithm</span><span class="op">)</span>
+
+<span class="co"># How many pixels are lit in the resulting image?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">img</span> <span class="op">==</span> <span class="st">"#"</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 5663</span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-21-dirac-dice">Day 21: <a href="https://adventofcode.com/2021/day/2" class="external-link">Dirac Dice</a><a class="anchor" aria-label="anchor" href="#day-21-dirac-dice"></a>
+</h2>
+<div class="section level3">
+<h3 id="part-1-18">Part 1<a class="anchor" aria-label="anchor" href="#part-1-18"></a>
+</h3>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day21.txt"</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
