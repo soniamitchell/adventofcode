@@ -10,12 +10,12 @@ function seat(dat)
         row_directions = dat[i][1:7]
         for j in row_directions
             if j == only("F")
-                row_max = floor(row_max - (row_max - row_min) / 2) 
+                row_max = floor(row_max - (row_max - row_min) / 2)
                 row_min = row_min
-                
-            elseif j == only("B") 
+
+            elseif j == only("B")
                 row_max = row_max
-                row_min = round(row_min + (row_max - row_min) / 2) 
+                row_min = round(row_min + (row_max - row_min) / 2)
             end
             return row_min
         end
