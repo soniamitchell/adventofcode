@@ -94,5 +94,18 @@ enhance_image <- function(input, n, algorithm) {
 
 img <- enhance_image(input, 2, algorithm)
 
+expand.grid(seq_len(nrow(img)), seq_len(nrow(img))) |>
+  setNames(c("row", "col")) |>
+  dplyr::left_join(which(img == "#", arr.ind = TRUE) |>
+                     cbind.data.frame(what = "hash"), by = c("row", "col")) |>
+  dplyr::mutate(what = dplyr::case_when(is.na(what) ~ "dot",
+                                        TRUE ~ what)) |>
+  ggplot2::ggplot() + ggplot2::theme_void() +
+  ggplot2::geom_tile(ggplot2::aes(x = row, y = col, fill = what)) +
+  ggplot2::scale_fill_manual(values = setNames(c("black", "white"),
+                                               c("hash", "dot"))) +
+  ggplot2::coord_fixed() +
+  ggplot2::theme(legend.position = "none")
+
 # How many pixels are lit in the resulting image?
 sum(img == "#")
