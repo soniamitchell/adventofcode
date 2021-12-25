@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Part 1
 
-```{julia day1-1, code=readLines("julia/1-1.jl")}
+```{julia day1-1, code=readLines("julia/src/1-1.jl")}
 ```
 
 #### Notes
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Part 2
 
-```{julia day1-2, code=readLines("julia/1-2.jl")}
+```{julia day1-2, code=readLines("julia/src/1-2.jl")}
 ```
 
 #### Notes
@@ -47,7 +47,7 @@ using DelimitedFiles
 
 ### Part 1
 
-```{julia day2-1, code=readLines("julia/2-1.jl")}
+```{julia day2-1, code=readLines("julia/src/2-1.jl")}
 ```
 
 #### Notes
@@ -61,7 +61,7 @@ everything into a function will achieve the expected behaviour.
 
 ### Part 2
 
-```{julia day2-1, code=readLines("julia/2-2.jl")}
+```{julia day2-1, code=readLines("julia/src/2-2.jl")}
 ```
 
 ## Day 3: [Toboggan Trajectory](https://adventofcode.com/2020/day/3)
@@ -72,12 +72,12 @@ using DelimitedFiles
 
 ### Part 1
 
-```{julia day3-1, code=readLines("julia/3-1.jl")}
+```{julia day3-1, code=readLines("julia/src/3-1.jl")}
 ```
 
 ### Part 2
 
-```{julia day3-2, code=readLines("julia/3-2.jl")}
+```{julia day3-2, code=readLines("julia/src/3-2.jl")}
 ```
 
 ## Day 4: [Passport Processing](https://adventofcode.com/2020/day/4)
@@ -88,12 +88,12 @@ using DelimitedFiles
 
 ### Part 1
 
-```{julia day4-1, code=readLines("julia/4-1.jl")}
+```{julia day4-1, code=readLines("julia/src/4-1.jl")}
 ```
 
 ### Part 2
 
-```{julia day4-2, code=readLines("julia/4-2.jl")}
+```{julia day4-2, code=readLines("julia/src/4-2.jl")}
 ```
 
 ## Day 5: [Binary Boarding](https://adventofcode.com/2020/day/5)
@@ -104,5 +104,5 @@ using DelimitedFiles
 
 ### Part 1
 
-```{julia day5-1, code=readLines("julia/5-1.jl")}
+```{julia day5-1, code=readLines("julia/src/5-1.jl")}
 ```
