@@ -5,7 +5,7 @@
 This repository contains my attempts at solving the [Advent of Code][AoC] programming 
 puzzles.
 
-* AoC-2021: [solutions][sol21] (mostly) in base R
+* AoC-2021: [solutions][sol21] in R
 * AoC-2020: [solutions][sol20] in Julia
 
 [AoC]: https://adventofcode.com/
