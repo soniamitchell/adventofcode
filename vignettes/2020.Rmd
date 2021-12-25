@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{julia setup, include=FALSE}
-add(Pkg)
+using(Pkg)
 Pkg.activate("Julia")
 ```
 
