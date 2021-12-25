@@ -34,7 +34,7 @@ Pkg.instantiate()
 
 ### Part 2
 
-```{julia day1-2}
+```{julia day1-2, code=readLines("julia/src/1-2.jl")}
 ```
 
 #### Notes
@@ -47,13 +47,9 @@ Pkg.instantiate()
 
 ## Day 2: [Password Philosophy](https://adventofcode.com/2020/day/2)
 
-```{julia day2-0, eval=FALSE}
-using DelimitedFiles
-```
-
 ### Part 1
 
-```{julia day2-1}
+```{julia day2-1, code=readLines("julia/src/2-1.jl")}
 ```
 
 #### Notes
@@ -67,31 +63,31 @@ everything into a function will achieve the expected behaviour.
 
 ### Part 2
 
-```{julia day2-1}
+```{julia day2-2, code=readLines("julia/src/2-2.jl")}
 ```
 
 ## Day 3: [Toboggan Trajectory](https://adventofcode.com/2020/day/3)
 
 ### Part 1
 
-```{julia day3-1}
+```{julia day3-1, code=readLines("julia/src/3-1.jl")}
 ```
 
 ### Part 2
 
-```{julia day3-2}
+```{julia day3-2, code=readLines("julia/src/3-2.jl")}
 ```
 
 ## Day 4: [Passport Processing](https://adventofcode.com/2020/day/4)
 
 ### Part 1
 
-```{julia day4-1}
+```{julia day4-1, code=readLines("julia/src/4-1.jl")}
 ```
 
 ### Part 2
 
-```{julia day4-2}
+```{julia day4-2, code=readLines("julia/src/4-2.jl")}
 ```
 
 ## Day 5: [Binary Boarding](https://adventofcode.com/2020/day/5)
