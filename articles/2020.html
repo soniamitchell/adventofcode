@@ -92,12 +92,13 @@
 <span id="cb1-5"><a href="#cb1-5"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day1.txt"</span>);</span>
 <span id="cb1-6"><a href="#cb1-6"></a>dat = vec(readdlm(path));</span>
 <span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Find the two entries that sum to 2020</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">2</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
-<span id="cb1-10"><a href="#cb1-10"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># What do you get if you multiply them together?</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>prod(numbers)</span></code></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Find the two entries that sum to 2020</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">2</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
+<span id="cb1-11"><a href="#cb1-11"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># What do you get if you multiply them together?</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>prod(numbers)</span></code></pre></div>
 <pre><code><span class="co">## 802011.0</span></code></pre>
 <div class="section level4">
 <h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
