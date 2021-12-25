@@ -1,5 +1,7 @@
+using adventofcode2020
+
 # Read in data
-path = joinpath("inst", "2020", "day1.txt");
+path = joinpath("..", "inst", "2020", "day1.txt");
 dat = vec(readdlm(path));
 
 # Find the two entries that sum to 2020
