@@ -1,3 +1,3 @@
 function here()
-    replace(pwd(), "/vignettes/julia/src" => "");
+    replace(pwd(), "/vignettes" => "");
 end
