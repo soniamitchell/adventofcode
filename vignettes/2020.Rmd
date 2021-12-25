@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Part 2
 
-```{julia day1-2, code=readLines("julia/src/1-2.jl")}
+```{julia day1-2}
 ```
 
 #### Notes
@@ -98,11 +98,7 @@ using DelimitedFiles
 
 ## Day 5: [Binary Boarding](https://adventofcode.com/2020/day/5)
 
-```{julia day5-0, eval=FALSE}
-using DelimitedFiles
-```
-
 ### Part 1
 
-```{julia day5-1, code=readLines("julia/src/5-1.jl")}
+```{julia day5-1}
 ```
