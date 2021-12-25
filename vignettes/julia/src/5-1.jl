@@ -1,5 +1,3 @@
-using DelimitedFiles
-
 # Read in data
 path = joinpath("..", "inst", "2020", "day5.txt");
 dat = readlines(path);

@@ -5,7 +5,7 @@ using Combinatorics
 using Formatting
 
 include("core.jl")
-include("1-1.jl")
+#include("1-1.jl")
 #include("1-2.jl")
 #include("2-1.jl")
 #include("2-2.jl")
