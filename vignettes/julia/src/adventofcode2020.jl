@@ -5,6 +5,8 @@ using Combinatorics
 using Formatting
 
 include("core.jl")
+export here
+
 include("1-1.jl")
 #include("1-2.jl")
 #include("2-1.jl")
