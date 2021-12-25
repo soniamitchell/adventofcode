@@ -1,4 +1,3 @@
-using Combinatorics
 using Formatting
 
 # What is the product of the three entries that sum to 2020?
