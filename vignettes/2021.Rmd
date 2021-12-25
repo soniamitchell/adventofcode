@@ -14,6 +14,7 @@ library(docstring)
 library(dplyr)
 library(ggplot2)
 library(here)
+library(plotly)
 library(purrr)
 library(R.utils)
 library(tidyr)
@@ -1296,11 +1297,11 @@ res <- lapply(seq_len(nrow(combinations)), function(x) {
   first <- combinations[x, 1]
   second <- combinations[x, 2]
   a <- scanners |> 
-    dplyr::filter(beacon == first) |> 
-    dplyr::select(-beacon) |> unlist()
+    dplyr::filter(scanner == first) |> 
+    dplyr::select(-scanner) |> unlist()
   b <- scanners |> 
-    dplyr::filter(beacon == second) |> 
-    dplyr::select(-beacon) |> unlist()
+    dplyr::filter(scanner == second) |> 
+    dplyr::select(-scanner) |> unlist()
   manhattan(a, b)
 }) |> unlist()
 
@@ -1367,3 +1368,13 @@ min(score1, score2) * i * 3
 ```{r dat22-1, code=readLines("R/22-1.R")}
 
 ```
+
+## Day 23: Amphipod
+
+### Part 1
+
+## Day 24: Arithmetic Logic Unit
+
+### Part 1
+
+## Day 25: Sea Cucumber
