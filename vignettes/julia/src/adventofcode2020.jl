@@ -1,4 +1,4 @@
-module AOC2020
+module adventofcode2020
 
 using DelimitedFiles
 using Combinatorics
