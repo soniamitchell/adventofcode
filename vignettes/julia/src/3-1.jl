@@ -1,5 +1,5 @@
 # Read in data
-path = joinpath(here, "inst", "2020", "day3.txt");
+path = joinpath("$(here())", "inst", "2020", "day3.txt");
 dat = readlines(path);
 
 function trees(x, y, map)

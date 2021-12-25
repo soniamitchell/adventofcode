@@ -1,5 +1,5 @@
 # Read in data
-path = joinpath(here, "inst", "2020", "day2.txt");
+path = joinpath("$(here())", "inst", "2020", "day2.txt");
 dat = readlines(path);
 
 function sled_password_check(dat)
