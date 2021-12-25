@@ -1,5 +1,5 @@
 # Read in data
-path = joinpath("$(here())", "inst", "2020", "day1.txt");
+path = joinpath("..", "inst", "2020", "day1.txt");
 dat = vec(readdlm(path));
 
 # Find the two entries that sum to 2020
