@@ -84,6 +84,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com" class="external-link">plotly</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/R.utils" class="external-link">R.utils</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></code></pre></div>
@@ -2006,7 +2007,7 @@
 <span class="co"># Assemble the full map of beacons ----------------------------------------</span>
 
 <span class="va">transformations</span> <span class="op">&lt;-</span> <span class="fu">get_combinations</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>
-<span class="va">scanners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>beacon <span class="op">=</span> <span class="fl">0</span>, x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, z <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
+<span class="va">scanners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>scanner <span class="op">=</span> <span class="fl">0</span>, x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">0</span>, z <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 
 <span class="kw">while</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scanners</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">scans</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
@@ -2017,7 +2018,7 @@
     <span class="co"># cat("\r", i, "of", length(scans), "-",</span>
     <span class="co">#     length(scans) - nrow(scanners), "left to find...")</span>
 
-    <span class="kw">if</span> <span class="op">(</span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">scanners</span><span class="op">$</span><span class="va">beacon</span><span class="op">)</span> <span class="kw">next</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="op">(</span><span class="va">i</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">scanners</span><span class="op">$</span><span class="va">scanner</span><span class="op">)</span> <span class="kw">next</span>
 
     <span class="va">scanner_zero</span> <span class="op">&lt;-</span> <span class="va">scans</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
     <span class="va">scanner_i</span> <span class="op">&lt;-</span> <span class="va">scans</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
@@ -2037,7 +2038,7 @@
         <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind.data.frame</span><span class="op">)</span> |&gt;
         <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">unite</a></span><span class="op">(</span><span class="va">unscramble</span><span class="op">)</span> |&gt;
         <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">unscramble</span><span class="op">)</span> |&gt;
-        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+        <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
       <span class="co"># If 12 or more matches are found, record the scanner position</span>
       <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">subtract</span><span class="op">$</span><span class="va">n</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">{</span>
@@ -2050,7 +2051,8 @@
 
         <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">this_coordinate</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>
 
-        <span class="va">scanners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">scanners</span>, <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>beacon <span class="op">=</span> <span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">this_coordinate</span><span class="op">)</span><span class="op">)</span>
+        <span class="va">scanners</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">scanners</span>,
+                          <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>scanner <span class="op">=</span> <span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">this_coordinate</span><span class="op">)</span><span class="op">)</span>
         <span class="va">results</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>scanner1 <span class="op">=</span> <span class="fl">0</span>,
                              scanner2 <span class="op">=</span> <span class="va">i</span> <span class="op">-</span> <span class="fl">1</span>,
                              beacon <span class="op">=</span> <span class="va">this_coordinate</span>,
@@ -2093,8 +2095,19 @@
       <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">scans</span><span class="op">[[</span><span class="va">from</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> |&gt;
       <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span>
   <span class="op">}</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scanners</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">scans</span><span class="op">)</span>
 <span class="op">}</span>
+
+<span class="co"># scans[[1]] %&gt;%</span>
+<span class="co">#   data.frame() |&gt;</span>
+<span class="co">#   setNames(c("x", "y", "z")) |&gt;</span>
+<span class="co">#   dplyr::mutate(what = "beacon",</span>
+<span class="co">#                 scanner = NA) |&gt;</span>
+<span class="co">#   rbind(scanners |&gt;</span>
+<span class="co">#           mutate(what = "scanner")) |&gt;</span>
+<span class="co">#   plotly::plot_ly(x = ~x, y = ~y, z = ~z, color = ~what,</span>
+<span class="co">#                   colors = c("#F4D06F", "#392F5A"),</span>
+<span class="co">#                   type = "scatter3d", mode = "markers",</span>
+<span class="co">#                   size = 1, opacity = 0.7)</span>
 
 <span class="co"># How many beacons are there?</span>
 <span class="va">scans</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> |&gt;
@@ -2118,11 +2131,11 @@
   <span class="va">first</span> <span class="op">&lt;-</span> <span class="va">combinations</span><span class="op">[</span><span class="va">x</span>, <span class="fl">1</span><span class="op">]</span>
   <span class="va">second</span> <span class="op">&lt;-</span> <span class="va">combinations</span><span class="op">[</span><span class="va">x</span>, <span class="fl">2</span><span class="op">]</span>
   <span class="va">a</span> <span class="op">&lt;-</span> <span class="va">scanners</span> |&gt; 
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">beacon</span> <span class="op">==</span> <span class="va">first</span><span class="op">)</span> |&gt; 
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">beacon</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">scanner</span> <span class="op">==</span> <span class="va">first</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">scanner</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
   <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">scanners</span> |&gt; 
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">beacon</span> <span class="op">==</span> <span class="va">second</span><span class="op">)</span> |&gt; 
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">beacon</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">scanner</span> <span class="op">==</span> <span class="va">second</span><span class="op">)</span> |&gt; 
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">scanner</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
   <span class="fu">manhattan</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
 
@@ -2367,6 +2380,26 @@
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">reactor</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 644257</span></code></pre>
 </div>
+</div>
+<div class="section level2">
+<h2 id="day-23-amphipod">Day 23: Amphipod<a class="anchor" aria-label="anchor" href="#day-23-amphipod"></a>
+</h2>
+<div class="section level3">
+<h3 id="part-1-20">Part 1<a class="anchor" aria-label="anchor" href="#part-1-20"></a>
+</h3>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-24-arithmetic-logic-unit">Day 24: Arithmetic Logic Unit<a class="anchor" aria-label="anchor" href="#day-24-arithmetic-logic-unit"></a>
+</h2>
+<div class="section level3">
+<h3 id="part-1-21">Part 1<a class="anchor" aria-label="anchor" href="#part-1-21"></a>
+</h3>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-25-sea-cucumber">Day 25: Sea Cucumber<a class="anchor" aria-label="anchor" href="#day-25-sea-cucumber"></a>
+</h2>
 </div>
   </div>
 

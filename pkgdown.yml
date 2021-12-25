@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   '2020': 2020.html
   '2021': 2021.html
-last_built: 2021-12-25T16:14Z
+last_built: 2021-12-25T16:40Z
 urls:
   reference: http://sonia-mitchell.com/adventofcode/reference
   article: http://sonia-mitchell.com/adventofcode/articles
