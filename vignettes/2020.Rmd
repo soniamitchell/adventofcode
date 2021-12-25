@@ -11,6 +11,11 @@ library(JuliaCall)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{julia setup, include=FALSE}
+add(Pkg)
+Pkg.activate("Julia")
+```
+
 ## Day 1: [Report Repair](https://adventofcode.com/2020/day/1)
 
 ### Part 1
