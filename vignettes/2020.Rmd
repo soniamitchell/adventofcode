@@ -47,7 +47,7 @@ using DelimitedFiles
 
 ### Part 1
 
-```{julia day2-1, code=readLines("julia/src/2-1.jl")}
+```{julia day2-1}
 ```
 
 #### Notes
@@ -61,39 +61,31 @@ everything into a function will achieve the expected behaviour.
 
 ### Part 2
 
-```{julia day2-1, code=readLines("julia/src/2-2.jl")}
+```{julia day2-1}
 ```
 
 ## Day 3: [Toboggan Trajectory](https://adventofcode.com/2020/day/3)
 
-```{julia day3-0, eval=FALSE}
-using DelimitedFiles
-```
-
 ### Part 1
 
-```{julia day3-1, code=readLines("julia/src/3-1.jl")}
+```{julia day3-1}
 ```
 
 ### Part 2
 
-```{julia day3-2, code=readLines("julia/src/3-2.jl")}
+```{julia day3-2}
 ```
 
 ## Day 4: [Passport Processing](https://adventofcode.com/2020/day/4)
 
-```{julia day4-0, eval=FALSE}
-using DelimitedFiles
-```
-
 ### Part 1
 
-```{julia day4-1, code=readLines("julia/src/4-1.jl")}
+```{julia day4-1}
 ```
 
 ### Part 2
 
-```{julia day4-2, code=readLines("julia/src/4-2.jl")}
+```{julia day4-2}
 ```
 
 ## Day 5: [Binary Boarding](https://adventofcode.com/2020/day/5)
