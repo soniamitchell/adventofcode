@@ -13,6 +13,7 @@ Imports:
     ggplot2,
     here,
     JuliaCall,
+    plotly,
     purrr,
     R.utils,
     tidyr

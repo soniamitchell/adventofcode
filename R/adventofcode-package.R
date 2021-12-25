@@ -10,6 +10,7 @@
 #' @import ggplot2
 #' @importFrom here here
 #' @import JuliaCall
+#' @import plotly
 #' @importFrom purrr pluck
 #' @importFrom R.utils seqToIntervals
 #' @importFrom tidyr separate unite
