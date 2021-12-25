@@ -8,7 +8,7 @@ i <- 0
 
 data.frame(rolls = 1:10, universes = 3^(1:10))
 
-tmp <- combn(27,3) %>%
+tmp <- combn(9,3) %>%
   t() %>%
   data.frame() %>%
   mutate_if(is.numeric, list(~ case_when(.%%3 == 0 ~ .%/%2 * 3,

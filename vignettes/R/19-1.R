@@ -80,7 +80,7 @@ transform_all <- function(scanner_output, transformation) {
 # Assemble the full map of beacons ----------------------------------------
 
 transformations <- get_combinations(1:3)
-scanners <- data.frame(beacon = 0, x = 0, y = 0, z = 0)
+scanners <- data.frame(scanner = 0, x = 0, y = 0, z = 0)
 
 while(nrow(scanners) != length(scans)) {
   results <- list()
@@ -91,7 +91,7 @@ while(nrow(scanners) != length(scans)) {
     # cat("\r", i, "of", length(scans), "-",
     #     length(scans) - nrow(scanners), "left to find...")
 
-    if ((i - 1) %in% scanners$beacon) next
+    if ((i - 1) %in% scanners$scanner) next
 
     scanner_zero <- scans[[1]]
     scanner_i <- scans[[i]]
@@ -111,7 +111,7 @@ while(nrow(scanners) != length(scans)) {
         do.call(what = rbind.data.frame) |>
         tidyr::unite(unscramble) |>
         dplyr::group_by(unscramble) |>
-        dplyr::summarize(n = n())
+        dplyr::summarize(n = dplyr::n())
 
       # If 12 or more matches are found, record the scanner position
       if (max(subtract$n) >= 12) {
@@ -124,7 +124,8 @@ while(nrow(scanners) != length(scans)) {
 
         colnames(this_coordinate) <- c("x", "y", "z")
 
-        scanners <- rbind(scanners, cbind(beacon = i - 1, this_coordinate))
+        scanners <- rbind(scanners,
+                          cbind(scanner = i - 1, this_coordinate))
         results[[i]] <- list(scanner1 = 0,
                              scanner2 = i - 1,
                              beacon = this_coordinate,
@@ -167,8 +168,19 @@ while(nrow(scanners) != length(scans)) {
       rbind(scans[[from]]) |>
       unique()
   }
-  nrow(scanners) != length(scans)
 }
+
+# scans[[1]] %>%
+#   data.frame() |>
+#   setNames(c("x", "y", "z")) |>
+#   dplyr::mutate(what = "beacon",
+#                 scanner = NA) |>
+#   rbind(scanners |>
+#           mutate(what = "scanner")) |>
+#   plotly::plot_ly(x = ~x, y = ~y, z = ~z, color = ~what,
+#                   colors = c("#F4D06F", "#392F5A"),
+#                   type = "scatter3d", mode = "markers",
+#                   size = 1, opacity = 0.7)
 
 # How many beacons are there?
 scans[[1]] |>

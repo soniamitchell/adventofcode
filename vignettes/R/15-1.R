@@ -17,60 +17,64 @@ dat <- scan(text = "1163751742
 1293138521
 2311944581", what = "character") |>
   strsplit("") |>
-  do.call(rbind, .) |>
+  do.call(what = cbind) |>
   apply(1, as.numeric)
-
-# Tidy up data ------------------------------------------------------------
-
-grid <- expand.grid(row = seq_len(nrow(dat)), col = seq_len(ncol(dat))) |>
-  dplyr::arrange(row, col) |>
-  dplyr::mutate(value = dat[cbind(row, col)])
 
 # Functions ---------------------------------------------------------------
 
-path_finder <- function(start, end, reference, max, total = 0) {
-  # Get adjacent grid squares
-  above <- dplyr::filter(grid, row == (start[1] - 1), col == start[2])
-  below <- dplyr::filter(grid, row == (start[1] + 1), col == start[2])
-  left <- dplyr::filter(grid, row == start[1], col == (start[2] - 1))
-  right <- dplyr::filter(grid, row == start[1], col == (start[2] + 1))
+n <- ncol(dat) + 1
 
-  next_steps <- list(above, below, left, right)
+path_finder <- function(start, end, dat) {
 
-  for(x in next_steps) {
-    if (nrow(x) == 0) {
-      # If index is not in the `grid`, ignore it
-      next
+  current <- list(start)
+  total <- 0
+  continue <- TRUE
 
-    } else {
-      # Calculate new total
-      total <- total + x$value
-      # Has the `end` been found? - if the grid coordinate doesn't exist then
-      # FALSE, otherwise check if it matches `end`
-      ended <- dplyr::if_else(nrow(x) == 0, FALSE, all(c(x$row, x$col) == end))
+  while(continue) {
 
-      # If an end has been found then return `total`, otherwise keep going
-      if (ended) {
-        max <- min(max, total)
+    running_total <- c()
+    coordinates <- list()
 
-      } else if (total > max) {
-        next
+    for (i in seq_len(length(current))) {
+      this_one <- current[[i]]
 
-      } else {
-        path_finder(c(x$row, x$col), end, reference, max, total)
+      # Get adjacent grid squares
+      below <- replace(this_one, 1, this_one[1] + 1)
+      right <- replace(this_one, 2, this_one[2] + 1)
+
+      next_steps <- list(below, right)
+
+      for (j in next_steps) {
+        if (n %in% j) next              # If coordinate is out of bounds, next
+        tmp <- dat[rbind(j)] + total    # Find new total
+        running_total <- c(running_total, tmp)
+        coordinates <- c(coordinates, list(j))
       }
     }
+
+    if (length(running_total) != 0) {
+      index <- running_total %in% min(running_total, na.rm = TRUE)
+      total <- unique(running_total[index])
+      current <- coordinates[index]
+      print(current)
+      print(total)
+    }
+
+    if (length(current) == 1 && all(unlist(current) == end))
+      continue <- FALSE
   }
+
+
+
 }
 
 # Run ---------------------------------------------------------------------
 
 # What is the lowest total risk of any path from the top left to the bottom right?
 start <- c(1, 1)
-end <- c(100, 100)
-max <- sum(dat[1,] + sum(dat[, ncol(dat)]))
+end <- c(10, 10)
 
-tmp <- path_finder(start, end, grid, max)
+path_finder(start, end, dat)
 
 
 
