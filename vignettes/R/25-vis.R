@@ -33,6 +33,8 @@ camcorder::gg_record(dir = file.path(tempdir(),"recording"),
                      units = "in",
                      dpi = 300)
 
+track_cucumbers$gg_cucumbers() |> print()
+
 for (i in 1:58) {
   track_cucumbers$move_east()
   track_cucumbers$move_south()
