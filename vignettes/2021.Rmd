@@ -1190,10 +1190,10 @@ current_string <- strsplit(template, "")[[1]]
 # and least common elements in the result
 for (i in seq_len(10)) {
   next_string <- "" 
-  cat("\r", i)
+  # cat("\r", i)
   for (j in seq_len(length(current_string) - 1)) {
-    index <- which(rules$pair == paste(current_string[j:(j + 1)], collapse = ""))
-    index
+    index <- which(rules$pair == paste(current_string[j:(j + 1)], 
+                                       collapse = ""))
     if (length(index) != 0) {
       next_string <- paste0(next_string, current_string[j], rules$insert[index])
     } else {
@@ -1216,7 +1216,7 @@ max(freq) - min(freq)
 current_string <- strsplit(template, "")[[1]] 
 
 for (i in 1:10) {
-  cat("\r", i)
+  # cat("\r", i)
   pairs <- vapply(seq_len(length(current_string) - 1), function(x) 
     paste(current_string[x:(x + 1)], collapse = ""), character(1)) |> 
     data.frame() |> 
