@@ -1249,19 +1249,16 @@ Part 1 is too slow to use the same method with part 2.
 ### Part 1
 
 ```{r dat17-1, code=readLines("R/17-1.R")}
-
 ```
 
 ### Test data
 
 ```{r dat17-t, code=readLines("R/17-t.R")}
-
 ```
 
 ### Part 2
 
 ```{r dat17-2, code=readLines("R/17-2.R")}
-
 ```
 
 ## Day 18: [Snailfish](https://adventofcode.com/2021/day/18)
@@ -1269,13 +1266,11 @@ Part 1 is too slow to use the same method with part 2.
 ### Part 1
 
 ```{r dat18-1, code=readLines("R/18-1.R")}
-
 ```
 
 ### Part 2
 
 ```{r dat18-2, code=readLines("R/18-2.R")}
-
 ```
 
 ## Day 19: [Beacon Scanner](https://adventofcode.com/2021/day/19)
@@ -1283,7 +1278,6 @@ Part 1 is too slow to use the same method with part 2.
 ### Part 1
 
 ```{r dat19-1, code=readLines("R/19-1.R")}
-
 ```
 
 ### Part 2
@@ -1318,7 +1312,6 @@ max(res)
 ### Part 1
 
 ```{r dat20-1, code=readLines("R/20-1.R")}
-
 ```
 
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/21)
@@ -1370,7 +1363,6 @@ min(score1, score2) * i * 3
 ### Part 1
 
 ```{r dat22-1, code=readLines("R/22-1.R")}
-
 ```
 
 ## Day 23: Amphipod
@@ -1382,3 +1374,8 @@ min(score1, score2) * i * 3
 ### Part 1
 
 ## Day 25: Sea Cucumber
+
+### Part 1
+
+```{r dat25-1, code=readLines("R/25-1.R")}
+```
