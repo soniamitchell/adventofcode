@@ -8,18 +8,17 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
-# To set up a virtual environment with reticulate:
+# Set up a virtual environment with reticulate
 
-# 1. `Sys.setenv(RETICULATE_PYTHON = "/usr/bin/python3")`
-# 2. `library(reticulate)`
-# 3. `conda_create("aoc2019", python_version = "3.8.2")`
-# 4. `py_install("numpy", envname = "aoc2019")`, since reticulate always 
-# prefers environments that contain NumPy
-# 5. Restart R
-# 6. `reticulate::use_condaenv("aoc2019")`
-# 7. Check with `py_config()` or `py_discover_config()`
+library(reticulate)
+conda_create("aoc2019", python_version = "3.8.2")
 
-# reticulate::py_install("pandas", envname = "aoc2019")
+# reticulate always prefers environments that contain NumPy
+py_install("numpy", envname = "aoc2019") 
+
+use_condaenv("aoc2019")
+py_install("pandas", envname = "aoc2019")
+# Check with `py_config()` or `py_discover_config()`
 ```
 
 ## Day 1: [The Tyranny of the Rocket Equation](https://adventofcode.com/2019/day/1)
