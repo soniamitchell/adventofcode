@@ -24,6 +24,7 @@ jobs:
       - name: Install camcorder dependencies
         run: |
           sudo apt-get install libpoppler-cpp-dev libpoppler-private-dev
+          sudo apt-get install -y libmagic
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
