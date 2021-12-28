@@ -6,9 +6,9 @@ output: html_document
 ---
 
 ```{r r-setup, include=FALSE}
-library(JuliaCall)
-
 knitr::opts_chunk$set(echo = TRUE)
+
+library(JuliaCall)
 ```
 
 ```{julia setup, include=FALSE}
