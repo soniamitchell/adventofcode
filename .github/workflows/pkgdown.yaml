@@ -23,7 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: pkgdown
+          extra-packages: pkgdown, rcmdcheck
           needs: website
 
       - uses: actions/setup-python@v2
@@ -42,3 +42,12 @@ jobs:
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
           Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'
+
+      - name: Check R package
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes",
+                                           "--no-build-vignettes"),
+                                  build_args = c("--no-manual",
+                                                 "--ignore-vignettes",
+                                                 "--no-build-vignettes"),
+                                  error_on = "error")
+        shell: Rscript {0}

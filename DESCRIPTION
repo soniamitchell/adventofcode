@@ -18,6 +18,7 @@ Imports:
     reticulate,
     R.utils,
     tidyr
+    testthat
 Encoding: UTF-8
 LazyData: true
 URL: http://sonia-mitchell.com/adventofcode
