@@ -1,12 +1,12 @@
 Package: adventofcode
 Type: Package
-Title: What the Package Does (Title Case)
+Title: My Advent of Code solutions
 Version: 0.1.0
 Authors@R: c(person("Sonia", "Mitchell", email = "sonia.mitchell@glasgow.ac.uk",
                   role = c("cre", "aut"), comment = c(ORCID = "0000-0003-1536-2066")))
-Description: Advent of code solutions in R
+Description: My Advent of Code solutions in R, Julia, and Python.
 License: GPL-3
-Depends: R (>= 4.1.1)
+Depends: R (>= 4.1)
 Imports:
     docstring,
     dplyr,
@@ -18,8 +18,12 @@ Imports:
     reticulate,
     R.utils,
     tidyr
+Suggests:
+    rmarkdown,
+    knitr,
     testthat
 Encoding: UTF-8
 LazyData: true
 URL: http://sonia-mitchell.com/adventofcode
 RoxygenNote: 7.1.2
+VignetteBuilder: knitr
