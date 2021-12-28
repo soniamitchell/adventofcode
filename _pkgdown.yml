@@ -1,6 +1,10 @@
 title: adventofcode
 url: http://sonia-mitchell.com/adventofcode
 
+template:
+  bootstrap: 5
+  bootswatch: sketchy
+
 navbar:
   left:
     - text: 2021 (R)
