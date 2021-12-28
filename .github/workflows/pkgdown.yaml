@@ -26,6 +26,11 @@ jobs:
           extra-packages: pkgdown
           needs: website
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+
       - name: Set up JuliaCall
         run: |
           library(JuliaCall)

@@ -11,6 +11,8 @@ navbar:
       href: articles/2021.html
     - text: 2020 (Julia)
       href: articles/2020.html
+    - text: 2019 (Python)
+      href: articles/2019.html
   right:
     - icon: fab fa-github
       text: "GitHub"
