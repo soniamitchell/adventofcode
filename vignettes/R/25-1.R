@@ -135,8 +135,7 @@ i <- 0
 
 while (continue) {
   i <- i + 1
-
-  cat("\r", i)
+  # cat("\r", i)
   east <- track_cucumbers$move_east()
   south <- track_cucumbers$move_south()
   cucumbers <- south$cucumbers
