@@ -25,20 +25,16 @@ py_install("pandas", envname = "aoc2019")
 # Check with `py_config()` or `py_discover_config()`
 ```
 
+```{python libraries, message=FALSE}
+import pandas as pd
+import numpy as np
+```
+
 ## Day 1: [The Tyranny of the Rocket Equation](https://adventofcode.com/2019/day/1)
 
 ### Part 1
 
 ```{python 1-1}
-False and True
-```
-
-ajldh
-
-```{python}
-import pandas as pd
-import numpy as np
-
 grid = np.random.rand(5,2)
 df = pd.DataFrame(grid)
 
