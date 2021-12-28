@@ -23,7 +23,7 @@ jobs:
 
       - name: Install camcorder dependencies
         run: |
-          Rscript -e "install.packages('remotes)"
+          Rscript -e "install.packages('remotes')"
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
