@@ -24,8 +24,6 @@ cucumbers <- rbind(east_cucumbers, south_cucumbers) |>
 # Start visualisation -----------------------------------------------------
 
 track_cucumbers <- sea_cucumbers$new(dat, cucumbers)
-continue <- TRUE
-i <- 0
 
 # Initialise recorder
 camcorder::gg_record(dir = file.path(tempdir(),"recording"),
