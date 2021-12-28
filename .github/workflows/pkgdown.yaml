@@ -31,14 +31,14 @@ jobs:
           extra-packages: pkgdown, rcmdcheck
           needs: website
 
-      - name: Check R package
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes",
-                                           "--no-build-vignettes"),
-                                  build_args = c("--no-manual",
-                                                 "--ignore-vignettes",
-                                                 "--no-build-vignettes"),
-                                  error_on = "error")
-        shell: Rscript {0}
+      # - name: Check R package
+      #   run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes",
+      #                                      "--no-build-vignettes"),
+      #                             build_args = c("--no-manual",
+      #                                            "--ignore-vignettes",
+      #                                            "--no-build-vignettes"),
+      #                             error_on = "error")
+      #   shell: Rscript {0}
 
       - uses: actions/setup-python@v2
         with:
