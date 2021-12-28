@@ -1,7 +1,4 @@
-using DelimitedFiles
-using Combinatorics
-
-# Read in data 
+# Read in data
 path = joinpath("..", "inst", "2020", "day1.txt");
 dat = vec(readdlm(path));
 
