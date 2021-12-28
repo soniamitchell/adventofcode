@@ -76,32 +76,28 @@
 
     
     
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code></pre></div>
 <div class="section level2">
 <h2 id="day-1-the-tyranny-of-the-rocket-equation">Day 1: <a href="https://adventofcode.com/2019/day/1" class="external-link">The Tyranny of the Rocket Equation</a><a class="anchor" aria-label="anchor" href="#day-1-the-tyranny-of-the-rocket-equation"></a>
 </h2>
 <div class="section level3">
 <h3 id="part-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1"></a>
 </h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="va">False</span> <span class="kw">and</span> <span class="va">True</span></span></code></pre></div>
-<pre><code><span class="co">## False</span></code></pre>
-<p>ajldh</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a>grid <span class="op">=</span> np.random.rand(<span class="dv">5</span>,<span class="dv">2</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>df <span class="op">=</span> pd.DataFrame(grid)</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">def</span> multiply(x):</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    <span class="cf">return</span> x[<span class="dv">0</span>]<span class="op">*</span>x[<span class="dv">1</span>]</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a>df[<span class="st">'multiply'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(multiply, axis <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="bu">print</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>grid <span class="op">=</span> np.random.rand(<span class="dv">5</span>,<span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a>df <span class="op">=</span> pd.DataFrame(grid)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">def</span> multiply(x):</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="cf">return</span> x[<span class="dv">0</span>]<span class="op">*</span>x[<span class="dv">1</span>]</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>df[<span class="st">'multiply'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(multiply, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="bu">print</span>(df)</span></code></pre></div>
 <pre><code><span class="co">##           0         1  multiply</span>
-<span class="co">## 0  0.066865  0.635729  0.042508</span>
-<span class="co">## 1  0.307124  0.600387  0.184393</span>
-<span class="co">## 2  0.732653  0.256113  0.187642</span>
-<span class="co">## 3  0.023216  0.661431  0.015356</span>
-<span class="co">## 4  0.408532  0.348999  0.142577</span></code></pre>
+<span class="co">## 0  0.389060  0.340420  0.132444</span>
+<span class="co">## 1  0.886082  0.986492  0.874113</span>
+<span class="co">## 2  0.171701  0.832260  0.142900</span>
+<span class="co">## 3  0.322610  0.734793  0.237052</span>
+<span class="co">## 4  0.281739  0.761313  0.214492</span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

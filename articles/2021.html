@@ -1309,10 +1309,10 @@
 <span class="co"># and least common elements in the result</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="st">""</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/R.utils/man/Non-documented_objects.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\r"</span>, <span class="va">i</span><span class="op">)</span>
+  <span class="co"># cat("\r", i)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rules</span><span class="op">$</span><span class="va">pair</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">:</span><span class="op">(</span><span class="va">j</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">index</span>
+    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rules</span><span class="op">$</span><span class="va">pair</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">:</span><span class="op">(</span><span class="va">j</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, 
+                                       collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
     <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
       <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">]</span>, <span class="va">rules</span><span class="op">$</span><span class="va">insert</span><span class="op">[</span><span class="va">index</span><span class="op">]</span><span class="op">)</span>
     <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
@@ -1321,20 +1321,9 @@
   <span class="op">}</span>
   <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
   <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="op">}</span></code></pre></div>
-<pre><code><span class="co">## </span>
- <span class="fl">1</span>
- <span class="fl">2</span>
- <span class="fl">3</span>
- <span class="fl">4</span>
- <span class="fl">5</span>
- <span class="fl">6</span>
- <span class="fl">7</span>
- <span class="fl">8</span>
- <span class="fl">9</span>
- <span class="fl">10</span></code></pre>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># What do you get if you take the quantity of the most common element and </span>
+<span class="op">}</span>
+
+<span class="co"># What do you get if you take the quantity of the most common element and </span>
 <span class="co"># subtract the quantity of the least common element?</span>
 <span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
@@ -1342,11 +1331,11 @@
 <div class="section level4">
 <h4 id="alternative-solution">Alternative solution<a class="anchor" aria-label="anchor" href="#alternative-solution"></a>
 </h4>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">template</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> 
 
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/R.utils/man/Non-documented_objects.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\r"</span>, <span class="va">i</span><span class="op">)</span>
+  <span class="co"># cat("\r", i)</span>
   <span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> 
     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">x</span><span class="op">:</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> |&gt; 
     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
@@ -1362,20 +1351,9 @@
     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
   
   <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="op">}</span></code></pre></div>
-<pre><code><span class="co">## </span>
- <span class="fl">1</span>
- <span class="fl">2</span>
- <span class="fl">3</span>
- <span class="fl">4</span>
- <span class="fl">5</span>
- <span class="fl">6</span>
- <span class="fl">7</span>
- <span class="fl">8</span>
- <span class="fl">9</span>
- <span class="fl">10</span></code></pre>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 2027</span></code></pre>
 <p>Part 1 is too slow to use the same method with part 2.</p>
@@ -1396,7 +1374,7 @@
 <div class="section level3">
 <h3 id="part-1-14">Part 1<a class="anchor" aria-label="anchor" href="#part-1-14"></a>
 </h3>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day17.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -1494,7 +1472,7 @@
                 <span class="va">step</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">vy</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 79</span></code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the highest y position it reaches on this trajectory?</span>
 <span class="va">results</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">trial</span> <span class="op">==</span> <span class="va">this_trial</span><span class="op">)</span> |&gt;
@@ -1506,7 +1484,7 @@
 <div class="section level3">
 <h3 id="test-data">Test data<a class="anchor" aria-label="anchor" href="#test-data"></a>
 </h3>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Plot test run -----------------------------------------------------------</span>
 
 <span class="va">dat</span> <span class="op">=</span> <span class="st">"target area: x=20..30, y=-10..-5"</span>
@@ -1550,7 +1528,7 @@
 <div class="section level3">
 <h3 id="part-2-13">Part 2<a class="anchor" aria-label="anchor" href="#part-2-13"></a>
 </h3>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day17.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -1691,14 +1669,14 @@
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y_max</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   xv yv y_max</span>
 <span class="co">## 1 24 79  3160</span></code></pre>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the highest y position it reaches on this trajectory?</span>
 <span class="va">results</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y_max</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 3160</span></code></pre>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># How many distinct initial velocity values cause the probe to be within the</span>
 <span class="co"># target area after any step?</span>
 <span class="va">results</span> |&gt;
@@ -1714,7 +1692,7 @@
 <div class="section level3">
 <h3 id="part-1-15">Part 1<a class="anchor" aria-label="anchor" href="#part-1-15"></a>
 </h3>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day18.txt"</span><span class="op">)</span> |&gt;
@@ -1894,7 +1872,7 @@
 <div class="section level3">
 <h3 id="part-2-14">Part 2<a class="anchor" aria-label="anchor" href="#part-2-14"></a>
 </h3>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the largest magnitude of any sum of two different snailfish numbers</span>
 <span class="co"># from the homework assignment?</span>
 
@@ -1921,7 +1899,7 @@
 <div class="section level3">
 <h3 id="part-1-16">Part 1<a class="anchor" aria-label="anchor" href="#part-1-16"></a>
 </h3>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day19.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span> |&gt;
@@ -2115,7 +2093,7 @@
 <div class="section level3">
 <h3 id="part-2-15">Part 2<a class="anchor" aria-label="anchor" href="#part-2-15"></a>
 </h3>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">manhattan</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">b</span><span class="op">)</span> |&gt; 
     <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">)</span>
@@ -2147,7 +2125,7 @@
 <div class="section level3">
 <h3 id="part-1-17">Part 1<a class="anchor" aria-label="anchor" href="#part-1-17"></a>
 </h3>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day20.txt"</span><span class="op">)</span>
 <span class="va">algorithm</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
@@ -2257,7 +2235,7 @@
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
 <p><img src="2021_files/figure-html/dat20-1-1.png" width="700"></p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># How many pixels are lit in the resulting image?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">img</span> <span class="op">==</span> <span class="st">"#"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 5663</span></code></pre>
@@ -2269,7 +2247,7 @@
 <div class="section level3">
 <h3 id="part-1-18">Part 1<a class="anchor" aria-label="anchor" href="#part-1-18"></a>
 </h3>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day21.txt"</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -2316,7 +2294,7 @@
 <div class="section level3">
 <h3 id="part-1-19">Part 1<a class="anchor" aria-label="anchor" href="#part-1-19"></a>
 </h3>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day22.txt"</span><span class="op">)</span> |&gt;

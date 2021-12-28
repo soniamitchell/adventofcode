@@ -86,16 +86,16 @@
 <h3 id="part-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Read in data</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day1.txt"</span>);</span>
-<span id="cb2-3"><a href="#cb2-3"></a>dat = vec(readdlm(path));</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># Find the two entries that sum to 2020</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">2</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
-<span id="cb2-8"><a href="#cb2-8"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># What do you get if you multiply them together?</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>prod(numbers)</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day1.txt"</span>)</span></code></pre></div>
+<pre><code><span class="co">## "../inst/2020/day1.txt"</span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>dat = vec(readdlm(path));</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Find the two entries that sum to 2020</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">2</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
+<span id="cb4-5"><a href="#cb4-5"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># What do you get if you multiply them together?</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>prod(numbers)</span></code></pre></div>
 <pre><code><span class="co">## 802011.0</span></code></pre>
 <div class="section level4">
 <h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
@@ -104,7 +104,7 @@
 <li>
 <strong>Array comprehension</strong> has the following syntax:</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span>]</span></code></pre></div>
 <pre><code><span class="co">## 3-element Vector{Int64}:</span>
 <span class="co">##  1</span>
 <span class="co">##  4</span>
@@ -114,10 +114,10 @@
 <div class="section level3">
 <h3 id="part-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># What is the product of the three entries that sum to 2020?</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">3</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
-<span id="cb6-3"><a href="#cb6-3"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
-<span id="cb6-4"><a href="#cb6-4"></a>format(prod(numbers))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># What is the product of the three entries that sum to 2020?</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">3</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
+<span id="cb8-3"><a href="#cb8-3"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
+<span id="cb8-4"><a href="#cb8-4"></a>format(prod(numbers))</span></code></pre></div>
 <pre><code><span class="co">## "248607374"</span></code></pre>
 <div class="section level4">
 <h4 id="notes-1">Notes<a class="anchor" aria-label="anchor" href="#notes-1"></a>
@@ -126,7 +126,7 @@
 <li>
 <strong>Conditional comprehension</strong> has the following syntax:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span> <span class="kw">if</span> x &gt; <span class="fl">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1"></a>[x^<span class="fl">2</span> <span class="kw">for</span> x = <span class="fl">1</span>:<span class="fl">3</span> <span class="kw">if</span> x &gt; <span class="fl">1</span>]</span></code></pre></div>
 <pre><code><span class="co">## 2-element Vector{Int64}:</span>
 <span class="co">##  4</span>
 <span class="co">##  9</span></code></pre>
@@ -139,26 +139,26 @@
 <div class="section level3">
 <h3 id="part-1-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1-1"></a>
 </h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Read in data</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day2.txt"</span>);</span>
-<span id="cb10-3"><a href="#cb10-3"></a>dat = readlines(path);</span>
-<span id="cb10-4"><a href="#cb10-4"></a></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">function</span> sled_password_check(dat)</span>
-<span id="cb10-6"><a href="#cb10-6"></a>    results = <span class="fl">0</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>    <span class="kw">for</span> i <span class="kw">in</span> dat</span>
-<span id="cb10-8"><a href="#cb10-8"></a>        m = match(r<span class="st">"(\d+)-(\d+)\s+(.):\s+(.+)"</span>, i)  <span class="co"># grep</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>        minimum = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">1</span>])       <span class="co"># convert to Int64</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a>        maximum = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">2</span>])</span>
-<span id="cb10-11"><a href="#cb10-11"></a>        letter = m.captures[<span class="fl">3</span>]</span>
-<span id="cb10-12"><a href="#cb10-12"></a>        password = m.captures[<span class="fl">4</span>]</span>
-<span id="cb10-13"><a href="#cb10-13"></a>        n = count(letter, password)</span>
-<span id="cb10-14"><a href="#cb10-14"></a>        results += (n &gt;= minimum &amp;&amp; n &lt;= maximum) ? <span class="fl">1</span> : <span class="fl">0</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a>    <span class="kw">end</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a>    results</span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="kw">end</span>;</span>
-<span id="cb10-18"><a href="#cb10-18"></a></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co"># How many passwords are valid according to their policies?</span></span>
-<span id="cb10-20"><a href="#cb10-20"></a>sled_password_check(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Read in data</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day2.txt"</span>);</span>
+<span id="cb12-3"><a href="#cb12-3"></a>dat = readlines(path);</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">function</span> sled_password_check(dat)</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    results = <span class="fl">0</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>    <span class="kw">for</span> i <span class="kw">in</span> dat</span>
+<span id="cb12-8"><a href="#cb12-8"></a>        m = match(r<span class="st">"(\d+)-(\d+)\s+(.):\s+(.+)"</span>, i)  <span class="co"># grep</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>        minimum = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">1</span>])       <span class="co"># convert to Int64</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>        maximum = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">2</span>])</span>
+<span id="cb12-11"><a href="#cb12-11"></a>        letter = m.captures[<span class="fl">3</span>]</span>
+<span id="cb12-12"><a href="#cb12-12"></a>        password = m.captures[<span class="fl">4</span>]</span>
+<span id="cb12-13"><a href="#cb12-13"></a>        n = count(letter, password)</span>
+<span id="cb12-14"><a href="#cb12-14"></a>        results += (n &gt;= minimum &amp;&amp; n &lt;= maximum) ? <span class="fl">1</span> : <span class="fl">0</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>    <span class="kw">end</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>    results</span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="kw">end</span>;</span>
+<span id="cb12-18"><a href="#cb12-18"></a></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co"># How many passwords are valid according to their policies?</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a>sled_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 640</span></code></pre>
 <div class="section level4">
 <h4 id="notes-2">Notes<a class="anchor" aria-label="anchor" href="#notes-2"></a>
@@ -172,23 +172,23 @@
 <div class="section level3">
 <h3 id="part-2-1">Part 2<a class="anchor" aria-label="anchor" href="#part-2-1"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">function</span> toboggan_password_check(dat)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>    results = <span class="fl">0</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>    <span class="kw">for</span> i <span class="kw">in</span> dat</span>
-<span id="cb12-4"><a href="#cb12-4"></a>        m = match(r<span class="st">"(\d+)-(\d+)\s+(.):\s+(.+)"</span>, i)  <span class="co"># grep</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>        pos1 = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">1</span>])          <span class="co"># convert to Int64</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a>        pos2 = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">2</span>])</span>
-<span id="cb12-7"><a href="#cb12-7"></a>        letter = only(m.captures[<span class="fl">3</span>])                <span class="co"># convert to ASCII/Unicode</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a>        password = m.captures[<span class="fl">4</span>]</span>
-<span id="cb12-9"><a href="#cb12-9"></a>        <span class="co"># Exactly one of these positions must contain the given letter</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a>        test = (password[pos1] == letter) + (password[pos2] == letter) == <span class="fl">1</span></span>
-<span id="cb12-11"><a href="#cb12-11"></a>        results += test ? <span class="fl">1</span> : <span class="fl">0</span></span>
-<span id="cb12-12"><a href="#cb12-12"></a>    <span class="kw">end</span></span>
-<span id="cb12-13"><a href="#cb12-13"></a>    results</span>
-<span id="cb12-14"><a href="#cb12-14"></a><span class="kw">end</span>;</span>
-<span id="cb12-15"><a href="#cb12-15"></a></span>
-<span id="cb12-16"><a href="#cb12-16"></a><span class="co"># How many passwords are valid according to the new interpretation of the policies?</span></span>
-<span id="cb12-17"><a href="#cb12-17"></a>toboggan_password_check(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">function</span> toboggan_password_check(dat)</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    results = <span class="fl">0</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="kw">for</span> i <span class="kw">in</span> dat</span>
+<span id="cb14-4"><a href="#cb14-4"></a>        m = match(r<span class="st">"(\d+)-(\d+)\s+(.):\s+(.+)"</span>, i)  <span class="co"># grep</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>        pos1 = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">1</span>])          <span class="co"># convert to Int64</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>        pos2 = parse(<span class="dt">Int64</span>, m.captures[<span class="fl">2</span>])</span>
+<span id="cb14-7"><a href="#cb14-7"></a>        letter = only(m.captures[<span class="fl">3</span>])                <span class="co"># convert to ASCII/Unicode</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>        password = m.captures[<span class="fl">4</span>]</span>
+<span id="cb14-9"><a href="#cb14-9"></a>        <span class="co"># Exactly one of these positions must contain the given letter</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>        test = (password[pos1] == letter) + (password[pos2] == letter) == <span class="fl">1</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a>        results += test ? <span class="fl">1</span> : <span class="fl">0</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="kw">end</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>    results</span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="kw">end</span>;</span>
+<span id="cb14-15"><a href="#cb14-15"></a></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co"># How many passwords are valid according to the new interpretation of the policies?</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a>toboggan_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 472</span></code></pre>
 </div>
 </div>
@@ -198,40 +198,40 @@
 <div class="section level3">
 <h3 id="part-1-2">Part 1<a class="anchor" aria-label="anchor" href="#part-1-2"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Read in data</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day3.txt"</span>);</span>
-<span id="cb14-3"><a href="#cb14-3"></a>dat = readlines(path);</span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="kw">function</span> trees(x, y, map)</span>
-<span id="cb14-6"><a href="#cb14-6"></a>    xpos = ypos = <span class="fl">1</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>    results = <span class="fl">0</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a>    xlim = length(map[<span class="fl">1</span>])</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    ylim = length(map)</span>
-<span id="cb14-10"><a href="#cb14-10"></a>    <span class="kw">while</span> ypos != ylim</span>
-<span id="cb14-11"><a href="#cb14-11"></a>        xpos += x</span>
-<span id="cb14-12"><a href="#cb14-12"></a>        xpos = (xpos &gt; xlim) ? xpos - xlim : xpos</span>
-<span id="cb14-13"><a href="#cb14-13"></a>        ypos += y</span>
-<span id="cb14-14"><a href="#cb14-14"></a>        results += map[ypos][xpos] == only(<span class="st">"#"</span>) ? <span class="fl">1</span> : <span class="fl">0</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a>    <span class="kw">end</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a>    results</span>
-<span id="cb14-17"><a href="#cb14-17"></a><span class="kw">end</span>;</span>
-<span id="cb14-18"><a href="#cb14-18"></a></span>
-<span id="cb14-19"><a href="#cb14-19"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and down 1, </span></span>
-<span id="cb14-20"><a href="#cb14-20"></a><span class="co"># how many trees would you encounter?</span></span>
-<span id="cb14-21"><a href="#cb14-21"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Read in data</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day3.txt"</span>);</span>
+<span id="cb16-3"><a href="#cb16-3"></a>dat = readlines(path);</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="kw">function</span> trees(x, y, map)</span>
+<span id="cb16-6"><a href="#cb16-6"></a>    xpos = ypos = <span class="fl">1</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    results = <span class="fl">0</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>    xlim = length(map[<span class="fl">1</span>])</span>
+<span id="cb16-9"><a href="#cb16-9"></a>    ylim = length(map)</span>
+<span id="cb16-10"><a href="#cb16-10"></a>    <span class="kw">while</span> ypos != ylim</span>
+<span id="cb16-11"><a href="#cb16-11"></a>        xpos += x</span>
+<span id="cb16-12"><a href="#cb16-12"></a>        xpos = (xpos &gt; xlim) ? xpos - xlim : xpos</span>
+<span id="cb16-13"><a href="#cb16-13"></a>        ypos += y</span>
+<span id="cb16-14"><a href="#cb16-14"></a>        results += map[ypos][xpos] == only(<span class="st">"#"</span>) ? <span class="fl">1</span> : <span class="fl">0</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a>    <span class="kw">end</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a>    results</span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="kw">end</span>;</span>
+<span id="cb16-18"><a href="#cb16-18"></a></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and down 1, </span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co"># how many trees would you encounter?</span></span>
+<span id="cb16-21"><a href="#cb16-21"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
 <pre><code><span class="co">## 237</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="part-2-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2-2"></a>
 </h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Determine the number of trees you would encounter if, for each of the following slopes, </span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co"># you start at the top-left corner and traverse the map all the way to the bottom</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>iterate = [[<span class="fl">1</span>,<span class="fl">1</span>], [<span class="fl">3</span>,<span class="fl">1</span>], [<span class="fl">5</span>,<span class="fl">1</span>], [<span class="fl">7</span>,<span class="fl">1</span>], [<span class="fl">1</span>,<span class="fl">2</span>]];</span>
-<span id="cb16-4"><a href="#cb16-4"></a>results = [trees(iterate[x][<span class="fl">1</span>], iterate[x][<span class="fl">2</span>], dat) <span class="kw">for</span> x <span class="kw">in</span> eachindex(iterate)];</span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="co"># What do you get if you multiply together the number of trees encountered on each of the </span></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># listed slopes?</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a>prod(results)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Determine the number of trees you would encounter if, for each of the following slopes, </span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># you start at the top-left corner and traverse the map all the way to the bottom</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>iterate = [[<span class="fl">1</span>,<span class="fl">1</span>], [<span class="fl">3</span>,<span class="fl">1</span>], [<span class="fl">5</span>,<span class="fl">1</span>], [<span class="fl">7</span>,<span class="fl">1</span>], [<span class="fl">1</span>,<span class="fl">2</span>]];</span>
+<span id="cb18-4"><a href="#cb18-4"></a>results = [trees(iterate[x][<span class="fl">1</span>], iterate[x][<span class="fl">2</span>], dat) <span class="kw">for</span> x <span class="kw">in</span> eachindex(iterate)];</span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co"># What do you get if you multiply together the number of trees encountered on each of the </span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co"># listed slopes?</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>prod(results)</span></code></pre></div>
 <pre><code><span class="co">## 2106818610</span></code></pre>
 </div>
 </div>
@@ -241,82 +241,82 @@
 <div class="section level3">
 <h3 id="part-1-3">Part 1<a class="anchor" aria-label="anchor" href="#part-1-3"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Read in data</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day4.txt"</span>);</span>
-<span id="cb18-3"><a href="#cb18-3"></a>dat = readlines(path);</span>
-<span id="cb18-4"><a href="#cb18-4"></a></span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="kw">function</span> parsepassports(dat) </span>
-<span id="cb18-6"><a href="#cb18-6"></a>    record = []</span>
-<span id="cb18-7"><a href="#cb18-7"></a>    d = <span class="dt">Dict</span>{<span class="dt">String</span>, <span class="dt">String</span>}()</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(dat)</span>
-<span id="cb18-9"><a href="#cb18-9"></a>        <span class="kw">if</span> isempty(dat[i])</span>
-<span id="cb18-10"><a href="#cb18-10"></a>            push!(record, d)</span>
-<span id="cb18-11"><a href="#cb18-11"></a>            d = <span class="dt">Dict</span>{<span class="dt">String</span>, <span class="dt">String</span>}()</span>
-<span id="cb18-12"><a href="#cb18-12"></a>        <span class="kw">else</span></span>
-<span id="cb18-13"><a href="#cb18-13"></a>            <span class="kw">for</span> j <span class="kw">in</span> split(dat[i])</span>
-<span id="cb18-14"><a href="#cb18-14"></a>                key, value = split(j, <span class="st">":"</span>)</span>
-<span id="cb18-15"><a href="#cb18-15"></a>                d[key] = value</span>
-<span id="cb18-16"><a href="#cb18-16"></a>            <span class="kw">end</span></span>
-<span id="cb18-17"><a href="#cb18-17"></a>            i == length(dat) ? push!(record, d) : nothing</span>
-<span id="cb18-18"><a href="#cb18-18"></a>        <span class="kw">end</span></span>
-<span id="cb18-19"><a href="#cb18-19"></a>    <span class="kw">end</span></span>
-<span id="cb18-20"><a href="#cb18-20"></a>    record</span>
-<span id="cb18-21"><a href="#cb18-21"></a><span class="kw">end</span>;</span>
-<span id="cb18-22"><a href="#cb18-22"></a></span>
-<span id="cb18-23"><a href="#cb18-23"></a><span class="kw">function</span> countpassports(passports)</span>
-<span id="cb18-24"><a href="#cb18-24"></a>    counter = <span class="fl">0</span></span>
-<span id="cb18-25"><a href="#cb18-25"></a>    fields = [<span class="st">"byr"</span>, <span class="st">"iyr"</span>, <span class="st">"eyr"</span>, <span class="st">"hgt"</span>, <span class="st">"hcl"</span>, <span class="st">"ecl"</span>, <span class="st">"pid"</span>]</span>
-<span id="cb18-26"><a href="#cb18-26"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(passports)</span>
-<span id="cb18-27"><a href="#cb18-27"></a>        invalid = sum([!haskey(passports[i], key) <span class="kw">for</span> key <span class="kw">in</span> fields]) &gt; <span class="fl">0</span></span>
-<span id="cb18-28"><a href="#cb18-28"></a>        counter += invalid ? <span class="fl">0</span> : <span class="fl">1</span></span>
-<span id="cb18-29"><a href="#cb18-29"></a>    <span class="kw">end</span></span>
-<span id="cb18-30"><a href="#cb18-30"></a>    counter</span>
-<span id="cb18-31"><a href="#cb18-31"></a><span class="kw">end</span>;</span>
-<span id="cb18-32"><a href="#cb18-32"></a></span>
-<span id="cb18-33"><a href="#cb18-33"></a><span class="co"># How many passports are valid?</span></span>
-<span id="cb18-34"><a href="#cb18-34"></a>passports = parsepassports(dat);</span>
-<span id="cb18-35"><a href="#cb18-35"></a>countpassports(passports)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Read in data</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day4.txt"</span>);</span>
+<span id="cb20-3"><a href="#cb20-3"></a>dat = readlines(path);</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="kw">function</span> parsepassports(dat) </span>
+<span id="cb20-6"><a href="#cb20-6"></a>    record = []</span>
+<span id="cb20-7"><a href="#cb20-7"></a>    d = <span class="dt">Dict</span>{<span class="dt">String</span>, <span class="dt">String</span>}()</span>
+<span id="cb20-8"><a href="#cb20-8"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(dat)</span>
+<span id="cb20-9"><a href="#cb20-9"></a>        <span class="kw">if</span> isempty(dat[i])</span>
+<span id="cb20-10"><a href="#cb20-10"></a>            push!(record, d)</span>
+<span id="cb20-11"><a href="#cb20-11"></a>            d = <span class="dt">Dict</span>{<span class="dt">String</span>, <span class="dt">String</span>}()</span>
+<span id="cb20-12"><a href="#cb20-12"></a>        <span class="kw">else</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>            <span class="kw">for</span> j <span class="kw">in</span> split(dat[i])</span>
+<span id="cb20-14"><a href="#cb20-14"></a>                key, value = split(j, <span class="st">":"</span>)</span>
+<span id="cb20-15"><a href="#cb20-15"></a>                d[key] = value</span>
+<span id="cb20-16"><a href="#cb20-16"></a>            <span class="kw">end</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a>            i == length(dat) ? push!(record, d) : nothing</span>
+<span id="cb20-18"><a href="#cb20-18"></a>        <span class="kw">end</span></span>
+<span id="cb20-19"><a href="#cb20-19"></a>    <span class="kw">end</span></span>
+<span id="cb20-20"><a href="#cb20-20"></a>    record</span>
+<span id="cb20-21"><a href="#cb20-21"></a><span class="kw">end</span>;</span>
+<span id="cb20-22"><a href="#cb20-22"></a></span>
+<span id="cb20-23"><a href="#cb20-23"></a><span class="kw">function</span> countpassports(passports)</span>
+<span id="cb20-24"><a href="#cb20-24"></a>    counter = <span class="fl">0</span></span>
+<span id="cb20-25"><a href="#cb20-25"></a>    fields = [<span class="st">"byr"</span>, <span class="st">"iyr"</span>, <span class="st">"eyr"</span>, <span class="st">"hgt"</span>, <span class="st">"hcl"</span>, <span class="st">"ecl"</span>, <span class="st">"pid"</span>]</span>
+<span id="cb20-26"><a href="#cb20-26"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(passports)</span>
+<span id="cb20-27"><a href="#cb20-27"></a>        invalid = sum([!haskey(passports[i], key) <span class="kw">for</span> key <span class="kw">in</span> fields]) &gt; <span class="fl">0</span></span>
+<span id="cb20-28"><a href="#cb20-28"></a>        counter += invalid ? <span class="fl">0</span> : <span class="fl">1</span></span>
+<span id="cb20-29"><a href="#cb20-29"></a>    <span class="kw">end</span></span>
+<span id="cb20-30"><a href="#cb20-30"></a>    counter</span>
+<span id="cb20-31"><a href="#cb20-31"></a><span class="kw">end</span>;</span>
+<span id="cb20-32"><a href="#cb20-32"></a></span>
+<span id="cb20-33"><a href="#cb20-33"></a><span class="co"># How many passports are valid?</span></span>
+<span id="cb20-34"><a href="#cb20-34"></a>passports = parsepassports(dat);</span>
+<span id="cb20-35"><a href="#cb20-35"></a>countpassports(passports)</span></code></pre></div>
 <pre><code><span class="co">## 182</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="part-2-3">Part 2<a class="anchor" aria-label="anchor" href="#part-2-3"></a>
 </h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">function</span> checkfields(passports)</span>
-<span id="cb20-2"><a href="#cb20-2"></a>    fields = [<span class="st">"byr"</span>, <span class="st">"iyr"</span>, <span class="st">"eyr"</span>, <span class="st">"hgt"</span>, <span class="st">"hcl"</span>, <span class="st">"ecl"</span>, <span class="st">"pid"</span>]</span>
-<span id="cb20-3"><a href="#cb20-3"></a>    colours = [<span class="st">"amb"</span>, <span class="st">"blu"</span>, <span class="st">"brn"</span>, <span class="st">"gry"</span>, <span class="st">"grn"</span>, <span class="st">"hzl"</span>, <span class="st">"oth"</span>]</span>
-<span id="cb20-4"><a href="#cb20-4"></a>    counter = <span class="fl">0</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>    <span class="kw">for</span> i <span class="kw">in</span> passports</span>
-<span id="cb20-6"><a href="#cb20-6"></a>        invalid = sum([!haskey(i, key) <span class="kw">for</span> key <span class="kw">in</span> fields]) &gt; <span class="fl">0</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a></span>
-<span id="cb20-8"><a href="#cb20-8"></a>        <span class="kw">if</span> (!invalid)</span>
-<span id="cb20-9"><a href="#cb20-9"></a>            byr = <span class="fl">1920</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"byr"</span>]) &lt;= <span class="fl">2002</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>            iyr = <span class="fl">2010</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"iyr"</span>]) &lt;= <span class="fl">2020</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a>            eyr = <span class="fl">2020</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"eyr"</span>]) &lt;= <span class="fl">2030</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a>    </span>
-<span id="cb20-13"><a href="#cb20-13"></a>            <span class="kw">if</span> endswith(i[<span class="st">"hgt"</span>], <span class="st">"cm"</span>)</span>
-<span id="cb20-14"><a href="#cb20-14"></a>                tmp = parse(<span class="dt">Int</span>, replace(i[<span class="st">"hgt"</span>], <span class="st">"cm"</span> =&gt; <span class="st">""</span>))</span>
-<span id="cb20-15"><a href="#cb20-15"></a>                hgt = <span class="fl">150</span> &lt;= tmp &lt;= <span class="fl">193</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a>            <span class="kw">elseif</span> endswith(i[<span class="st">"hgt"</span>], <span class="st">"in"</span>)</span>
-<span id="cb20-17"><a href="#cb20-17"></a>                tmp = parse(<span class="dt">Int</span>, replace(i[<span class="st">"hgt"</span>], <span class="st">"in"</span> =&gt; <span class="st">""</span>))</span>
-<span id="cb20-18"><a href="#cb20-18"></a>                hgt = <span class="fl">59</span> &lt;= tmp &lt;= <span class="fl">76</span></span>
-<span id="cb20-19"><a href="#cb20-19"></a>            <span class="kw">else</span> </span>
-<span id="cb20-20"><a href="#cb20-20"></a>                hgt = false</span>
-<span id="cb20-21"><a href="#cb20-21"></a>            <span class="kw">end</span></span>
-<span id="cb20-22"><a href="#cb20-22"></a>    </span>
-<span id="cb20-23"><a href="#cb20-23"></a>            hcl = match(r<span class="st">"^#[0-9a-f]{6}"</span>, i[<span class="st">"hcl"</span>]) != nothing</span>
-<span id="cb20-24"><a href="#cb20-24"></a>            ecl = issubset([i[<span class="st">"ecl"</span>]], colours)</span>
-<span id="cb20-25"><a href="#cb20-25"></a>            pid = match(r<span class="st">"^[0-9]{9}$"</span>, i[<span class="st">"pid"</span>]) != nothing</span>
-<span id="cb20-26"><a href="#cb20-26"></a>            </span>
-<span id="cb20-27"><a href="#cb20-27"></a>            <span class="co"># Is passport valid?</span></span>
-<span id="cb20-28"><a href="#cb20-28"></a>            test = byr &amp; iyr &amp; eyr &amp; hgt &amp; hcl &amp; ecl &amp; pid</span>
-<span id="cb20-29"><a href="#cb20-29"></a>            counter += test ? <span class="fl">1</span> : <span class="fl">0</span></span>
-<span id="cb20-30"><a href="#cb20-30"></a>        <span class="kw">end</span></span>
-<span id="cb20-31"><a href="#cb20-31"></a>    <span class="kw">end</span></span>
-<span id="cb20-32"><a href="#cb20-32"></a>    counter</span>
-<span id="cb20-33"><a href="#cb20-33"></a><span class="kw">end</span>;</span>
-<span id="cb20-34"><a href="#cb20-34"></a></span>
-<span id="cb20-35"><a href="#cb20-35"></a><span class="co"># How many passports are valid?</span></span>
-<span id="cb20-36"><a href="#cb20-36"></a>checkfields(passports)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">function</span> checkfields(passports)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>    fields = [<span class="st">"byr"</span>, <span class="st">"iyr"</span>, <span class="st">"eyr"</span>, <span class="st">"hgt"</span>, <span class="st">"hcl"</span>, <span class="st">"ecl"</span>, <span class="st">"pid"</span>]</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    colours = [<span class="st">"amb"</span>, <span class="st">"blu"</span>, <span class="st">"brn"</span>, <span class="st">"gry"</span>, <span class="st">"grn"</span>, <span class="st">"hzl"</span>, <span class="st">"oth"</span>]</span>
+<span id="cb22-4"><a href="#cb22-4"></a>    counter = <span class="fl">0</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>    <span class="kw">for</span> i <span class="kw">in</span> passports</span>
+<span id="cb22-6"><a href="#cb22-6"></a>        invalid = sum([!haskey(i, key) <span class="kw">for</span> key <span class="kw">in</span> fields]) &gt; <span class="fl">0</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a></span>
+<span id="cb22-8"><a href="#cb22-8"></a>        <span class="kw">if</span> (!invalid)</span>
+<span id="cb22-9"><a href="#cb22-9"></a>            byr = <span class="fl">1920</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"byr"</span>]) &lt;= <span class="fl">2002</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>            iyr = <span class="fl">2010</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"iyr"</span>]) &lt;= <span class="fl">2020</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>            eyr = <span class="fl">2020</span> &lt;= parse(<span class="dt">Int</span>, i[<span class="st">"eyr"</span>]) &lt;= <span class="fl">2030</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>    </span>
+<span id="cb22-13"><a href="#cb22-13"></a>            <span class="kw">if</span> endswith(i[<span class="st">"hgt"</span>], <span class="st">"cm"</span>)</span>
+<span id="cb22-14"><a href="#cb22-14"></a>                tmp = parse(<span class="dt">Int</span>, replace(i[<span class="st">"hgt"</span>], <span class="st">"cm"</span> =&gt; <span class="st">""</span>))</span>
+<span id="cb22-15"><a href="#cb22-15"></a>                hgt = <span class="fl">150</span> &lt;= tmp &lt;= <span class="fl">193</span></span>
+<span id="cb22-16"><a href="#cb22-16"></a>            <span class="kw">elseif</span> endswith(i[<span class="st">"hgt"</span>], <span class="st">"in"</span>)</span>
+<span id="cb22-17"><a href="#cb22-17"></a>                tmp = parse(<span class="dt">Int</span>, replace(i[<span class="st">"hgt"</span>], <span class="st">"in"</span> =&gt; <span class="st">""</span>))</span>
+<span id="cb22-18"><a href="#cb22-18"></a>                hgt = <span class="fl">59</span> &lt;= tmp &lt;= <span class="fl">76</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a>            <span class="kw">else</span> </span>
+<span id="cb22-20"><a href="#cb22-20"></a>                hgt = false</span>
+<span id="cb22-21"><a href="#cb22-21"></a>            <span class="kw">end</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a>    </span>
+<span id="cb22-23"><a href="#cb22-23"></a>            hcl = match(r<span class="st">"^#[0-9a-f]{6}"</span>, i[<span class="st">"hcl"</span>]) != nothing</span>
+<span id="cb22-24"><a href="#cb22-24"></a>            ecl = issubset([i[<span class="st">"ecl"</span>]], colours)</span>
+<span id="cb22-25"><a href="#cb22-25"></a>            pid = match(r<span class="st">"^[0-9]{9}$"</span>, i[<span class="st">"pid"</span>]) != nothing</span>
+<span id="cb22-26"><a href="#cb22-26"></a>            </span>
+<span id="cb22-27"><a href="#cb22-27"></a>            <span class="co"># Is passport valid?</span></span>
+<span id="cb22-28"><a href="#cb22-28"></a>            test = byr &amp; iyr &amp; eyr &amp; hgt &amp; hcl &amp; ecl &amp; pid</span>
+<span id="cb22-29"><a href="#cb22-29"></a>            counter += test ? <span class="fl">1</span> : <span class="fl">0</span></span>
+<span id="cb22-30"><a href="#cb22-30"></a>        <span class="kw">end</span></span>
+<span id="cb22-31"><a href="#cb22-31"></a>    <span class="kw">end</span></span>
+<span id="cb22-32"><a href="#cb22-32"></a>    counter</span>
+<span id="cb22-33"><a href="#cb22-33"></a><span class="kw">end</span>;</span>
+<span id="cb22-34"><a href="#cb22-34"></a></span>
+<span id="cb22-35"><a href="#cb22-35"></a><span class="co"># How many passports are valid?</span></span>
+<span id="cb22-36"><a href="#cb22-36"></a>checkfields(passports)</span></code></pre></div>
 <pre><code><span class="co">## 109</span></code></pre>
 </div>
 </div>
