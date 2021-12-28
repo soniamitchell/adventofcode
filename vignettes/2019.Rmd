@@ -1,8 +1,12 @@
 ---
 title: 'AoC 2019 (Python)'
 author: "Sonia Mitchell"
-date: "28/12/2021"
-output: html_document
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{AoC 2019 (Python)}
+  %\usepackage[UTF-8]
 ---
 
 ```{r setup, include=FALSE}

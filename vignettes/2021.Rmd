@@ -1,8 +1,12 @@
 ---
 title: 'AoC 2021 (R)'
 author: "Sonia Mitchell"
-date: "05/12/2021"
-output: html_document
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{AoC 2021 (R)}
+  %\usepackage[UTF-8]
 ---
 
 ```{r setup, include = FALSE}
