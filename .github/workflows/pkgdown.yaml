@@ -9,7 +9,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Install camcorder dependencies
         run: |
-          brew install poppler
+          sudo apt-get install libpoppler-cpp-dev libpoppler-private-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
