@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-# Read in polymer template
+# Read in cucumber positions
 dat <- readLines(here("inst", "2021", "day25.txt")) |>
   strsplit("") |>
   do.call(what = rbind)
@@ -16,11 +16,33 @@ cucumbers <- rbind(east_cucumbers, south_cucumbers) |>
 
 # Define functions --------------------------------------------------------
 
+gg_cucumbers <- function(cucumbers, dat) {
+  rows <- seq_len(nrow(dat))
+  cols <- seq_len(ncol(dat))
+
+  fill <- c("#DA4167", "#F0EFF4", "#D78521")
+
+  cucumbers |>
+    dplyr::select(-id) |>
+    tidyr::complete(row = rows, col = cols,
+                    fill = list(type = "empty")) |>
+    dplyr::mutate(text = dplyr::case_when(type == "south" ~ "v",
+                                          type == "east" ~ ">",
+                                          TRUE ~ "")) |>
+    ggplot2::ggplot(ggplot2::aes(x = col, y = row, fill = type)) +
+    ggplot2::theme_void() +  ggplot2::coord_fixed() +
+    ggplot2::scale_fill_manual(values = fill) +
+    ggplot2::geom_tile() +
+    ggplot2::geom_text(ggplot2::aes(label = text)) +
+    ggplot2::theme(legend.position = "none")
+}
+
 sea_cucumbers <- R6::R6Class("cucumbers", list(
   dat = NULL,
   cucumbers = NULL,
   continue_east = NULL,
   continue_south = NULL,
+  plot = NULL,
 
   initialize = function(dat, cucumbers) {
     self$dat <- dat
@@ -80,7 +102,7 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     invisible(self)
   },
 
-  move_south = function() {
+  move_south = function(display = FALSE, plot = FALSE) {
     dat <- self$dat
     cucumbers <- self$cucumbers
     boundary <- nrow(dat) + 1
@@ -119,7 +141,12 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     self$cucumbers <- updated_cucumbers
     self$continue_south <-  nrow(moved) > 0
 
-    # print(self)
+    # Print to console
+    if (display) print(self)
+
+    # Generate plot
+    if (plot) self$plot <- gg_cucumbers(updated_cucumbers, dat)
+
     invisible(self)
   }
 ))
@@ -135,10 +162,10 @@ i <- 0
 
 while (continue) {
   i <- i + 1
-  # cat("\r", i)
-  east <- track_cucumbers$move_east()
-  south <- track_cucumbers$move_south()
-  cucumbers <- south$cucumbers
+  cat("\r", i)
+  track_cucumbers$move_east()
+  track_cucumbers$move_south()
+  cucumbers <- track_cucumbers$cucumbers
   continue <- track_cucumbers$continue_east | track_cucumbers$continue_south
 }
 
