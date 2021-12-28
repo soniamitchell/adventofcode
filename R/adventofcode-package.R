@@ -10,8 +10,9 @@
 #' @import ggplot2
 #' @importFrom here here
 #' @import JuliaCall
-#' @import plotly
+#' @rawNamespace import(plotly, except = last_plot)
 #' @importFrom purrr pluck
+#' @import reticulate
 #' @importFrom R.utils seqToIntervals
 #' @importFrom tidyr separate unite
 #'

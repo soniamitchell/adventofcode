@@ -15,6 +15,7 @@ Imports:
     JuliaCall,
     plotly,
     purrr,
+    reticulate,
     R.utils,
     tidyr
 Encoding: UTF-8
