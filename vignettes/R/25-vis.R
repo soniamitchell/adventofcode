@@ -28,8 +28,8 @@ track_cucumbers <- sea_cucumbers$new(dat, cucumbers)
 # Initialise recorder
 camcorder::gg_record(dir = file.path(tempdir(),"recording"),
                      device = "png",
-                     width = 4,
-                     height = 6,
+                     width = 2,
+                     height = 2,
                      units = "in",
                      dpi = 300)
 
@@ -46,5 +46,6 @@ camcorder::gg_playback(
   name = file.path("recording.gif"),
   first_image_duration = 8,
   last_image_duration = 12,
-  frame_duration = .25
+  frame_duration = .25,
+  background = "none"
 )
