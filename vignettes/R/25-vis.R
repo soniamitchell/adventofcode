@@ -1,14 +1,5 @@
-
 # Read in cucumber positions
-dat <- scan(text = "v...>>.vv>
-.vv>>.vv..
->>.>v>...v
->>v>>.>.v.
-v>v.vv.v..
->.>>..v...
-.vv..>.>v.
-v.v..>>v.v
-....v..v.>", what = "character") |>
+dat <- readLines(here("inst", "2021", "day25-test.txt")) |>
   strsplit("") |>
   do.call(what = rbind)
 
@@ -26,16 +17,16 @@ cucumbers <- rbind(east_cucumbers, south_cucumbers) |>
 track_cucumbers <- sea_cucumbers$new(dat, cucumbers)
 
 # Initialise recorder
-camcorder::gg_record(dir = file.path(tempdir(),"recording"),
+camcorder::gg_record(dir = "recording_tmp",
                      device = "png",
-                     width = 2,
-                     height = 2,
+                     width = 2,        # 12 for the full dataset
+                     height = 2,       # 12 for the full dataset
                      units = "in",
                      dpi = 300)
 
 track_cucumbers$gg_cucumbers() |> print()
 
-for (i in 1:58) {
+for (i in 1:58) {                      # 530 for the test dataset
   track_cucumbers$move_east()
   track_cucumbers$move_south()
   track_cucumbers$gg_cucumbers() |> print()

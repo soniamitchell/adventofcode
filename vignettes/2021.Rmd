@@ -1373,6 +1373,9 @@ min(score1, score2) * i * 3
 
 ### Part 1
 
+```{r dat24-1}
+```
+
 ## Day 25: Sea Cucumber
 
 ### Part 1
@@ -1385,6 +1388,6 @@ min(score1, score2) * i * 3
 ```{r dat25-1, code=readLines("R/25-vis.R"), include = FALSE}
 ```
 
-```{r testing, fig.cap="Test dataset"}
+```{r testing, fig.width=6, fig.height=6, fig.cap="Test dataset"}
 knitr::include_graphics("recording.gif")
 ```
