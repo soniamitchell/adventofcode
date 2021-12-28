@@ -16,27 +16,6 @@ cucumbers <- rbind(east_cucumbers, south_cucumbers) |>
 
 # Define functions --------------------------------------------------------
 
-gg_cucumbers <- function(cucumbers, dat) {
-  rows <- seq_len(nrow(dat))
-  cols <- seq_len(ncol(dat))
-
-  fill <- c("#DA4167", "#F0EFF4", "#D78521")
-
-  cucumbers |>
-    dplyr::select(-id) |>
-    tidyr::complete(row = rows, col = cols,
-                    fill = list(type = "empty")) |>
-    dplyr::mutate(text = dplyr::case_when(type == "south" ~ "v",
-                                          type == "east" ~ ">",
-                                          TRUE ~ "")) |>
-    ggplot2::ggplot(ggplot2::aes(x = col, y = row, fill = type)) +
-    ggplot2::theme_void() +  ggplot2::coord_fixed() +
-    ggplot2::scale_fill_manual(values = fill) +
-    ggplot2::geom_tile() +
-    ggplot2::geom_text(ggplot2::aes(label = text)) +
-    ggplot2::theme(legend.position = "none")
-}
-
 sea_cucumbers <- R6::R6Class("cucumbers", list(
   dat = NULL,
   cucumbers = NULL,
@@ -102,7 +81,7 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     invisible(self)
   },
 
-  move_south = function(display = FALSE, plot = FALSE) {
+  move_south = function(display = FALSE) {
     dat <- self$dat
     cucumbers <- self$cucumbers
     boundary <- nrow(dat) + 1
@@ -144,10 +123,31 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     # Print to console
     if (display) print(self)
 
-    # Generate plot
-    if (plot) self$plot <- gg_cucumbers(updated_cucumbers, dat)
-
     invisible(self)
+  },
+
+  gg_cucumbers = function() {
+    dat <- self$dat
+    cucumbers <- self$cucumbers
+
+    rows <- seq_len(nrow(dat))
+    cols <- seq_len(ncol(dat))
+
+    fill <- c("#489FB5", "#EDE7E3", "#FFA62B")
+
+    cucumbers |>
+      dplyr::select(-id) |>
+      tidyr::complete(row = rows, col = cols,
+                      fill = list(type = "empty")) |>
+      dplyr::mutate(text = dplyr::case_when(type == "south" ~ "v",
+                                            type == "east" ~ ">",
+                                            TRUE ~ "")) |>
+      ggplot2::ggplot(ggplot2::aes(x = col, y = row, fill = type)) +
+      ggplot2::theme_void() +  ggplot2::coord_fixed() +
+      ggplot2::scale_fill_manual(values = fill) +
+      ggplot2::geom_tile() +
+      ggplot2::geom_text(ggplot2::aes(label = text)) +
+      ggplot2::theme(legend.position = "none")
   }
 ))
 
@@ -162,10 +162,9 @@ i <- 0
 
 while (continue) {
   i <- i + 1
-  cat("\r", i)
+  # cat("\r", i)
   track_cucumbers$move_east()
   track_cucumbers$move_south()
-  cucumbers <- track_cucumbers$cucumbers
   continue <- track_cucumbers$continue_east | track_cucumbers$continue_south
 }
 

@@ -5,6 +5,7 @@
 #' @references \url{https://adventofcode.com/2021}
 #' @keywords internal
 #'
+#' @import camcorder
 #' @import docstring
 #' @import dplyr
 #' @import ggplot2

@@ -1379,3 +1379,12 @@ min(score1, score2) * i * 3
 
 ```{r dat25-1, code=readLines("R/25-1.R")}
 ```
+
+### Test data
+
+```{r dat25-1, code=readLines("R/25-vis.R"), include = FALSE}
+```
+
+```{r testing, fig.cap="Test dataset"}
+knitr::include_graphics("recording.gif")
+```

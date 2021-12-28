@@ -17,7 +17,8 @@ Imports:
     purrr,
     reticulate,
     R.utils,
-    tidyr
+    tidyr,
+    camcorder (>= 0.0.2.9000)
 Suggests:
     rmarkdown,
     knitr,
@@ -27,3 +28,5 @@ LazyData: true
 URL: http://sonia-mitchell.com/adventofcode
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
+Remotes:  
+    thebioengineer/camcorder
