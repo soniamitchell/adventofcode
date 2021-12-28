@@ -144,6 +144,7 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
                                             TRUE ~ "")) |>
       ggplot2::ggplot(ggplot2::aes(x = col, y = row, fill = type)) +
       ggplot2::theme_void() +  ggplot2::coord_fixed() +
+      ggplot2::scale_y_reverse() +
       ggplot2::scale_fill_manual(values = fill) +
       ggplot2::geom_tile() +
       ggplot2::geom_text(ggplot2::aes(label = text)) +
