@@ -12,4 +12,4 @@ programming puzzles by Eric Wastl.
 [AoC]: https://adventofcode.com/
 [sol21]: http://soniamitchell.github.io/adventofcode/articles/2021.html
 [sol20]: http://soniamitchell.github.io/adventofcode/articles/2020.html
-[sol19]: http://soniamitchell.github.io/adventofcode/articles/2021.html
+[sol19]: http://soniamitchell.github.io/adventofcode/articles/2019.html
