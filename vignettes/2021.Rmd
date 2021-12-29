@@ -260,6 +260,11 @@ Part 1 is too slow to use the same method with part 2.
 ```{r dat20-1, code=readLines("R/20-1.R"), time = TRUE}
 ```
 
+### Part 2
+
+```{r dat20-2, code=readLines("R/20-2.R"), time = TRUE}
+```
+
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/21)
 
 ### Part 1
