@@ -11,6 +11,18 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+# Benchmark code chunks
+knit_hooks$set(
+  time = function(before, envir) {
+    t <- proc.time()['elapsed']
+    if(before) {
+      envir$.elapsed <- t
+    } else {
+      paste(signif(t - envir$.elapsed), 'sec.')
+    }
+  }
+)
 ```
 
 ```{r libraries, message=FALSE}
@@ -28,67 +40,67 @@ library(tidyr)
 
 ### Part 1
 
-```{r day1-1, code=readLines("R/1-1.R")}
+```{r day1-1, code=readLines("R/1-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day1-2, code=readLines("R/1-2.R")}
+```{r day1-2, code=readLines("R/1-2.R"), time = TRUE}
 ```
 
 ## Day 2: [Dive!](https://adventofcode.com/2021/day/2)
 
 ### Part 1
 
-```{r day2-1, code=readLines("R/2-1.R")}
+```{r day2-1, code=readLines("R/2-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day2-2, code=readLines("R/2-2.R")}
+```{r day2-2, code=readLines("R/2-2.R"), time = TRUE}
 ```
 
 ## Day 3: [Binary Diagnostic](https://adventofcode.com/2021/day/3)
 
 ### Part 1
 
-```{r day3-1, code=readLines("R/3-1.R")}
+```{r day3-1, code=readLines("R/3-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day3-2, code=readLines("R/3-2.R")}
+```{r day3-2, code=readLines("R/3-2.R"), time = TRUE}
 ```
 
 ## Day 4: [Giant Squid](https://adventofcode.com/2021/day/4)
 
 ### Part 1
 
-```{r day4-1, code=readLines("R/4-1.R")}
+```{r day4-1, code=readLines("R/4-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day4-2, code=readLines("R/4-2.R")}
+```{r day4-2, code=readLines("R/4-2.R"), time = TRUE}
 ```
 
 ## Day 5: [Hydrothermal Venture](https://adventofcode.com/2021/day/5)
 
 ### Part 1
 
-```{r day5-1, code=readLines("R/5-1.R")}
+```{r day5-1, code=readLines("R/5-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day5-2, code=readLines("R/5-2.R")}
+```{r day5-2, code=readLines("R/5-2.R"), time = TRUE}
 ```
 
 ## Day 6: [Lanternfish](https://adventofcode.com/2021/day/6)
 
 ### Part 1
 
-```{r day6-1, code=readLines("R/6-1.R")}
+```{r day6-1, code=readLines("R/6-1.R"), time = TRUE}
 ```
 
 ### Part 2
@@ -96,74 +108,74 @@ library(tidyr)
 It takes too much memory to simulate individual fish in a vector, so generate
 a frequency table instead.
 
-```{r day6-2, code=readLines("R/6-2.R")}
+```{r day6-2, code=readLines("R/6-2.R"), time = TRUE}
 ```
 
 ## Day 7: [The Treachery of Whales](https://adventofcode.com/2021/day/7)
 
 ### Part 1
 
-```{r day7-1, code=readLines("R/7-1.R")}
+```{r day7-1, code=readLines("R/7-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day7-2, code=readLines("R/7-2.R")}
+```{r day7-2, code=readLines("R/7-2.R"), time = TRUE}
 ```
 
 ## Day 8: [Seven Segment Search](https://adventofcode.com/2021/day/8)
 
 ### Part 1
 
-```{r day8-1, code=readLines("R/8-1.R")}
+```{r day8-1, code=readLines("R/8-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day8-2, code=readLines("R/8-2.R")}
+```{r day8-2, code=readLines("R/8-2.R"), time = TRUE}
 ```
 
 ## Day 9: [Smoke Basin](https://adventofcode.com/2021/day/9)
 
 ### Part 1
 
-```{r day9-1, code=readLines("R/9-1.R")}
+```{r day9-1, code=readLines("R/9-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day9-2, code=readLines("R/9-2.R")}
+```{r day9-2, code=readLines("R/9-2.R"), time = TRUE}
 ```
 
 ## Day 10: [Syntax Scoring](https://adventofcode.com/2021/day/10)
 
 ### Part 1
 
-```{r day10-1, code=readLines("R/10-1.R")}
+```{r day10-1, code=readLines("R/10-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day10-2, code=readLines("R/10-2.R")}
+```{r day10-2, code=readLines("R/10-2.R"), time = TRUE}
 ```
 
 ## Day 11: [Dumbo Octopus](https://adventofcode.com/2021/day/11)
 
 ### Part 1
 
-```{r day11-1, code=readLines("R/11-1.R")}
+```{r day11-1, code=readLines("R/11-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r day11-2, code=readLines("R/11-2.R")}
+```{r day11-2, code=readLines("R/11-2.R"), time = TRUE}
 ```
 
 ## Day 12: [Passage Pathing](https://adventofcode.com/2021/day/12)
 
 ### Part 1
 
-```{r day12-1, code=readLines("R/12-1.R")}
+```{r day12-1, code=readLines("R/12-1.R"), time = TRUE}
 ```
 
 ### Part 2
@@ -171,31 +183,31 @@ a frequency table instead.
 We have to use a different method for Part 2, since it takes too long to 
 calculate the number of routes.
 
-```{r day12-2, code=readLines("R/12-2.R")}
+```{r day12-2, code=readLines("R/12-2.R"), time = TRUE}
 ```
 
 ## Day 13: [Transparent Origami](https://adventofcode.com/2021/day/13)
 
 ### Part 1
 
-```{r day13-1, code=readLines("R/13-1.R")}
+```{r day13-1, code=readLines("R/13-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat13-2, code=readLines("R/13-2.R")}
+```{r dat13-2, code=readLines("R/13-2.R"), time = TRUE}
 ```
 
 ## Day 14: [Extended Polymerization](https://adventofcode.com/2021/day/14)
 
 ### Part 1
 
-```{r dat14-1, code=readLines("R/14-1.R")}
+```{r dat14-1, code=readLines("R/14-1.R"), time = TRUE}
 ```
 
 #### Alternative solution
 
-```{r dat14-1b, code=readLines("R/14-1b.R")}
+```{r dat14-1b, code=readLines("R/14-1b.R"), time = TRUE}
 ```
 
 Part 1 is too slow to use the same method with part 2.
@@ -208,36 +220,36 @@ Part 1 is too slow to use the same method with part 2.
 
 ### Part 1
 
-```{r dat17-1, code=readLines("R/17-1.R")}
+```{r dat17-1, code=readLines("R/17-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat17-2, code=readLines("R/17-2.R")}
+```{r dat17-2, code=readLines("R/17-2.R"), time = TRUE}
 ```
 
 ## Day 18: [Snailfish](https://adventofcode.com/2021/day/18)
 
 ### Part 1
 
-```{r dat18-1, code=readLines("R/18-1.R")}
+```{r dat18-1, code=readLines("R/18-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat18-2, code=readLines("R/18-2.R")}
+```{r dat18-2, code=readLines("R/18-2.R"), time = TRUE}
 ```
 
 ## Day 19: [Beacon Scanner](https://adventofcode.com/2021/day/19)
 
 ### Part 1
 
-```{r dat19-1, code=readLines("R/19-1.R")}
+```{r dat19-1, code=readLines("R/19-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat19-2, code=readLines("R/19-2.R")}
+```{r dat19-2, code=readLines("R/19-2.R"), time = TRUE}
 
 ```
 
@@ -245,14 +257,14 @@ Part 1 is too slow to use the same method with part 2.
 
 ### Part 1
 
-```{r dat20-1, code=readLines("R/20-1.R")}
+```{r dat20-1, code=readLines("R/20-1.R"), time = TRUE}
 ```
 
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/21)
 
 ### Part 1
 
-```{r dat21-1, code=readLines("R/21-1.R")}
+```{r dat21-1, code=readLines("R/21-1.R"), time = TRUE}
 
 ```
 
@@ -260,7 +272,7 @@ Part 1 is too slow to use the same method with part 2.
 
 ### Part 1
 
-```{r dat22-1, code=readLines("R/22-1.R")}
+```{r dat22-1, code=readLines("R/22-1.R"), time = TRUE}
 ```
 
 ## Day 23: [Amphipod](https://adventofcode.com/2021/day/23)
@@ -278,7 +290,7 @@ Part 1 is too slow to use the same method with part 2.
 
 ### Part 1
 
-```{r dat25-1, code=readLines("R/25-1.R")}
+```{r dat25-1, code=readLines("R/25-1.R"), time = TRUE}
 ```
 
 ### Test data
