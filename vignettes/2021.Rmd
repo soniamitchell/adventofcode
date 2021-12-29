@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 
 # Benchmark code chunks
-knit_hooks$set(
+knitr::knit_hooks$set(
   time = function(before, envir) {
     t <- proc.time()['elapsed']
     if(before) {
