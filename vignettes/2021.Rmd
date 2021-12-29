@@ -211,11 +211,6 @@ Part 1 is too slow to use the same method with part 2.
 ```{r dat17-1, code=readLines("R/17-1.R")}
 ```
 
-### Test data
-
-```{r dat17-t, code=readLines("R/17-t.R")}
-```
-
 ### Part 2
 
 ```{r dat17-2, code=readLines("R/17-2.R")}
