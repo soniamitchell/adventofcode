@@ -28,359 +28,67 @@ library(tidyr)
 
 ### Part 1
 
-```{r day1-1}
-# Read in data
-dat <- here("inst", "2021", "day1.txt") |> 
-  scan()
-
-# Count the number of times the depth increases from the previous measurement
-sum(diff(dat) > 0)
+```{r day1-1, code=readLines("R/1-1.R")}
 ```
 
 ### Part 2
 
-```{r day1-2}
-# Sum depths in each window
-index <- 1
-summed <- c()
-while((index + 2) <= length(dat)) {
-  summed <- c(summed, sum(dat[index:(index + 2)]))
-  index <- index + 1
-}
-
-# Count the number of times the depth increases from the previous measurement
-sum(diff(summed) > 0)
+```{r day1-2, code=readLines("R/1-2.R")}
 ```
 
 ## Day 2: [Dive!](https://adventofcode.com/2021/day/2)
 
 ### Part 1
 
-```{r day2-1}
-# Read in data
-dat <- here("inst", "2021", "day2.txt") |> 
-  read.table()
-colnames(dat) <- c("direction", "value")
-
-# Calculate the horizontal position and depth and multiply them together
-summarise_dat <- dat |> 
-  dplyr::group_by(direction) |> 
-  dplyr::summarise(total = sum(value)) 
-
-horizontal_position <- summarise_dat$total[summarise_dat$direction == "forward"]
-depth <- summarise_dat$total[summarise_dat$direction == "down"] - 
-  summarise_dat$total[summarise_dat$direction == "up"]
-
-horizontal_position * depth
+```{r day2-1, code=readLines("R/2-1.R")}
 ```
 
 ### Part 2
 
-```{r day2-2}
-# Initialise variables
-aim <- 0
-horizontal_position <- 0
-depth <- 0
-
-# Track aim
-for (i in seq_len(nrow(dat))) {
-  if (dat$direction[i] == "down") {
-    aim <- aim  + dat$value[i]
-  } else if (dat$direction[i] == "up") {
-    aim <- aim  - dat$value[i]
-  } else {
-    horizontal_position <- horizontal_position + dat$value[i]
-    depth <- depth + (aim * dat$value[i])
-  }
-}
-
-horizontal_position * depth
+```{r day2-2, code=readLines("R/2-2.R")}
 ```
 
 ## Day 3: [Binary Diagnostic](https://adventofcode.com/2021/day/3)
 
 ### Part 1
 
-```{r day3-1}
-# Read in data
-dat <- here("inst", "2021", "day3.txt") |> 
-  scan(what = "character") 
-
-# Number of bits in each binary number
-digits <- nchar(dat[1])
-
-# Calculate gamma and epsilon rates
-gamma_binary <- rep(NA, digits)
-epsilon_binary <- rep(NA, digits)
-
-for (i in seq_len(digits)) {
-  # Extract the i[th] character of each string 
-  character <- vapply(dat, function(x) substr(x, i, i), character(1))
-  # Find most common bit
-  zeroes <- sum(character == "0")
-  ones <- sum(character == "1")
-  gamma_binary[i] <- dplyr::if_else(zeroes > ones, 0, 1)
-  epsilon_binary[i] <- dplyr::if_else(zeroes < ones, 0, 1)
-}
-
-gamma_rate <- strtoi(paste(gamma_binary, collapse = ""), base = 2)
-epsilon_rate <- strtoi(paste(epsilon_binary, collapse = ""), base = 2)
-
-# Calculate power consumption
-gamma_rate * epsilon_rate
+```{r day3-1, code=readLines("R/3-1.R")}
 ```
 
 ### Part 2
 
-```{r day3-2}
-# Define functions --------------------------------------------------------
-
-rating <- function(dat, type) {
-  # For each bit in a binary string
-  for (i in seq_len(digits)) {
-    # Extract the i[th] character of each string 
-    character <- vapply(dat, function(x) substr(x, i, i), 
-                        character(1))
-    # Find zeroes and ones
-    zeroes <- character == "0"
-    ones <- character == "1"
-    # Find most common bit
-    if (sum(zeroes) > sum(ones)) { 
-      bit_criteria <- which(zeroes)
-    } else if (sum(zeroes) < sum(ones)) { 
-      bit_criteria <- which(ones)
-    } else { 
-      bit_criteria <- which(ones)
-    }
-    # Keep binary strings with most common bit in the ith position
-    if (type == "oxygen") {
-      dat <- dat[bit_criteria]
-    } else if (type == "CO2") {
-      dat <- dat[-bit_criteria]
-    }
-    # If there's only one binary string left, stop
-    if (length(dat) == 1) break
-  }
-  # Return decimal
-  strtoi(paste(dat, collapse = ""), base = 2)
-}
-
-# Run simulation ----------------------------------------------------------
-
-# Calculate oxygen generator and CO2 scrubber ratings
-oxygen_generator_rating <- rating(dat, "oxygen")
-CO2_scrubber_rating <- rating(dat, "CO2")
-
-# Calculate life support rating
-oxygen_generator_rating * CO2_scrubber_rating
+```{r day3-2, code=readLines("R/3-2.R")}
 ```
 
 ## Day 4: [Giant Squid](https://adventofcode.com/2021/day/4)
 
 ### Part 1
 
-```{r day4-1}
-# Read in data ------------------------------------------------------------
-path <- here("inst", "2021", "day4.txt")
-raw_numbers <- scan(path, what = "character", n = 1) 
-raw_boards <- read.table(path, skip = 1)
-
-# Tidy up data
-numbers <- as.numeric(strsplit(raw_numbers, ",")[[1]])
-
-number_of_boards <- nrow(raw_boards) / 5
-boards <- lapply(seq_len(number_of_boards), function(x) {
-  start <- 1 + (5 * (x - 1))
-  end <- start + 4
-  raw_boards[start:end, ]
-})
-
-# Define functions --------------------------------------------------------
-
-update_board <- function(number, board) {
-  check_number <- board == number
-  if (any(check_number, na.rm = TRUE)) {
-    # Mark the number
-    find_number <- which(check_number, arr.ind = TRUE)
-    board[find_number] <- NA
-  }
-  board
-}
-
-check_for_win <- function(board) {
-  check_board <- is.na(board)
-  row_win <- any(rowSums(check_board) == 5)
-  column_win <- any(colSums(check_board) == 5)
-  if_else(row_win | column_win, TRUE, FALSE)
-}
-
-play_bingo <- function(numbers, boards) {
-  # For each number in the bingo call
-  for (this_number in numbers) {
-    # Check each board
-    for (i in seq_along(boards)) {
-      # If the number is on the board, mark it off (as NA) 
-      boards[[i]] <- update_board(this_number, boards[[i]])
-      # Check for win
-      has_won <- check_for_win(boards[[i]])
-      # If this board has won, calculate the winning score
-      if (has_won) 
-        return(sum(boards[[i]], na.rm = TRUE) * this_number)
-    } 
-  }
-}
-
-# Play bingo --------------------------------------------------------------
-
-play_bingo(numbers, boards)
+```{r day4-1, code=readLines("R/4-1.R")}
 ```
 
 ### Part 2
 
-```{r day4-2}
-lose_bingo <- function(numbers, boards) {
-  # Initialise objects
-  results <- data.frame(number = numeric(), board = numeric(), score = numeric())
-  remaining_boards <- seq_along(boards)
-  
-  # For each number in the bingo call
-  for (this_number in numbers) {
-    # Check each board
-    for (i in remaining_boards) {
-      # If the number is on the board, mark it off (as NA) 
-      boards[[i]] <- update_board(this_number, boards[[i]])
-      # Check for win
-      has_won <- check_for_win(boards[[i]])
-      # If this board has won, calculate the winning score
-      if (has_won) {
-        score <- sum(boards[[i]], na.rm = TRUE) * this_number
-        results <- rbind(results, 
-                         data.frame(number = this_number, 
-                                    board = i, 
-                                    score = score))
-        remaining_boards <- remaining_boards[-which(remaining_boards == i)]
-      }
-    } 
-  }
-  results
-}
-
-# Play bingo
-losers <- lose_bingo(numbers, boards)
-tail(losers)
+```{r day4-2, code=readLines("R/4-2.R")}
 ```
 
 ## Day 5: [Hydrothermal Venture](https://adventofcode.com/2021/day/5)
 
 ### Part 1
 
-```{r day5-1}
-# Read in data
-dat <- here("inst", "2021", "day5.txt") |> 
-  read.table()
-
-# Tidy up data
-coordinates <- dat |> 
-  dplyr::select(-V2) |> 
-  tidyr::separate(V1, c("x1", "y1")) |> 
-  tidyr::separate(V3, c("x2", "y2")) |> 
-  dplyr::mutate(dplyr::across(dplyr::everything(), as.numeric))
-
-# Initialise object
-xlim <- max(c(coordinates$x1, coordinates$x2))
-ylim <- max(c(coordinates$y1, coordinates$y2))
-grid <- matrix(0, nrow = ylim, ncol = xlim)
-
-# Track horizontal and vertical lines
-for (i in seq_len(nrow(coordinates))) {
-  this_line <- coordinates[i, ]
-  
-  if (this_line$x1 == this_line$x2) {
-    # Horizontal line
-    this_x <- this_line$x1
-    y_values <- this_line$y1:this_line$y2
-    # Add one to each point on the line
-    for (y in y_values) grid[this_x, y] <- grid[this_x, y] + 1
-    
-  } else if (this_line$y1 == this_line$y2) {
-    # Vertical line
-    this_y <- this_line$y1
-    x_values <- this_line$x1:this_line$x2
-    # Add one to each point on the line
-    for (x in x_values) grid[x, this_y] <- grid[x, this_y] + 1
-  }
-}
-
-# Find points where at least two lines overlap
-sum(grid >= 2)
+```{r day5-1, code=readLines("R/5-1.R")}
 ```
 
 ### Part 2
 
-```{r day5-2}
-# Initialise object
-grid <- matrix(0, nrow = ylim, ncol = xlim)
-
-# Track horizontal, vertical lines, and diagonal lines
-for (i in seq_len(nrow(coordinates))) {
-  this_line <- coordinates[i, ]
-  
-  if (this_line$x1 == this_line$x2) {
-    # Horizontal line
-    this_x <- this_line$x1
-    y_values <- this_line$y1:this_line$y2
-    # Add one to each point on the line
-    for (y in y_values) grid[this_x, y] <- grid[this_x, y] + 1
-    
-  } else if (this_line$y1 == this_line$y2) {
-    # Vertical line
-    this_y <- this_line$y1
-    x_values <- this_line$x1:this_line$x2
-    # Add one to each point on the line
-    for (x in x_values) grid[x, this_y] <- grid[x, this_y] + 1
-    
-  } else if(abs(this_line$x1 - this_line$x2) == abs(this_line$y1 - this_line$y2)) {
-    # Diagonal line
-    x_values <- this_line$x1:this_line$x2
-    y_values <- this_line$y1:this_line$y2
-    # Add one to each point on the line
-    for (i in seq_along(x_values)) 
-      grid[x_values[i], y_values[i]] <- grid[x_values[i], y_values[i]] + 1
-  }
-}
-
-# Find points where at least two lines overlap
-sum(grid >= 2)
+```{r day5-2, code=readLines("R/5-2.R")}
 ```
 
 ## Day 6: [Lanternfish](https://adventofcode.com/2021/day/6)
 
 ### Part 1
 
-```{r day6-1}
-# Read in data
-dat <- here("inst", "2021", "day6.txt") |> 
-  scan(what = "character", sep = ",") |> 
-  as.numeric()
-
-# Initialise variables
-days <- 80
-fish <- dat
-
-# Simulate lanternfish
-for (i in seq_len(days)) {
-  # Find zeroes
-  zeroes <- which(fish == 0)
-  # Subtract 1 from all fish
-  fish <- fish - 1
-  # Reset zeroes to six
-  fish[zeroes] <- 6
-  # Add eights for each zero
-  fish <- c(fish, rep(8, length(zeroes)))
-}
-
-# How many lanternfish would there be after 80 days?
-length(fish)
+```{r day6-1, code=readLines("R/6-1.R")}
 ```
 
 ### Part 2
@@ -388,630 +96,74 @@ length(fish)
 It takes too much memory to simulate individual fish in a vector, so generate
 a frequency table instead.
 
-```{r day6-2}
-# Initialise variables
-days <- 256
-
-# Generate a frequency table
-fish_counts <- data.frame(age = dat) |> 
-  dplyr::count(age) |>                     # Count fish
-  complete(age = 0:8, fill = list(n = 0))  # Fill in the missing categories
-
-for (i in seq_len(days)) {
-  # Number of zeroes
-  n_zeroes <- fish_counts$n[fish_counts$age == 0]
-  # Subtract 1 from all fish
-  fish_counts$n[1:(nrow(fish_counts) - 1)] <- fish_counts$n[2:nrow(fish_counts)]
-  # Reset zeroes to six
-  age_6 <- which(fish_counts$age == 6)
-  fish_counts$n[age_6] <- fish_counts$n[age_6] + n_zeroes
-  # Add eights for each zero
-  fish_counts$n[which(fish_counts$age == 8)] <- n_zeroes
-}
-
-# How many lanternfish would there be after 256 days?
-sum(fish_counts$n) |> 
-  format(scientific = FALSE)
+```{r day6-2, code=readLines("R/6-2.R")}
 ```
 
 ## Day 7: [The Treachery of Whales](https://adventofcode.com/2021/day/7)
 
 ### Part 1
 
-```{r day7-1}
-# Read in data
-dat <- here("inst", "2021", "day7.txt") |>
-  scan(what = "character", sep = ",") |> 
-  as.numeric()
-
-# Initialise objects
-xlim <- max(dat)
-results <- data.frame(x = 1:xlim, total_fuel_cost = NA)
-
-# Determine the horizontal position that the crabs can align to using the least 
-# fuel possible
-for (position in seq_len(xlim)) {
-  fuel_cost <- 0
-  for (crab in dat) {
-    fuel_cost <- fuel_cost + abs(crab - position)
-  }
-  results$total_fuel_cost[i] <- sum(fuel_cost)
-}
-
-lowest <- which.min(results$total_fuel_cost)
-results$x[lowest]
-
-# How much fuel must they spend to align to that position?
-results$total_fuel_cost[lowest]
+```{r day7-1, code=readLines("R/7-1.R")}
 ```
 
 ### Part 2
 
-```{r day7-2}
-# Initialise objects
-results <- data.frame(x = 1:xlim, total_fuel_cost = NA)
-
-# Determine the horizontal position that the crabs can align to using the least 
-# fuel possible
-for (position in seq_len(xlim)) {
-  fuel_cost <- 0
-  for (crab in dat) {
-    distance <- abs(crab - position)
-    fuel_cost <- fuel_cost + sum(0:distance)
-  }
-  results$total_fuel_cost[position] <- sum(fuel_cost)
-}
-
-lowest <- which.min(results$total_fuel_cost)
-results$x[lowest]
-
-# How much fuel must they spend to align to that position?
-results$total_fuel_cost[lowest]
+```{r day7-2, code=readLines("R/7-2.R")}
 ```
 
 ## Day 8: [Seven Segment Search](https://adventofcode.com/2021/day/8)
 
 ### Part 1
 
-```{r day8-1}
-# Read in data
-dat <- here("inst", "2021", "day8.txt") |> 
-  scan(what = "character", sep = "\n")
-
-# Tidy up data
-results <- c()
-for (i in seq_along(dat)) {
-  tmp <- strsplit(dat[i], "\\| ")[[1]][2]
-  digits <- strsplit(tmp, " ")[[1]]
-  results[i] <- sum(nchar(digits) %in% c(2, 4, 3, 7))
-}
-
-# How many times do digits 1, 4, 7, or 8 (length 2, 4, 3, and 7) appear?
-sum(results)
+```{r day8-1, code=readLines("R/8-1.R")}
 ```
 
 ### Part 2
 
-```{r day8-2}
-# Define functions --------------------------------------------------------
-
-find_digit <- function(string_vector, num_characters) {
-  #' Find string in `string_vector` of length `num_characters`
-  
-  string_vector[which(nchar(string_vector) == num_characters)]
-}
-
-deconstruct <- function(string) {
-  #' Split string into vector of letters
-  
-  strsplit(string, "")[[1]]
-}
-
-contains_subset <- function(unknown_vector, known_string, contains = TRUE) {
-  #' contains_subset
-  #' 
-  #' Find (1) which string in `unknown_vector` contains all segments  
-  #' (characters) in `known_string` or (2) which string is the only one that 
-  #' doesn't
-  #' @param unknown_vector an unknown vector
-  #' @param known_string a known string
-  #' @param contains (optional) default is `TRUE`
-  
-  results <- c()
-  for (i in seq_along(unknown_vector)) {
-    known_segments <- deconstruct(known_string)
-    unknown_segments <- deconstruct(unknown_vector[i])
-    if (contains) {
-      results[i] <- all(known_segments %in% unknown_segments)
-    } else {
-      results[i] <- !all(known_segments %in% unknown_segments)
-    }
-  }
-  unknown_vector[which(results)]
-}
-
-subset_of <- function(unknown_vector, known_string) {
-  #' Find the string in `unknown_vector` whose segments (characters) are a 
-  #' subset of `known_string` 
-  
-  results <- c()
-  for (i in seq_along(unknown_vector)) {
-    known_segments <- deconstruct(known_string)
-    unknown_segments <- deconstruct(unknown_vector[i])
-    results[i] <- all(unknown_segments %in% known_segments)
-  }
-  unknown_vector[which(results)]
-}
-
-decode <- function(unknown_vector, dictionary) {
-  #' Decode each string (digit) in `unknown_vector`
-  
-  code <- c()
-  for (i in seq_along(unknown_vector)) {
-    # Check against each dictionary entry
-    entry <- c()
-    for (j in seq_len(nrow(dictionary))) {
-      length_match <- nchar(dictionary$segments[j]) == nchar(unknown_vector[i])
-      characters_match <- all(deconstruct(dictionary$segments[j]) %in% 
-                                deconstruct(unknown_vector[i]))
-      entry[j] <- length_match && characters_match
-    }
-    code[i] <- dictionary$number[which(entry)]
-  }
-  as.numeric(paste(code, collapse = ""))
-}
-
-# Run simulation ----------------------------------------------------------
-
-# Determine all of the wire/segment connections 
-results <- c()
-for (i in seq_along(dat)) {
-  segments <- strsplit(dat[i], " \\|")[[1]][1]
-  segments <- strsplit(segments, " ")[[1]]
-  
-  # Known
-  one <- find_digit(segments, 2)
-  four <- find_digit(segments, 4)
-  seven <- find_digit(segments, 3)
-  eight <- find_digit(segments, 7)
-  
-  # Remaining segments
-  remaining <- segments[-which(nchar(segments) %in% c(2, 4, 3, 7))]
-  # six, nine, zero (6)
-  length_six <- remaining[which(nchar(remaining) == 6)]
-  six <- contains_subset(length_six, one, FALSE)
-  nine <- contains_subset(length_six, four, TRUE)
-  zero <- length_six[!(length_six %in% c(six, nine))]
-  # two, three, five (5)
-  length_five <- remaining[which(nchar(remaining) == 5)]
-  five <- subset_of(length_five, six)
-  length_five <- length_five[!length_five %in% five]
-  three <- subset_of(length_five, nine)
-  two <- length_five[!length_five %in% three]
-  
-  # Initialise dictionary
-  dict <- data.frame(number = 0:9, 
-                     segments = c(zero, one, two, three, four, 
-                                  five, six, seven, eight, nine))
-  
-  # Decode the four-digit output values
-  digits <- strsplit(dat[i], "\\| ")[[1]][2]
-  digits <- strsplit(digits, " ")[[1]]
-  results[i] <- decode(digits, dict)
-}
-
-# What do you get if you add up all of the output values?
-sum(results)
+```{r day8-2, code=readLines("R/8-2.R")}
 ```
 
 ## Day 9: [Smoke Basin](https://adventofcode.com/2021/day/9)
 
 ### Part 1
 
-```{r day9-1}
-# Read in data ------------------------------------------------------------
-
-dat <- here("inst", "2021", "day9.txt") |> 
-  readLines() |> 
-  strsplit("") |> 
-  do.call(what = "rbind") |> 
-  apply(1, as.numeric)
-
-# Define functions --------------------------------------------------------
-
-compare_heights <- function(dat, row, column) {
-  #' Find `height` of adjacent points and if it's lower than all 
-  #' `adjacent_points`, return risk level
-  
-  height <- dat[row, column]
-  # Extract adjacent heights
-  adjacent_points <- c()
-  if (i != 1)
-    adjacent_points <- c(adjacent_points, dat[row - 1, column]) # above
-  if (j != ncol(dat))
-    adjacent_points <- c(adjacent_points, dat[row, column + 1]) # right
-  if (i != nrow(dat))
-    adjacent_points <- c(adjacent_points, dat[row + 1, column]) # below
-  if (j != 1)
-    adjacent_points <- c(adjacent_points, dat[row, column - 1]) # left
-  # Compare height to adjacent heights
-  if (all(height < adjacent_points)) 
-    return(data.frame(x = row, y = column, risk = height + 1))
-}
-
-# Run simulation ----------------------------------------------------------
-
-# Find all of the low points on the heightmap and calculate risk level
-lowest_points <- data.frame(x = numeric(), y = numeric(), risk = numeric())
-for (i in seq_len(nrow(dat))) {
-  for (j in seq_len(ncol(dat))) {
-    lowest_point <- compare_heights(dat, i, j)
-    lowest_points <- rbind.data.frame(lowest_points, lowest_point)
-  }
-}
-
-# What is the sum of the risk levels of all low points on your heightmap?
-sum(lowest_points$risk)
+```{r day9-1, code=readLines("R/9-1.R")}
 ```
 
 ### Part 2
 
-```{r day9-2}
-# Define functions --------------------------------------------------------
-
-check_height <- function(dat, row, column) {
-  #' Check height is less than 9
-  
-  if (dat[row, column] < 9) 
-    return(data.frame(row = row, column = column, height = dat[row, column]))
-}
-
-check_adjacent <- function(dat, row, column) {
-  #' Return neighbouring points that have a height less than 9
-  
-  # Find height of adjacent points
-  adjacent_points <- data.frame(row = numeric(), column = numeric(), 
-                                height = numeric())
-  
-  if (row != 1)            # Above
-    adjacent_points <- rbind(adjacent_points, check_height(dat, row - 1, column))
-  if (column != ncol(dat)) # Right
-    adjacent_points <- rbind(adjacent_points, check_height(dat, row, column + 1))
-  if (row != nrow(dat))    # Below
-    adjacent_points <- rbind(adjacent_points, check_height(dat, row + 1, column))
-  if (column != 1)         # Left
-    adjacent_points <- rbind(adjacent_points, check_height(dat, row, column - 1))
-  
-  # Return neibouring points that should be checked
-  adjacent_points |> 
-    dplyr::filter(height != 9)
-}
-
-survey <- function(dat, row, column) {
-  #' For a particular `lowest_point`, survey the basin and return it's size
-  
-  # Height of lowest point being surveyed
-  height <- dat[row, column]
-  # Initialise basin dataframe
-  basin <- data.frame(row = row, column = column, risk = height + 1)
-  # Find adjacent points with depth less than 9 
-  neighbours <- check_adjacent(dat, row, column)
-  # Add them to the basin
-  tmp <- neighbours |> 
-    dplyr::mutate(risk = height + 1) |> 
-    dplyr::select(-height)
-  basin <- rbind(basin, tmp)
-  
-  # Check neighbouring points
-  continue <- nrow(neighbours) > 0
-  while(continue) {
-    more_neighbours <- check_adjacent(dat, 
-                                      neighbours$row[1], 
-                                      neighbours$column[1])
-    # Remove this point from `neighbours`
-    neighbours <- neighbours[-1, ]
-    # Remove new neighbours that are already in the basin
-    more_neighbours <- setdiff(dplyr::select(more_neighbours, -height), 
-                               dplyr::select(basin, -risk)) |> 
-      dplyr::left_join(more_neighbours, by = c("row", "column"))
-    
-    # If any new neighbours are remaining
-    if (nrow(more_neighbours) > 0) {
-      # Add them to the basin
-      tmp <- more_neighbours |> 
-        dplyr::mutate(risk = height + 1) |> 
-        dplyr::select(-height)
-      basin <- rbind(basin, tmp)
-      # And add them to `neighbours` (for checking)
-      neighbours <- rbind(neighbours, more_neighbours)
-    }
-    
-    continue <- nrow(neighbours) > 0
-  }
-  # Return size of basin
-  nrow(basin)
-}
-
-# Run simulation ----------------------------------------------------------
-
-# Find all of the low points on the heightmap and calculate basin size
-results <- c()
-for (i in seq_len(nrow(lowest_points))) {
-  # cat("\r", i, "/", nrow(lowest_points))
-  size <- survey(dat, lowest_points$x[i], lowest_points$y[i])
-  results <- c(results, size)
-}
-
-# Multiply together the sizes of the three largest basins
-prod(tail(sort(results), 3))
+```{r day9-2, code=readLines("R/9-2.R")}
 ```
 
 ## Day 10: [Syntax Scoring](https://adventofcode.com/2021/day/10)
 
 ### Part 1
 
-```{r day10-1}
-# Read in data ------------------------------------------------------------
-
-dat <- here("inst", "2021", "day10.txt") |> 
-  readLines() 
-
-corrupted_score <- function(character) {
-  score_table <- data.frame(char = c(")", "]", "}", ">"), 
-                            val = c(3, 57, 1197, 25137))
-  score_table$val[which(score_table$char == character)]
-}
-
-# Run simulation ----------------------------------------------------------
-
-total <- 0
-remove_lines <- c()
-
-for (i in seq_along(dat)){
-  expecting <- c()
-  points <- NA
-  check_this <- strsplit(dat[i], "")[[1]]
-  
-  for (j in seq_along(check_this)) {
-    if (check_this[j] == "("){
-      expecting <- c(expecting, ")")
-      
-    } else if (check_this[j] == "[") {
-      expecting <- c(expecting, "]")
-      
-    } else if (check_this[j] == "{") {
-      expecting <- c(expecting, "}")
-      
-    } else if (check_this[j] == "<") {
-      expecting <- c(expecting, ">")
-      
-    } else {
-      # If `check_this` matches the last expected value, remove it 
-      if (check_this[j] == tail(expecting, 1)) {
-        expecting <- expecting[-length(expecting)]
-        
-      } else if (is.na(points)) {
-        # Otherwise add the score to `total`
-        points <- corrupted_score(check_this[j])
-        total <- total + points
-        remove_lines <- c(remove_lines, i)
-        break
-      }
-    }
-  }
-}
-
-# Find the first illegal character in each corrupted line of the navigation 
-# subsystem. What is the total syntax error score for those errors?
-total
+```{r day10-1, code=readLines("R/10-1.R")}
 ```
 
 ### Part 2
 
-```{r day10-2}
-# Remove corrupted lines
-incomplete_lines <- dat[-remove_lines]
-
-incomplete_score <- function(character) {
-  score_table <- data.frame(char = c(")", "]", "}", ">"), 
-                            val = c(1, 2, 3, 4))
-  score_table$val[which(score_table$char == character)]
-}
-
-results <- c()
-for (i in seq_along(incomplete_lines)){
-  expecting <- c()
-  check_this <- strsplit(incomplete_lines[i], "")[[1]]
-  points <- 0
-  
-  for (j in seq_along(check_this)) {
-    if (check_this[j] == "("){
-      expecting <- c(expecting, ")")
-      
-    } else if (check_this[j] == "[") {
-      expecting <- c(expecting, "]")
-      
-    } else if (check_this[j] == "{") {
-      expecting <- c(expecting, "}")
-      
-    } else if (check_this[j] == "<") {
-      expecting <- c(expecting, ">")
-    } else {
-      # If `check_this` matches the last expected value, remove it 
-      if (check_this[j] == tail(expecting, 1)) {
-        expecting <- expecting[-length(expecting)]
-      }
-    }
-  }
-  expecting <- rev(expecting)
-  
-  # Calculate score
-  for (k in seq_along(expecting)) {
-    points <- (points * 5) + incomplete_score(expecting[k])
-  }
-  results <- c(results, points)
-  
-}
-
-# Find the completion string for each incomplete line, score the completion 
-# strings, and sort the scores. What is the middle score?
-index <- ceiling(length(results) / 2)
-value <- sort(results)[index]
-format(value, scientific = FALSE)
+```{r day10-2, code=readLines("R/10-2.R")}
 ```
 
 ## Day 11: [Dumbo Octopus](https://adventofcode.com/2021/day/11)
 
 ### Part 1
 
-```{r day11-1}
-# Read in data ------------------------------------------------------------
-
-dat <- here("inst", "2021", "day11.txt") |> 
-  scan(what = "character") |> 
-  strsplit("") |> 
-  do.call(what = rbind) |> 
-  apply(1, as.numeric)
-
-# Define functions --------------------------------------------------------
-
-find_neighbours <- function(x, y, flashing_now, flashed_previously, octopus) {
-  # Index neighbours
-  tmp <- rbind(data.frame(row = x - 1, col = (y - 1):(y + 1)), # above
-               data.frame(row = x, col = c(y - 1, y + 1)),     # sides
-               data.frame(row = x + 1, col = (y - 1):(y + 1))) # below
-  # Remove invalid coordinates
-  xlim <- ncol(octopus) + 1
-  ylim <- nrow(octopus) + 1
-  tmp <- dplyr::filter(tmp, row != 0, col != 0, row != xlim, col != ylim)
-  # Add to `neighbours`, remove duplicates, and remove those that are flashing 
-  # now or have flashed previously
-  tmp |> 
-    unique() |> 
-    dplyr::anti_join(data.frame(flashing_now), by = c("row", "col")) |> 
-    dplyr::anti_join(data.frame(flashed_previously), by = c("row", "col")) |> 
-    as.matrix()
-}
-
-timestep <- function(octopus) {
-  # Increases the energy level of each octopus by 1
-  octopus <- octopus + 1
-  done <- matrix(nrow = 0, ncol = 2)
-  
-  # Any octopus with an energy level greater than 9 flashes and has its energy 
-  # level reset to 0, the energy level of all adjacent octopuses (including 
-  # octopuses that are diagonally adjacent) increases by 1. If this causes an 
-  # octopus to have an energy level greater than 9, it also flashes
-  while (any(octopus > 9)) {
-    # Check if energy level is greater than 9 
-    flash <- which(octopus > 9, arr.ind = T)
-    # Flash
-    done <- rbind(done, flash)
-    # Reset energy
-    octopus[flash] <- 0
-    
-    # For each flashing octopus
-    for (j in seq_len(nrow(flash))) {
-      x <- unname(flash[j, "row"])
-      y <- unname(flash[j, "col"])
-      # Find adjacent octopi
-      neighbours <- find_neighbours(x, y, flash, done, octopus)
-      # Increase energy level by 1
-      octopus[neighbours] <- octopus[neighbours] + 1
-    } 
-  }
-  # Latest flashes
-  list(octopus = octopus, latest_flashes = nrow(done))
-}
-
-# Run simulation ----------------------------------------------------------
-
-octopus <- dat
-count <- 0
-
-# Given the starting energy levels of the dumbo octopuses in your cavern, 
-# simulate 100 steps. 
-for (i in 1:100) {
-  # cat("\r", i, "of 100")
-  data <- timestep(octopus)
-  octopus <- data$octopus
-  count <- count + data$latest_flashes
-}
-
-# How many total flashes are there after 100 steps?
-count
+```{r day11-1, code=readLines("R/11-1.R")}
 ```
 
 ### Part 2
 
-```{r day11-2}
-octopus <- dat
-count <- 1
-
-# What is the first step during which all octopuses flash?
-while (sum(octopus) != 0) {
-  # cat("\r", count)
-  data <- timestep(octopus)
-  octopus <- data$octopus
-  count <- count + 1
-}
-
-count
+```{r day11-2, code=readLines("R/11-2.R")}
 ```
 
 ## Day 12: [Passage Pathing](https://adventofcode.com/2021/day/12)
 
 ### Part 1
 
-```{r day12-1}
-# Read in data
-dat <- here("inst", "2021", "day12.txt") |> 
-  read.table(sep = "-")
-
-# Tidy up data
-dat <- rbind(dat, rename(dat, V1 = V2, V2 = V1)) |> 
-  dplyr::rename(from = V1, 
-                to = V2) |> 
-  dplyr::filter(from != "end",
-                to != "start")
-
-# Initialise routes
-completed_routes <- list()
-unfinished_routes <- filter(dat, from == "start") 
-unfinished_routes <- lapply(seq_len(nrow(unfinished_routes)), 
-                            function(x) unname(unlist(unfinished_routes[x,])))
-
-# Plot routes through cave system
-while (length(unfinished_routes) > 0) {
-  this_route <- unfinished_routes[[1]]
-  this_cave <- tail(this_route, 1)
-  
-  # Record next step(s) of the route
-  next_steps <- dplyr::filter(dat, from == this_cave, to != "start")$to
-  
-  # If the exit has been found, move the route to `completed_routes`
-  if ("end" %in% next_steps) {
-    completed_routes <- c(completed_routes, list(c(this_route, "end")))
-    next_steps <- setdiff(next_steps, "end")
-  }
-  
-  # If the cave is small and has already been visited, ignore it
-  small <- next_steps[vapply(next_steps, function(x) 
-    grepl("^[[:lower:]]+$", x), logical(1))]
-  big <- setdiff(next_steps, small)
-  next_steps <- c(setdiff(small, this_route), big)
-  
-  # Record next step(s) of the route
-  add_these <- lapply(next_steps, function(x) c(this_route, x))
-  
-  # Record steps and tidy up
-  unfinished_routes <- c(unfinished_routes, add_these)
-  unfinished_routes <- unfinished_routes[-1]
-}
-
-# How many paths through this cave system are there that visit small caves at 
-# most once?
-length(completed_routes)
+```{r day12-1, code=readLines("R/12-1.R")}
 ```
 
 ### Part 2
@@ -1019,223 +171,31 @@ length(completed_routes)
 We have to use a different method for Part 2, since it takes too long to 
 calculate the number of routes.
 
-```{r day12-2}
-# Initialise routes
-unfinished <- dplyr::filter(dat, from == "start") 
-complete <- data.frame()
-
-last_step <- "to"
-
-# Plot routes through cave system
-while (nrow(unfinished) != 0) {
-  # Record next step(s) of the route
-  unfinished <- dplyr::left_join(unfinished, dat, 
-                                 by = setNames("from", last_step))
-  
-  # Extract column name of the last step
-  last_step <- tail(names(unfinished), 1)
-  
-  # For each unfinished route, count the number of small caves that were 
-  # visited more than once
-  test <- apply(unfinished, 1, function(x) {
-    duplicates <- x[duplicated(unlist(x))]
-    islower <- grepl("^[[:lower:]]+$", duplicates)
-    sum(islower)}) 
-  # Remove routes where more than one small cave was visited more than once
-  index <- which(test > 1)
-  if (length(index) > 0)
-    unfinished <- unfinished[-index, ]
-  
-  # Add completed routes to `complete`
-  complete <- dplyr::bind_rows(complete,
-                               dplyr::filter(unfinished, 
-                                             get(last_step) == "end"))
-  
-  # Remove completed routes from `unfinished`
-  unfinished <- dplyr::filter(unfinished, get(last_step) != "end")
-}
-
-# If we visit a single small cave twice, how many paths through this cave 
-# system are there?
-nrow(complete)
+```{r day12-2, code=readLines("R/12-2.R")}
 ```
 
 ## Day 13: [Transparent Origami](https://adventofcode.com/2021/day/13)
 
 ### Part 1
 
-```{r day13-1}
-# Read in data ------------------------------------------------------------
-
-dat <- here("inst", "2021", "day13.txt") |> 
-  read.table(sep = "-")
-
-# Tidy up data
-dots <- dat |> 
-  dplyr::filter(!grepl("^fold", V1)) |> 
-  tidyr::separate(V1, c("y", "x"), convert = TRUE) |> 
-  dplyr::mutate(x = x + 1,
-                y = y + 1) |> 
-  dplyr::select(x, y)
-
-xlim <- max(dots$x)
-ylim <- max(dots$y)
-
-instructions <- dplyr::filter(dat, grepl("^fold", V1)) |> 
-  dplyr::mutate(V1 = gsub("^.*([a-z]=[0-9]*)$", "\\1", V1)) |> 
-  tidyr::separate(V1, c("axis", "value")) |> 
-  dplyr::mutate(value = as.numeric(value) + 1)
-
-# Generate grid of dots
-paper <- matrix(FALSE, nrow = xlim, ncol = ylim)
-for (i in seq_len(nrow(dots))) paper[dots$x[i], dots$y[i]] <- TRUE
-
-# Define functions --------------------------------------------------------
-
-fold_left <- function(grid, value) {
-  #' Make a vertical fold
-  
-  left <- grid[, 1:(value - 1)]
-  right <- grid[, (value + 1):ncol(grid)] 
-  pad <- matrix(0, nrow = nrow(grid), ncol = abs(ncol(left) - ncol(right)))
-  if (ncol(right) < ncol(left)) {
-    right <- cbind(right, pad)
-  } else if (ncol(right) > ncol(left)) {
-    left <- cbind(pad, left)
-  }
-  left | right[, ncol(right):1]
-}
-
-# Run simulation ----------------------------------------------------------
-
-# Make first fold
-results <- fold_left(paper, instructions[1,]$value)
-
-# How many dots are visible after completing just the first fold instruction on 
-# your transparent paper?
-sum(results > 0)
+```{r day13-1, code=readLines("R/13-1.R")}
 ```
 
 ### Part 2
 
-```{r dat13-2}
-# Define functions --------------------------------------------------------
-
-fold_up <- function(grid, value) {
-  #' Make a horizontal fold
-  
-  upper <- grid[1:(value - 1), ]
-  lower <- grid[(value + 1):nrow(grid), ] 
-  pad <- matrix(FALSE, nrow = abs(nrow(upper) - nrow(lower)), ncol = ncol(upper))
-  if (nrow(upper) < nrow(lower)) {
-    upper <- rbind(pad, upper)
-  } else if (nrow(upper) > nrow(lower)) {
-    lower <- rbind(lower, pad)
-  }
-  upper | lower[nrow(lower):1, ]
-}
-
-# Run simulation ----------------------------------------------------------
-
-fold_this <- paper
-
-# Finish folding the transparent paper according to the instructions. The 
-# manual says the code is always eight capital letters.
-for (i in seq_len(nrow(instructions))) {
-  if (instructions$axis[i] == "x") {
-    fold_this <- fold_left(fold_this, instructions$value[i]) 
-    
-  } else if(instructions$axis[i] == "y") {
-    fold_this <- fold_up(fold_this, instructions$value[i]) 
-  }
-}
-
-# What code do you use to activate the infrared thermal imaging camera system?
-coords <- which(fold_this, arr.ind = TRUE) |> 
-  as.data.frame() |> 
-  dplyr::mutate(value = 1, 
-                row = max(row) - row)
-
-ggplot2::ggplot(coords, ggplot2::aes(x = col, y = row, fill = value)) +
-  ggplot2::geom_tile(fill = "goldenrod2") +
-  ggplot2::coord_fixed() + 
-  ggplot2::theme_void() +
-  ggplot2::theme(legend.position = "none")
+```{r dat13-2, code=readLines("R/13-2.R")}
 ```
 
 ## Day 14: [Extended Polymerization](https://adventofcode.com/2021/day/14)
 
 ### Part 1
 
-```{r dat14-1}
-# Read in data ------------------------------------------------------------
-
-# Read in polymer template
-path <- here("inst", "2021", "day14.txt")
-template <- path |> 
-  scan(what = "character", n = 1) 
-
-# Read in pair insertion rules
-rules <- path |> 
-  scan(what = "character", sep = "\n", skip = 2) |> 
-  data.frame() |> 
-  setNames("x") |> 
-  tidyr::separate(x, c("pair", "insert"), " -> ")
-
-# Run simulation ----------------------------------------------------------
-
-current_string <- strsplit(template, "")[[1]]
-
-# Apply 10 steps of pair insertion to the polymer template and find the most 
-# and least common elements in the result
-for (i in seq_len(10)) {
-  next_string <- "" 
-  # cat("\r", i)
-  for (j in seq_len(length(current_string) - 1)) {
-    index <- which(rules$pair == paste(current_string[j:(j + 1)], 
-                                       collapse = ""))
-    if (length(index) != 0) {
-      next_string <- paste0(next_string, current_string[j], rules$insert[index])
-    } else {
-      next_string <- paste0(next_string, current_string[j])
-    }
-  }
-  next_string <- paste0(next_string, tail(current_string, 1))
-  current_string <- strsplit(next_string, "")[[1]]
-}
-
-# What do you get if you take the quantity of the most common element and 
-# subtract the quantity of the least common element?
-freq <- table(current_string)
-max(freq) - min(freq)
+```{r dat14-1, code=readLines("R/14-1.R")}
 ```
 
 #### Alternative solution
 
-```{r dat14-1b}
-current_string <- strsplit(template, "")[[1]] 
-
-for (i in 1:10) {
-  # cat("\r", i)
-  pairs <- vapply(seq_len(length(current_string) - 1), function(x) 
-    paste(current_string[x:(x + 1)], collapse = ""), character(1)) |> 
-    data.frame() |> 
-    setNames("pair") 
-  
-  next_string <- dplyr::left_join(pairs, rules, 
-                                  by = "pair") |> 
-    tidyr::separate(pair, c("first", "last"), "(?<=[A-Z])") |> 
-    tidyr::unite(string, c(first, insert), sep = "", na.rm = TRUE) |> 
-    dplyr::select(string) |> 
-    unlist() |> 
-    paste(collapse = "") |> 
-    paste0(tail(current_string, 1, collapse = ""))
-  
-  current_string <- strsplit(next_string, "")[[1]]
-}
-
-freq <- table(current_string)
-max(freq) - min(freq)
+```{r dat14-1b, code=readLines("R/14-1b.R")}
 ```
 
 Part 1 is too slow to use the same method with part 2.
@@ -1282,29 +242,8 @@ Part 1 is too slow to use the same method with part 2.
 
 ### Part 2
 
-```{r dat19-2}
-manhattan <- function(a, b) {
-  abs(a - b) |> 
-    sum()
-}
+```{r dat19-2, code=readLines("R/19-2.R")}
 
-index <- seq_len(nrow(scanners)) - 1
-combinations <- t(combn(index, 2))
-
-res <- lapply(seq_len(nrow(combinations)), function(x) {
-  first <- combinations[x, 1]
-  second <- combinations[x, 2]
-  a <- scanners |> 
-    dplyr::filter(scanner == first) |> 
-    dplyr::select(-scanner) |> unlist()
-  b <- scanners |> 
-    dplyr::filter(scanner == second) |> 
-    dplyr::select(-scanner) |> unlist()
-  manhattan(a, b)
-}) |> unlist()
-
-# What is the largest Manhattan distance between any two scanners?
-max(res)
 ```
 
 ## Day 20: [Trench Map](https://adventofcode.com/2021/day/20)
@@ -1318,44 +257,8 @@ max(res)
 
 ### Part 1
 
-```{r dat21-1}
-# Read in data ------------------------------------------------------------
-dat <- here("inst", "2021", "day21.txt") |> 
-  readLines()
+```{r dat21-1, code=readLines("R/21-1.R")}
 
-start <- dat |> vapply(function(x) gsub(".*([0-9])$", "\\1", x),
-                       character(1)) |>
-  as.numeric()
-
-# Play a practice game using the deterministic 100-sided die --------------
-
-pos1 <- start[1]
-pos2 <- start[2]
-score1 <- 0
-score2 <- 0
-i <- 0
-
-while (all(c(score1, score2) < 1000)) {
-  i <- i + 1
-  
-  if (i%%2 != 0) {
-    pos1 <- pos1 + sum(((i * 3) - 2):(i * 3))
-    pos1 <- dplyr::if_else(pos1 > 10, pos1%%10, pos1)
-    pos1 <- dplyr::if_else(pos1 == 0, 10, pos1) # since pos1 = 100 returns 0
-    score1 <- score1 + pos1
-    
-  } else {
-    pos2 <- pos2 + sum(((i * 3) - 2):(i * 3))
-    pos2 <- dplyr::if_else(pos2 > 10, pos2%%10, pos2)
-    pos2 <- dplyr::if_else(pos2 == 0, 10, pos2)
-    score2 <- score2 + pos2
-  }
-}
-
-# The moment either player wins, what do you get if you multiply the score of
-# the losing player by the number of times the die was rolled during the game?
-
-min(score1, score2) * i * 3
 ```
 
 ## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
