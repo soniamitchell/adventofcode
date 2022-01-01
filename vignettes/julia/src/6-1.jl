@@ -1,5 +1,5 @@
 # Read in data
-path = joinpath(".", "inst", "2020", "day6-test.txt");
+path = joinpath("..", "inst", "2020", "day6-test.txt");
 raw = read(path, String)
 
 groups = split(raw, "\n\n")          # split into groups
