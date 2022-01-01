@@ -78,8 +78,7 @@
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1"></a>using DelimitedFiles</span>
 <span id="cb1-2"><a href="#cb1-2"></a>using Combinatorics</span>
-<span id="cb1-3"><a href="#cb1-3"></a>using Formatting</span>
-<span id="cb1-4"><a href="#cb1-4"></a>using Test</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a>using Formatting</span></code></pre></div>
 <div class="section level2">
 <h2 id="day-1-report-repair">Day 1: <a href="https://adventofcode.com/2020/day/1" class="external-link">Report Repair</a><a class="anchor" aria-label="anchor" href="#day-1-report-repair"></a>
 </h2>
@@ -401,12 +400,10 @@
 <span id="cb24-41"><a href="#cb24-41"></a></span>
 <span id="cb24-42"><a href="#cb24-42"></a><span class="co"># Try test data</span></span>
 <span id="cb24-43"><a href="#cb24-43"></a>test = readlines(joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day5-test.txt"</span>));</span>
-<span id="cb24-44"><a href="#cb24-44"></a>@test all(findseat(test) .== [<span class="fl">357</span>, <span class="fl">567</span>, <span class="fl">119</span>, <span class="fl">820</span>])</span></code></pre></div>
-<pre><code><span class="co">## Test Passed</span>
-<span class="co">##   Expression: all(findseat(test) .== [357, 567, 119, 820])</span></code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1"></a></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co"># What is the highest seat ID on a boarding pass?</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>seat_ids = findseat(dat)</span></code></pre></div>
+<span id="cb24-44"><a href="#cb24-44"></a>@assert all(findseat(test) .== [<span class="fl">357</span>, <span class="fl">567</span>, <span class="fl">119</span>, <span class="fl">820</span>])</span>
+<span id="cb24-45"><a href="#cb24-45"></a></span>
+<span id="cb24-46"><a href="#cb24-46"></a><span class="co"># What is the highest seat ID on a boarding pass?</span></span>
+<span id="cb24-47"><a href="#cb24-47"></a>seat_ids = findseat(dat)</span></code></pre></div>
 <pre><code><span class="co">## 851-element Vector{Any}:</span>
 <span class="co">##  105</span>
 <span class="co">##  741</span>
@@ -428,15 +425,16 @@
 <span class="co">##  779</span>
 <span class="co">##  284</span>
 <span class="co">##  215</span></code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1"></a>maximum(seat_ids)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb26-1"><a href="#cb26-1"></a>maximum(seat_ids)</span></code></pre></div>
 <pre><code><span class="co">## 906</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="part-2-4">Part 2<a class="anchor" aria-label="anchor" href="#part-2-4"></a>
 </h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># What is the ID of your seat?</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a>seats = sort(seat_ids)</span></code></pre></div>
+<p><code>\in</code> and <code>\notin</code>, then TAB:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># What is the ID of your seat?</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a>seats = sort(seat_ids)</span></code></pre></div>
 <pre><code><span class="co">## 851-element Vector{Any}:</span>
 <span class="co">##   55</span>
 <span class="co">##   56</span>
@@ -458,18 +456,59 @@
 <span class="co">##  904</span>
 <span class="co">##  905</span>
 <span class="co">##  906</span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb30-1"><a href="#cb30-1"></a></span>
+<span id="cb30-2"><a href="#cb30-2"></a>myseat = <span class="kw">function</span>(seats)</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="kw">for</span> i <span class="kw">in</span> <span class="fl">1</span>:maximum(seats)</span>
+<span id="cb30-4"><a href="#cb30-4"></a>        <span class="kw">if</span> i ∉ seats &amp;&amp; i-<span class="fl">1</span> ∈ seats &amp;&amp; i+<span class="fl">1</span> ∈ seats</span>
+<span id="cb30-5"><a href="#cb30-5"></a>            <span class="kw">return</span>(i)</span>
+<span id="cb30-6"><a href="#cb30-6"></a>        <span class="kw">end</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>    <span class="kw">end</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a><span class="kw">end</span></span></code></pre></div>
+<pre><code><span class="co">## #189 (generic function with 1 method)</span></code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb32-1"><a href="#cb32-1"></a></span>
-<span id="cb32-2"><a href="#cb32-2"></a>myseat = <span class="kw">function</span>(seats)</span>
-<span id="cb32-3"><a href="#cb32-3"></a>    <span class="kw">for</span> i <span class="kw">in</span> <span class="fl">1</span>:maximum(seats)</span>
-<span id="cb32-4"><a href="#cb32-4"></a>        <span class="kw">if</span> i ∉ seats &amp;&amp; i-<span class="fl">1</span> ∈ seats &amp;&amp; i+<span class="fl">1</span> ∈ seats</span>
-<span id="cb32-5"><a href="#cb32-5"></a>            <span class="kw">return</span>(i)</span>
-<span id="cb32-6"><a href="#cb32-6"></a>        <span class="kw">end</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a>    <span class="kw">end</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a><span class="kw">end</span></span></code></pre></div>
-<pre><code><span class="co">## #191 (generic function with 1 method)</span></code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1"></a></span>
-<span id="cb34-2"><a href="#cb34-2"></a>myseat(seats)</span></code></pre></div>
+<span id="cb32-2"><a href="#cb32-2"></a>myseat(seats)</span></code></pre></div>
 <pre><code><span class="co">## 519</span></code></pre>
+</div>
+</div>
+<div class="section level2">
+<h2 id="day-6-custom-customs">Day 6: <a href="https://adventofcode.com/2020/day/6" class="external-link">Custom Customs</a><a class="anchor" aria-label="anchor" href="#day-6-custom-customs"></a>
+</h2>
+<div class="section level3">
+<h3 id="part-1-5">Part 1<a class="anchor" aria-label="anchor" href="#part-1-5"></a>
+</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Read in data</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day6-test.txt"</span>);</span>
+<span id="cb34-3"><a href="#cb34-3"></a>raw = read(path, <span class="dt">String</span>)</span></code></pre></div>
+<pre><code><span class="co">## "abc\n\na\nb\nc\n\nab\nac\n\na\na\na\na\n\nb\n"</span></code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1"></a></span>
+<span id="cb36-2"><a href="#cb36-2"></a>groups = split(raw, <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)          <span class="co"># split into groups</span></span></code></pre></div>
+<pre><code><span class="co">## 5-element Vector{SubString{String}}:</span>
+<span class="co">##  "abc"</span>
+<span class="co">##  "a\nb\nc"</span>
+<span class="co">##  "ab\nac"</span>
+<span class="co">##  "a\na\na\na"</span>
+<span class="co">##  "b\n"</span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1"></a>dat = replace.(groups, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span> =&gt; <span class="st">""</span>)   <span class="co"># remove line breaks</span></span></code></pre></div>
+<pre><code><span class="co">## 5-element Vector{String}:</span>
+<span class="co">##  "abc"</span>
+<span class="co">##  "abc"</span>
+<span class="co">##  "abac"</span>
+<span class="co">##  "aaaa"</span>
+<span class="co">##  "b"</span></code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1"></a></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="co"># For each group, count the number of questions to which anyone answered "yes"</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>length.(unique.(dat))</span></code></pre></div>
+<pre><code><span class="co">## 5-element Vector{Int64}:</span>
+<span class="co">##  3</span>
+<span class="co">##  3</span>
+<span class="co">##  3</span>
+<span class="co">##  1</span>
+<span class="co">##  1</span></code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1"></a></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="co"># What is the sum of those counts?</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a>sum(length.(unique.(dat)))</span></code></pre></div>
+<pre><code><span class="co">## 11</span></code></pre>
+<p>```</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
