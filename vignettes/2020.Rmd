@@ -118,5 +118,6 @@ everything into a function will achieve the expected behaviour.
 
 ### Part 1
 
-```{julia day6-1}
+```{julia day6-1, code=readLines("julia/src/6-1.jl")}
+```
 ```
