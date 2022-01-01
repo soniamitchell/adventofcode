@@ -1,8 +1,11 @@
 function checkfields(passports)
+
     fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
     colours = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
     counter = 0
+    
     for i in passports
+
         invalid = sum([!haskey(i, key) for key in fields]) > 0
 
         if (!invalid)
@@ -28,8 +31,11 @@ function checkfields(passports)
             test = byr & iyr & eyr & hgt & hcl & ecl & pid
             counter += test ? 1 : 0
         end
+        
     end
+
     counter
+
 end;
 
 # How many passports are valid?
