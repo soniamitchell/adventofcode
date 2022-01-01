@@ -25,6 +25,7 @@ Pkg.instantiate()
 using DelimitedFiles
 using Combinatorics
 using Formatting
+using Test
 ```
 
 ## Day 1: [Report Repair](https://adventofcode.com/2020/day/1)
