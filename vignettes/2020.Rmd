@@ -120,4 +120,10 @@ everything into a function will achieve the expected behaviour.
 
 ```{julia day6-1, code=readLines("julia/src/6-1.jl")}
 ```
+
+## Day 7: [Handy Haversacks](https://adventofcode.com/2020/day/7)
+
+### Part 1
+
+```{julia day7-1}
 ```

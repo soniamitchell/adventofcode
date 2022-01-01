@@ -1,6 +1,6 @@
 # What is the ID of your seat?
 
-seats = sort(seat_ids)
+seats = sort(seat_ids);
 
 myseat = function(seats)
     for i in 1:maximum(seats)
@@ -8,6 +8,6 @@ myseat = function(seats)
             return(i)
         end
     end
-end
+end;
 
 myseat(seats)

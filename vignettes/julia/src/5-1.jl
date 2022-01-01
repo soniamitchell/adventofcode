@@ -44,5 +44,5 @@ test = readlines(joinpath("..", "inst", "2020", "day5-test.txt"));
 @assert all(findseat(test) .== [357, 567, 119, 820])
 
 # What is the highest seat ID on a boarding pass?
-seat_ids = findseat(dat)
+seat_ids = findseat(dat);
 maximum(seat_ids)
