@@ -25,7 +25,6 @@ Pkg.instantiate()
 using DelimitedFiles
 using Combinatorics
 using Formatting
-using Test
 ```
 
 ## Day 1: [Report Repair](https://adventofcode.com/2020/day/1)
@@ -110,5 +109,14 @@ everything into a function will achieve the expected behaviour.
 
 ### Part 2
 
+`\in` and `\notin`, then TAB:
+
 ```{julia day5-2, code=readLines("julia/src/5-2.jl")}
+```
+
+## Day 6: [Custom Customs](https://adventofcode.com/2020/day/6)
+
+### Part 1
+
+```{julia day6-1}
 ```
