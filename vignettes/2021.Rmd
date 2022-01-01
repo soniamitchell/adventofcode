@@ -250,7 +250,6 @@ Part 1 is too slow to use the same method with part 2.
 ### Part 2
 
 ```{r dat19-2, code=readLines("R/19-2.R"), time = TRUE}
-
 ```
 
 ## Day 20: [Trench Map](https://adventofcode.com/2021/day/20)
@@ -270,7 +269,6 @@ Part 1 is too slow to use the same method with part 2.
 ### Part 1
 
 ```{r dat21-1, code=readLines("R/21-1.R"), time = TRUE}
-
 ```
 
 ## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
