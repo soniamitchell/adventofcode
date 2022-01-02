@@ -13,7 +13,8 @@ function findweakness(dat, invalid)
         end
     
         if total == invalid
-            vals = dat[i:j]                         # Find encryption weakness
+            # Find encryption weakness
+            vals = dat[i:j]                         
             weakness = minimum(vals) + maximum(vals)
             return(weakness)
         end
