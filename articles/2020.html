@@ -689,6 +689,80 @@
 <pre><code><span class="co">## 35602097</span></code></pre>
 </div>
 </div>
+<div class="section level2">
+<h2 id="day-10-adapter-array">Day 10: <a href="https://adventofcode.com/2020/day/10" class="external-link">Adapter Array</a><a class="anchor" aria-label="anchor" href="#day-10-adapter-array"></a>
+</h2>
+<div class="section level3">
+<h3 id="part-1-9">Part 1<a class="anchor" aria-label="anchor" href="#part-1-9"></a>
+</h3>
+<div class="sourceCode" id="cb44"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># Read in data ------------------------------------------------------------</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day10.txt"</span>);</span>
+<span id="cb44-4"><a href="#cb44-4"></a>dat = readlines(path);</span>
+<span id="cb44-5"><a href="#cb44-5"></a>dat = parse.(<span class="dt">Int64</span>, dat);                       <span class="co"># convert string to numeric</span></span></code></pre></div>
+<pre><code><span class="co">## 104-element Vector{Int64}:</span>
+<span class="co">##    2</span>
+<span class="co">##   49</span>
+<span class="co">##   78</span>
+<span class="co">##  116</span>
+<span class="co">##  143</span>
+<span class="co">##   42</span>
+<span class="co">##  142</span>
+<span class="co">##   87</span>
+<span class="co">##  132</span>
+<span class="co">##   86</span>
+<span class="co">##    ⋮</span>
+<span class="co">##   21</span>
+<span class="co">##   11</span>
+<span class="co">##  163</span>
+<span class="co">##  161</span>
+<span class="co">##    4</span>
+<span class="co">##  168</span>
+<span class="co">##  157</span>
+<span class="co">##   27</span>
+<span class="co">##   72</span></code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1"></a></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="co"># Define functions --------------------------------------------------------</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="kw">function</span> chain(dat)</span>
+<span id="cb46-5"><a href="#cb46-5"></a>    current = <span class="fl">0</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a>    log = []</span>
+<span id="cb46-7"><a href="#cb46-7"></a>    target = length(dat)</span>
+<span id="cb46-8"><a href="#cb46-8"></a></span>
+<span id="cb46-9"><a href="#cb46-9"></a>    <span class="kw">while</span> length(log) != target</span>
+<span id="cb46-10"><a href="#cb46-10"></a>        <span class="co"># find index of next adapter</span></span>
+<span id="cb46-11"><a href="#cb46-11"></a>        possible = collect(current .+ (<span class="fl">1</span>:<span class="fl">3</span>))    <span class="co"># possible values to match against         </span></span>
+<span id="cb46-12"><a href="#cb46-12"></a>        index = indexin(possible, dat)          <span class="co"># find index of matching values       </span></span>
+<span id="cb46-13"><a href="#cb46-13"></a>        filter!(x -&gt; x != nothing, index)       <span class="co"># remove `nothing`    </span></span>
+<span id="cb46-14"><a href="#cb46-14"></a>        index = index[<span class="fl">1</span>]                        <span class="co"># use first index (lowest value)</span></span>
+<span id="cb46-15"><a href="#cb46-15"></a></span>
+<span id="cb46-16"><a href="#cb46-16"></a>        value = dat[index]</span>
+<span id="cb46-17"><a href="#cb46-17"></a>        <span class="co"># store difference</span></span>
+<span id="cb46-18"><a href="#cb46-18"></a>        push!(log, value - current)</span>
+<span id="cb46-19"><a href="#cb46-19"></a></span>
+<span id="cb46-20"><a href="#cb46-20"></a>        <span class="co"># set current value</span></span>
+<span id="cb46-21"><a href="#cb46-21"></a>        current = copy(value)</span>
+<span id="cb46-22"><a href="#cb46-22"></a>   </span>
+<span id="cb46-23"><a href="#cb46-23"></a>        <span class="co"># remove value from `dat`</span></span>
+<span id="cb46-24"><a href="#cb46-24"></a>        deleteat!(dat, index)</span>
+<span id="cb46-25"><a href="#cb46-25"></a>    <span class="kw">end</span></span>
+<span id="cb46-26"><a href="#cb46-26"></a></span>
+<span id="cb46-27"><a href="#cb46-27"></a>    push!(log, <span class="fl">3</span>)</span>
+<span id="cb46-28"><a href="#cb46-28"></a>    log</span>
+<span id="cb46-29"><a href="#cb46-29"></a><span class="kw">end</span>;</span>
+<span id="cb46-30"><a href="#cb46-30"></a></span>
+<span id="cb46-31"><a href="#cb46-31"></a><span class="co"># Find a chain that uses all of your adapters to connect the charging outlet to your </span></span>
+<span id="cb46-32"><a href="#cb46-32"></a><span class="co"># device's built-in adapter and count the joltage differences between the charging </span></span>
+<span id="cb46-33"><a href="#cb46-33"></a><span class="co"># outlet, the adapters, and your device</span></span>
+<span id="cb46-34"><a href="#cb46-34"></a></span>
+<span id="cb46-35"><a href="#cb46-35"></a>res = chain(dat);</span>
+<span id="cb46-36"><a href="#cb46-36"></a></span>
+<span id="cb46-37"><a href="#cb46-37"></a><span class="co"># What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?</span></span>
+<span id="cb46-38"><a href="#cb46-38"></a></span>
+<span id="cb46-39"><a href="#cb46-39"></a>sum(res .== <span class="fl">1</span>) * sum(res .== <span class="fl">3</span>)</span></code></pre></div>
+<pre><code><span class="co">## 2450</span></code></pre>
+</div>
+</div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
 </div>
