@@ -18,21 +18,24 @@ end;
 
 # Run boot code ----------------------------------------------------------
 
-accumulator = 0;                            # initialise accumulator
-i = 1;                                      # initialise place in instruction list
-log = [];
+function boot(inst, vals)
+    accumulator = 0;                            # initialise accumulator
+    i = 1;                                      # initialise place in instruction list
+    log = [];
 
-while i ∉ log                               # stop before an instruction is run again
-    push!(log, i)                           # record i in log
+    while i ∉ log                               # stop before an instruction is run again
+        push!(log, i)                           # record i in log
 
-    if inst[i] == "acc"
-        accumulator += vals[i]              # add value to accumulator
-        i += 1                              # next instruction
-    elseif inst[i] == "jmp"
-        i += vals[i]                        # jump to a new instruction
-    elseif inst[i] == "nop"
-        i += 1                              # next instruction
+        if inst[i] == "acc"
+            accumulator += vals[i]              # add value to accumulator
+            i += 1                              # next instruction
+        elseif inst[i] == "jmp"
+            i += vals[i]                        # jump to a new instruction
+        elseif inst[i] == "nop"
+            i += 1                              # next instruction
+        end
     end
+    return(accumulator)
 end;
 
 # Immediately before any instruction is executed a second time, what value is in the 
