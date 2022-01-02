@@ -585,10 +585,9 @@
 </h3>
 <div class="sourceCode" id="cb38"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Read in data ------------------------------------------------------------</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a></span>
-<span id="cb38-3"><a href="#cb38-3"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day9.txt"</span>) </span></code></pre></div>
-<pre><code><span class="co">## "../inst/2020/day9.txt"</span></code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1"></a>dat = readlines(path);</span>
-<span id="cb40-2"><a href="#cb40-2"></a>dat = parse.(<span class="dt">Int64</span>, dat);                       <span class="co"># convert string to numeric</span></span></code></pre></div>
+<span id="cb38-3"><a href="#cb38-3"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day9.txt"</span>);</span>
+<span id="cb38-4"><a href="#cb38-4"></a>dat = readlines(path);</span>
+<span id="cb38-5"><a href="#cb38-5"></a>dat = parse.(<span class="dt">Int64</span>, dat);                       <span class="co"># convert string to numeric</span></span></code></pre></div>
 <pre><code><span class="co">## 1000-element Vector{Int64}:</span>
 <span class="co">##                3</span>
 <span class="co">##               17</span>
@@ -610,48 +609,84 @@
 <span class="co">##  104829897365462</span>
 <span class="co">##  104882565934705</span>
 <span class="co">##  108297043768811</span></code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1"></a></span>
-<span id="cb42-2"><a href="#cb42-2"></a>preamble = <span class="fl">25</span>;</span>
-<span id="cb42-3"><a href="#cb42-3"></a></span>
-<span id="cb42-4"><a href="#cb42-4"></a><span class="co"># Define functions --------------------------------------------------------</span></span>
-<span id="cb42-5"><a href="#cb42-5"></a></span>
-<span id="cb42-6"><a href="#cb42-6"></a><span class="kw">function</span> checksums(dat, preamble)</span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a>    cmb = combinations(<span class="fl">1</span>:preamble, <span class="fl">2</span>) |&gt; collect    <span class="co"># generate pairwise combination index</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>    add = map(x -&gt; dat[x[<span class="fl">1</span>]] + dat[x[<span class="fl">2</span>]], cmb)      <span class="co"># find sum of each pairwise combination</span></span>
-<span id="cb42-10"><a href="#cb42-10"></a>    </span>
-<span id="cb42-11"><a href="#cb42-11"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(dat)</span>
-<span id="cb42-12"><a href="#cb42-12"></a>    </span>
-<span id="cb42-13"><a href="#cb42-13"></a>        <span class="kw">if</span> i ∈ <span class="fl">1</span>:preamble                           <span class="co"># don't check preamble</span></span>
-<span id="cb42-14"><a href="#cb42-14"></a>            <span class="kw">continue</span></span>
-<span id="cb42-15"><a href="#cb42-15"></a>        <span class="kw">end</span></span>
-<span id="cb42-16"><a href="#cb42-16"></a>    </span>
-<span id="cb42-17"><a href="#cb42-17"></a>        tmp = i - preamble - <span class="fl">1</span>                         <span class="co"># remove elements outwith the preamble </span></span>
-<span id="cb42-18"><a href="#cb42-18"></a>        remove = findall(x -&gt; x[<span class="fl">1</span>] == tmp || x[<span class="fl">2</span>] == tmp, cmb)</span>
-<span id="cb42-19"><a href="#cb42-19"></a>        deleteat!(cmb, remove)</span>
-<span id="cb42-20"><a href="#cb42-20"></a>        deleteat!(add, remove)</span>
-<span id="cb42-21"><a href="#cb42-21"></a></span>
-<span id="cb42-22"><a href="#cb42-22"></a>        tmp = (tmp + <span class="fl">1</span>):(i - <span class="fl">1</span>)                     <span class="co"># generate next set of indices</span></span>
-<span id="cb42-23"><a href="#cb42-23"></a>        ind = map(x -&gt; [i, x], tmp)                 </span>
-<span id="cb42-24"><a href="#cb42-24"></a>        append!(cmb, ind)</span>
-<span id="cb42-25"><a href="#cb42-25"></a>    </span>
-<span id="cb42-26"><a href="#cb42-26"></a>        new = map(x -&gt; dat[x[<span class="fl">1</span>]] + dat[x[<span class="fl">2</span>]], ind)  <span class="co"># generate next set of additions               </span></span>
-<span id="cb42-27"><a href="#cb42-27"></a>        append!(add, new)</span>
-<span id="cb42-28"><a href="#cb42-28"></a></span>
-<span id="cb42-29"><a href="#cb42-29"></a>        <span class="kw">if</span> dat[i] ∉ add                             <span class="co"># return invalid number</span></span>
-<span id="cb42-30"><a href="#cb42-30"></a>            <span class="kw">return</span>(dat[i])</span>
-<span id="cb42-31"><a href="#cb42-31"></a>        <span class="kw">end</span></span>
-<span id="cb42-32"><a href="#cb42-32"></a></span>
-<span id="cb42-33"><a href="#cb42-33"></a>    <span class="kw">end</span></span>
-<span id="cb42-34"><a href="#cb42-34"></a><span class="kw">end</span>;</span>
-<span id="cb42-35"><a href="#cb42-35"></a></span>
-<span id="cb42-36"><a href="#cb42-36"></a><span class="co"># Find the first number in the list (after the preamble) which is not the sum of </span></span>
-<span id="cb42-37"><a href="#cb42-37"></a><span class="co"># two of the 25 numbers before it</span></span>
-<span id="cb42-38"><a href="#cb42-38"></a></span>
-<span id="cb42-39"><a href="#cb42-39"></a><span class="co"># What is the first number that does not have this property?</span></span>
-<span id="cb42-40"><a href="#cb42-40"></a></span>
-<span id="cb42-41"><a href="#cb42-41"></a>checksums(dat, preamble)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1"></a></span>
+<span id="cb40-2"><a href="#cb40-2"></a>preamble = <span class="fl">25</span>;</span>
+<span id="cb40-3"><a href="#cb40-3"></a></span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="co"># Define functions --------------------------------------------------------</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a></span>
+<span id="cb40-6"><a href="#cb40-6"></a><span class="kw">function</span> checksums(dat, preamble)</span>
+<span id="cb40-7"><a href="#cb40-7"></a></span>
+<span id="cb40-8"><a href="#cb40-8"></a>    <span class="co"># generate pairwise combination index</span></span>
+<span id="cb40-9"><a href="#cb40-9"></a>    cmb = combinations(<span class="fl">1</span>:preamble, <span class="fl">2</span>) |&gt; collect    </span>
+<span id="cb40-10"><a href="#cb40-10"></a>    <span class="co"># find sum of each pairwise combination</span></span>
+<span id="cb40-11"><a href="#cb40-11"></a>    add = map(x -&gt; dat[x[<span class="fl">1</span>]] + dat[x[<span class="fl">2</span>]], cmb)      </span>
+<span id="cb40-12"><a href="#cb40-12"></a>    </span>
+<span id="cb40-13"><a href="#cb40-13"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(dat)</span>
+<span id="cb40-14"><a href="#cb40-14"></a>    </span>
+<span id="cb40-15"><a href="#cb40-15"></a>        <span class="co"># don't check preamble</span></span>
+<span id="cb40-16"><a href="#cb40-16"></a>        <span class="kw">if</span> i ∈ <span class="fl">1</span>:preamble                           </span>
+<span id="cb40-17"><a href="#cb40-17"></a>            <span class="kw">continue</span></span>
+<span id="cb40-18"><a href="#cb40-18"></a>        <span class="kw">end</span></span>
+<span id="cb40-19"><a href="#cb40-19"></a>    </span>
+<span id="cb40-20"><a href="#cb40-20"></a>        <span class="co"># remove elements outwith the preamble </span></span>
+<span id="cb40-21"><a href="#cb40-21"></a>        tmp = i - preamble - <span class="fl">1</span>                         </span>
+<span id="cb40-22"><a href="#cb40-22"></a>        remove = findall(x -&gt; x[<span class="fl">1</span>] == tmp || x[<span class="fl">2</span>] == tmp, cmb)</span>
+<span id="cb40-23"><a href="#cb40-23"></a>        deleteat!(cmb, remove)</span>
+<span id="cb40-24"><a href="#cb40-24"></a>        deleteat!(add, remove)</span>
+<span id="cb40-25"><a href="#cb40-25"></a></span>
+<span id="cb40-26"><a href="#cb40-26"></a>        <span class="co"># generate next set of indices</span></span>
+<span id="cb40-27"><a href="#cb40-27"></a>        tmp = (tmp + <span class="fl">1</span>):(i - <span class="fl">1</span>)                     </span>
+<span id="cb40-28"><a href="#cb40-28"></a>        ind = map(x -&gt; [i, x], tmp)                 </span>
+<span id="cb40-29"><a href="#cb40-29"></a>        append!(cmb, ind)</span>
+<span id="cb40-30"><a href="#cb40-30"></a>    </span>
+<span id="cb40-31"><a href="#cb40-31"></a>        <span class="co"># generate next set of additions     </span></span>
+<span id="cb40-32"><a href="#cb40-32"></a>        new = map(x -&gt; dat[x[<span class="fl">1</span>]] + dat[x[<span class="fl">2</span>]], ind)            </span>
+<span id="cb40-33"><a href="#cb40-33"></a>        append!(add, new)</span>
+<span id="cb40-34"><a href="#cb40-34"></a></span>
+<span id="cb40-35"><a href="#cb40-35"></a>        <span class="co"># return invalid number</span></span>
+<span id="cb40-36"><a href="#cb40-36"></a>        <span class="kw">if</span> dat[i] ∉ add                             </span>
+<span id="cb40-37"><a href="#cb40-37"></a>            <span class="kw">return</span>(dat[i])</span>
+<span id="cb40-38"><a href="#cb40-38"></a>        <span class="kw">end</span></span>
+<span id="cb40-39"><a href="#cb40-39"></a></span>
+<span id="cb40-40"><a href="#cb40-40"></a>    <span class="kw">end</span></span>
+<span id="cb40-41"><a href="#cb40-41"></a><span class="kw">end</span>;</span>
+<span id="cb40-42"><a href="#cb40-42"></a></span>
+<span id="cb40-43"><a href="#cb40-43"></a><span class="co"># Find the first number in the list (after the preamble) which is not the sum of </span></span>
+<span id="cb40-44"><a href="#cb40-44"></a><span class="co"># two of the 25 numbers before it</span></span>
+<span id="cb40-45"><a href="#cb40-45"></a></span>
+<span id="cb40-46"><a href="#cb40-46"></a><span class="co"># What is the first number that does not have this property?</span></span>
+<span id="cb40-47"><a href="#cb40-47"></a></span>
+<span id="cb40-48"><a href="#cb40-48"></a>invalid = checksums(dat, preamble)</span></code></pre></div>
 <pre><code><span class="co">## 257342611</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-6">Part 2<a class="anchor" aria-label="anchor" href="#part-2-6"></a>
+</h3>
+<div class="sourceCode" id="cb42"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Find a contiguous set of at least two numbers in your list which sum to the </span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="co"># invalid number from step 1</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="kw">function</span> findweakness(dat, invalid)</span>
+<span id="cb42-5"><a href="#cb42-5"></a>    <span class="kw">for</span> i <span class="kw">in</span> eachindex(dat)</span>
+<span id="cb42-6"><a href="#cb42-6"></a></span>
+<span id="cb42-7"><a href="#cb42-7"></a>        total = dat[i]</span>
+<span id="cb42-8"><a href="#cb42-8"></a>        j = i</span>
+<span id="cb42-9"><a href="#cb42-9"></a>    </span>
+<span id="cb42-10"><a href="#cb42-10"></a>        <span class="kw">while</span>(total &lt; invalid)</span>
+<span id="cb42-11"><a href="#cb42-11"></a>            j += <span class="fl">1</span></span>
+<span id="cb42-12"><a href="#cb42-12"></a>            total += dat[j]</span>
+<span id="cb42-13"><a href="#cb42-13"></a>        <span class="kw">end</span></span>
+<span id="cb42-14"><a href="#cb42-14"></a>    </span>
+<span id="cb42-15"><a href="#cb42-15"></a>        <span class="kw">if</span> total == invalid</span>
+<span id="cb42-16"><a href="#cb42-16"></a>            vals = dat[i:j]                         <span class="co"># Find encryption weakness</span></span>
+<span id="cb42-17"><a href="#cb42-17"></a>            weakness = minimum(vals) + maximum(vals)</span>
+<span id="cb42-18"><a href="#cb42-18"></a>            <span class="kw">return</span>(weakness)</span>
+<span id="cb42-19"><a href="#cb42-19"></a>        <span class="kw">end</span></span>
+<span id="cb42-20"><a href="#cb42-20"></a>    </span>
+<span id="cb42-21"><a href="#cb42-21"></a>    <span class="kw">end</span></span>
+<span id="cb42-22"><a href="#cb42-22"></a><span class="kw">end</span>;</span>
+<span id="cb42-23"><a href="#cb42-23"></a></span>
+<span id="cb42-24"><a href="#cb42-24"></a>findweakness(dat, invalid)</span></code></pre></div>
+<pre><code><span class="co">## 35602097</span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
