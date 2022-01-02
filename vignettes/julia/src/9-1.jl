@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath("..", "inst", "2020", "day9.txt");
+path = joinpath("..", "inst", "2020", "day9.txt") 
 dat = readlines(path);
 dat = parse.(Int64, dat);                       # convert string to numeric
 
@@ -38,11 +38,9 @@ function checksums(dat, preamble)
     end
 end;
 
-
 # Find the first number in the list (after the preamble) which is not the sum of 
 # two of the 25 numbers before it
 
-checksums(dat, preamble)
-
 # What is the first number that does not have this property?
 
+checksums(dat, preamble)
