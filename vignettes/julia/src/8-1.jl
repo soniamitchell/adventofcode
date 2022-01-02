@@ -24,15 +24,6 @@ function tidyday8(dat)
     inst, vals
 end;
 
-"""
-    boot(inst, vals)
-
-Boot code
-
-# Arguments
-- `inst`: boot up instructions
-- `vals`: values associated with each instruction
-"""
 function boot(inst, vals)
     accumulator = 0;                            # initialise accumulator
     i = 1;                                      # initialise place in instruction list
