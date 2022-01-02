@@ -1,6 +1,6 @@
 # Run boot code ----------------------------------------------------------
 
-function boot(inst, vals)
+function boot2(inst, vals)
 
     stop_condition = length(inst) + 1
 
@@ -40,4 +40,4 @@ function boot(inst, vals)
     end
 end
 
-boot(inst, vals)
+boot2(inst, vals)
