@@ -1,4 +1,5 @@
-# Read in data
+# Read in data ------------------------------------------------------------
+
 path = joinpath("..", "inst", "2020", "day8.txt");
 dat = split(read(path, String), "\n");      # split by new line
 dat = filter(!isempty, dat);                # remove empty last element
@@ -15,7 +16,7 @@ vals = map(val) do str
     contains.(str, "-") ? num * -1 : num    # multiply by -1 if negative
 end;
 
-# Run your copy of the boot code
+# Define functions --------------------------------------------------------
 
 function boot(inst, vals)
 
@@ -38,6 +39,8 @@ function boot(inst, vals)
 
     accumulator
 end;
+
+# Run boot code ----------------------------------------------------------
 
 # Immediately before any instruction is executed a second time, what value is in the 
 # accumulator?
