@@ -127,3 +127,10 @@ everything into a function will achieve the expected behaviour.
 
 ```{julia day7-1}
 ```
+
+## Day 8: [Handheld Halting](https://adventofcode.com/2020/day/8)
+
+### Part 1
+
+```{julia day8-1, code=readLines("julia/src/8-1.jl")}
+```
