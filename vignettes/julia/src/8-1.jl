@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath(".", "inst", "2020", "day8.txt");
+path = joinpath("..", "inst", "2020", "day8.txt");
 dat = split(read(path, String), "\n");      # split by new line
 dat = filter(!isempty, dat);                # remove empty last element
 dat = split.(dat, " ");                     # split by space
