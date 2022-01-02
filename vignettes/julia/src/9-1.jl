@@ -43,4 +43,4 @@ end;
 
 # What is the first number that does not have this property?
 
-checksums(dat, preamble)
+invalid = checksums(dat, preamble)

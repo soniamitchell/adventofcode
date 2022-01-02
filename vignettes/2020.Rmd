@@ -159,3 +159,8 @@ expected behaviour.
 
 ```{julia day9-1, code=readLines("julia/src/9-1.jl")}
 ```
+
+### Part 2
+
+```{julia day9-2, code=readLines("julia/src/9-2.jl")}
+```
