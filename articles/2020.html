@@ -93,7 +93,7 @@
 <span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Find the two entries that sum to 2020</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>numbers = [x <span class="kw">for</span> x <span class="kw">in</span> combinations(dat, <span class="fl">2</span>) <span class="kw">if</span> sum(x) == <span class="fl">2020</span>];</span>
 <span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Convert 1-element  Vector{Vector{Float64}} to 2-element Vector{Float64}</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Convert 1-element Vector{Vector{Float64}} to 2-element Vector{Float64}</span></span>
 <span id="cb4-7"><a href="#cb4-7"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
 <span id="cb4-8"><a href="#cb4-8"></a></span>
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co"># What do you get if you multiply them together?</span></span>
@@ -171,7 +171,7 @@
 </h4>
 <ul>
 <li><p>The <strong>ternary operator</strong>, <code>?:</code> is related to <code>if-elseif-else</code> syntax and is written as <code>condition ? value_if_true : value_if_false</code>.</p></li>
-<li><p>Julia complains of scoping issues when calling <code>x += 1</code> inside a <code>for</code> loop (if <code>x</code> was defined outside of it). Rather than using <code>global x += 1</code>, putting everything into a function will achieve the expected behaviour.</p></li>
+<li><p>Julia complains of scoping issues when calling <code>results</code> += 1<code>inside a</code>for<code>loop (if</code>results<code>was defined outside of it). Rather than using</code>global results += 1`, putting everything into a function will achieve the expected behaviour.</p></li>
 </ul>
 </div>
 </div>
@@ -231,8 +231,8 @@
 <span id="cb16-20"><a href="#cb16-20"></a>    </span>
 <span id="cb16-21"><a href="#cb16-21"></a><span class="kw">end</span>;</span>
 <span id="cb16-22"><a href="#cb16-22"></a></span>
-<span id="cb16-23"><a href="#cb16-23"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and down 1, </span></span>
-<span id="cb16-24"><a href="#cb16-24"></a><span class="co"># how many trees would you encounter?</span></span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="co"># Starting at the top-left corner of your map and following a slope of right 3 and </span></span>
+<span id="cb16-24"><a href="#cb16-24"></a><span class="co"># down 1, how many trees would you encounter?</span></span>
 <span id="cb16-25"><a href="#cb16-25"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
 <pre><code><span class="co">## 237</span></code></pre>
 </div>
@@ -474,9 +474,10 @@
 <div class="section level3">
 <h3 id="part-1-7">Part 1<a class="anchor" aria-label="anchor" href="#part-1-7"></a>
 </h3>
-<div class="sourceCode" id="cb34"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Read in data</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day8.txt"</span>);</span>
-<span id="cb34-3"><a href="#cb34-3"></a>dat = split(read(path, <span class="dt">String</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);      <span class="co"># split by new line</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Read in data ------------------------------------------------------------</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day8.txt"</span>);</span>
+<span id="cb34-4"><a href="#cb34-4"></a>dat = split(read(path, <span class="dt">String</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>);      <span class="co"># split by new line</span></span></code></pre></div>
 <pre><code><span class="co">## 635-element Vector{SubString{String}}:</span>
 <span class="co">##  "acc +15"</span>
 <span class="co">##  "acc +2"</span>
@@ -596,34 +597,272 @@
 <span id="cb44-6"><a href="#cb44-6"></a>    contains.(str, <span class="st">"-"</span>) ? num * -<span class="fl">1</span> : num    <span class="co"># multiply by -1 if negative</span></span>
 <span id="cb44-7"><a href="#cb44-7"></a><span class="kw">end</span>;</span>
 <span id="cb44-8"><a href="#cb44-8"></a></span>
-<span id="cb44-9"><a href="#cb44-9"></a><span class="co"># Run your copy of the boot code</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a><span class="co"># Run boot code ----------------------------------------------------------</span></span>
 <span id="cb44-10"><a href="#cb44-10"></a></span>
 <span id="cb44-11"><a href="#cb44-11"></a><span class="kw">function</span> boot(inst, vals)</span>
-<span id="cb44-12"><a href="#cb44-12"></a></span>
-<span id="cb44-13"><a href="#cb44-13"></a>    accumulator = <span class="fl">0</span>                         <span class="co"># initialise accumulator</span></span>
-<span id="cb44-14"><a href="#cb44-14"></a>    i = <span class="fl">1</span>                                   <span class="co"># initialise place in instruction list</span></span>
-<span id="cb44-15"><a href="#cb44-15"></a>    log = []</span>
-<span id="cb44-16"><a href="#cb44-16"></a></span>
-<span id="cb44-17"><a href="#cb44-17"></a>    <span class="kw">while</span> i ∉ log                           <span class="co"># stop before an instruction is run again</span></span>
-<span id="cb44-18"><a href="#cb44-18"></a>        push!(log, i)                       <span class="co"># record i in log</span></span>
-<span id="cb44-19"><a href="#cb44-19"></a></span>
-<span id="cb44-20"><a href="#cb44-20"></a>        <span class="kw">if</span> inst[i] == <span class="st">"acc"</span></span>
-<span id="cb44-21"><a href="#cb44-21"></a>            accumulator += vals[i]          <span class="co"># add value to accumulator</span></span>
-<span id="cb44-22"><a href="#cb44-22"></a>            i += <span class="fl">1</span>                          <span class="co"># next instruction</span></span>
-<span id="cb44-23"><a href="#cb44-23"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"jmp"</span></span>
-<span id="cb44-24"><a href="#cb44-24"></a>            i += vals[i]                    <span class="co"># jump to a new instruction</span></span>
-<span id="cb44-25"><a href="#cb44-25"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"nop"</span></span>
-<span id="cb44-26"><a href="#cb44-26"></a>            i += <span class="fl">1</span>                          <span class="co"># next instruction</span></span>
-<span id="cb44-27"><a href="#cb44-27"></a>        <span class="kw">end</span></span>
-<span id="cb44-28"><a href="#cb44-28"></a>    <span class="kw">end</span></span>
-<span id="cb44-29"><a href="#cb44-29"></a></span>
-<span id="cb44-30"><a href="#cb44-30"></a>    accumulator</span>
-<span id="cb44-31"><a href="#cb44-31"></a><span class="kw">end</span>;</span>
-<span id="cb44-32"><a href="#cb44-32"></a></span>
-<span id="cb44-33"><a href="#cb44-33"></a><span class="co"># Immediately before any instruction is executed a second time, what value is in the </span></span>
-<span id="cb44-34"><a href="#cb44-34"></a><span class="co"># accumulator?</span></span>
-<span id="cb44-35"><a href="#cb44-35"></a>boot(inst, vals)</span></code></pre></div>
+<span id="cb44-12"><a href="#cb44-12"></a>    accumulator = <span class="fl">0</span>;                            <span class="co"># initialise accumulator</span></span>
+<span id="cb44-13"><a href="#cb44-13"></a>    i = <span class="fl">1</span>;                                      <span class="co"># initialise place in instruction list</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>    log = [];</span>
+<span id="cb44-15"><a href="#cb44-15"></a></span>
+<span id="cb44-16"><a href="#cb44-16"></a>    <span class="kw">while</span> i ∉ log                               <span class="co"># stop before an instruction is run again</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a>        push!(log, i)                           <span class="co"># record i in log</span></span>
+<span id="cb44-18"><a href="#cb44-18"></a></span>
+<span id="cb44-19"><a href="#cb44-19"></a>        <span class="kw">if</span> inst[i] == <span class="st">"acc"</span></span>
+<span id="cb44-20"><a href="#cb44-20"></a>            accumulator += vals[i]              <span class="co"># add value to accumulator</span></span>
+<span id="cb44-21"><a href="#cb44-21"></a>            i += <span class="fl">1</span>                              <span class="co"># next instruction</span></span>
+<span id="cb44-22"><a href="#cb44-22"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"jmp"</span></span>
+<span id="cb44-23"><a href="#cb44-23"></a>            i += vals[i]                        <span class="co"># jump to a new instruction</span></span>
+<span id="cb44-24"><a href="#cb44-24"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"nop"</span></span>
+<span id="cb44-25"><a href="#cb44-25"></a>            i += <span class="fl">1</span>                              <span class="co"># next instruction</span></span>
+<span id="cb44-26"><a href="#cb44-26"></a>        <span class="kw">end</span></span>
+<span id="cb44-27"><a href="#cb44-27"></a>    <span class="kw">end</span></span>
+<span id="cb44-28"><a href="#cb44-28"></a>    <span class="kw">return</span>(accumulator)</span>
+<span id="cb44-29"><a href="#cb44-29"></a><span class="kw">end</span>;</span>
+<span id="cb44-30"><a href="#cb44-30"></a></span>
+<span id="cb44-31"><a href="#cb44-31"></a><span class="co"># Immediately before any instruction is executed a second time, what value is in the </span></span>
+<span id="cb44-32"><a href="#cb44-32"></a><span class="co"># accumulator?</span></span>
+<span id="cb44-33"><a href="#cb44-33"></a>boot(inst, vals)</span></code></pre></div>
 <pre><code><span class="co">## 1749</span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="part-2-5">Part 2<a class="anchor" aria-label="anchor" href="#part-2-5"></a>
+</h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># Run boot code ----------------------------------------------------------</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="kw">function</span> boot2(inst, vals)</span>
+<span id="cb46-4"><a href="#cb46-4"></a></span>
+<span id="cb46-5"><a href="#cb46-5"></a>    stop_condition = length(inst) + <span class="fl">1</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a></span>
+<span id="cb46-7"><a href="#cb46-7"></a>    <span class="kw">for</span> i <span class="kw">in</span> <span class="fl">1</span>:length(inst)</span>
+<span id="cb46-8"><a href="#cb46-8"></a></span>
+<span id="cb46-9"><a href="#cb46-9"></a>        new_inst = copy(inst)</span>
+<span id="cb46-10"><a href="#cb46-10"></a>    </span>
+<span id="cb46-11"><a href="#cb46-11"></a>        <span class="kw">if</span> inst[i] == <span class="st">"acc"</span></span>
+<span id="cb46-12"><a href="#cb46-12"></a>            <span class="kw">continue</span></span>
+<span id="cb46-13"><a href="#cb46-13"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"jmp"</span></span>
+<span id="cb46-14"><a href="#cb46-14"></a>            new_inst[i] = <span class="st">"nop"</span></span>
+<span id="cb46-15"><a href="#cb46-15"></a>        <span class="kw">elseif</span> inst[i] == <span class="st">"nop"</span></span>
+<span id="cb46-16"><a href="#cb46-16"></a>            new_inst[i] = <span class="st">"jmp"</span></span>
+<span id="cb46-17"><a href="#cb46-17"></a>        <span class="kw">end</span></span>
+<span id="cb46-18"><a href="#cb46-18"></a>        </span>
+<span id="cb46-19"><a href="#cb46-19"></a>        accumulator = <span class="fl">0</span>                         <span class="co"># initialise accumulator</span></span>
+<span id="cb46-20"><a href="#cb46-20"></a>        j = <span class="fl">1</span>                                   <span class="co"># initialise place in instruction list</span></span>
+<span id="cb46-21"><a href="#cb46-21"></a>        log = [] </span>
+<span id="cb46-22"><a href="#cb46-22"></a>        </span>
+<span id="cb46-23"><a href="#cb46-23"></a>        <span class="kw">while</span> j ∉ log                           <span class="co"># stop before an instruction is run again</span></span>
+<span id="cb46-24"><a href="#cb46-24"></a>            <span class="kw">if</span> j == stop_condition              <span class="co"># found correct termination point!</span></span>
+<span id="cb46-25"><a href="#cb46-25"></a>                <span class="kw">return</span>(accumulator)  </span>
+<span id="cb46-26"><a href="#cb46-26"></a>            <span class="kw">end</span></span>
+<span id="cb46-27"><a href="#cb46-27"></a>            push!(log, j)                       <span class="co"># record i in log</span></span>
+<span id="cb46-28"><a href="#cb46-28"></a>    </span>
+<span id="cb46-29"><a href="#cb46-29"></a>            <span class="kw">if</span> new_inst[j] == <span class="st">"acc"</span></span>
+<span id="cb46-30"><a href="#cb46-30"></a>                accumulator += vals[j]          <span class="co"># add value to accumulator</span></span>
+<span id="cb46-31"><a href="#cb46-31"></a>                j += <span class="fl">1</span>                          <span class="co"># next instruction</span></span>
+<span id="cb46-32"><a href="#cb46-32"></a>            <span class="kw">elseif</span> new_inst[j] == <span class="st">"jmp"</span></span>
+<span id="cb46-33"><a href="#cb46-33"></a>                j += vals[j]                    <span class="co"># jump to a new instruction</span></span>
+<span id="cb46-34"><a href="#cb46-34"></a>            <span class="kw">elseif</span> new_inst[j] == <span class="st">"nop"</span></span>
+<span id="cb46-35"><a href="#cb46-35"></a>                j += <span class="fl">1</span>                          <span class="co"># next instruction</span></span>
+<span id="cb46-36"><a href="#cb46-36"></a>            <span class="kw">end</span></span>
+<span id="cb46-37"><a href="#cb46-37"></a>        <span class="kw">end</span></span>
+<span id="cb46-38"><a href="#cb46-38"></a>        println(i)</span>
+<span id="cb46-39"><a href="#cb46-39"></a></span>
+<span id="cb46-40"><a href="#cb46-40"></a>    <span class="kw">end</span></span>
+<span id="cb46-41"><a href="#cb46-41"></a><span class="kw">end</span></span></code></pre></div>
+<pre><code><span class="co">## boot2 (generic function with 1 method)</span></code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1"></a></span>
+<span id="cb48-2"><a href="#cb48-2"></a>boot2(inst, vals)</span></code></pre></div>
+<pre><code><span class="co">## 4</span>
+<span class="co">## 6</span>
+<span class="co">## 7</span>
+<span class="co">## 9</span>
+<span class="co">## 11</span>
+<span class="co">## 14</span>
+<span class="co">## 17</span>
+<span class="co">## 18</span>
+<span class="co">## 19</span>
+<span class="co">## 21</span>
+<span class="co">## 24</span>
+<span class="co">## 25</span>
+<span class="co">## 28</span>
+<span class="co">## 29</span>
+<span class="co">## 30</span>
+<span class="co">## 33</span>
+<span class="co">## 35</span>
+<span class="co">## 40</span>
+<span class="co">## 43</span>
+<span class="co">## 45</span>
+<span class="co">## 47</span>
+<span class="co">## 51</span>
+<span class="co">## 52</span>
+<span class="co">## 53</span>
+<span class="co">## 57</span>
+<span class="co">## 61</span>
+<span class="co">## 64</span>
+<span class="co">## 66</span>
+<span class="co">## 71</span>
+<span class="co">## 73</span>
+<span class="co">## 75</span>
+<span class="co">## 78</span>
+<span class="co">## 79</span>
+<span class="co">## 81</span>
+<span class="co">## 82</span>
+<span class="co">## 87</span>
+<span class="co">## 88</span>
+<span class="co">## 91</span>
+<span class="co">## 92</span>
+<span class="co">## 93</span>
+<span class="co">## 95</span>
+<span class="co">## 100</span>
+<span class="co">## 105</span>
+<span class="co">## 106</span>
+<span class="co">## 107</span>
+<span class="co">## 112</span>
+<span class="co">## 114</span>
+<span class="co">## 115</span>
+<span class="co">## 117</span>
+<span class="co">## 118</span>
+<span class="co">## 119</span>
+<span class="co">## 120</span>
+<span class="co">## 125</span>
+<span class="co">## 127</span>
+<span class="co">## 130</span>
+<span class="co">## 131</span>
+<span class="co">## 136</span>
+<span class="co">## 138</span>
+<span class="co">## 143</span>
+<span class="co">## 147</span>
+<span class="co">## 148</span>
+<span class="co">## 150</span>
+<span class="co">## 151</span>
+<span class="co">## 155</span>
+<span class="co">## 159</span>
+<span class="co">## 162</span>
+<span class="co">## 163</span>
+<span class="co">## 165</span>
+<span class="co">## 166</span>
+<span class="co">## 167</span>
+<span class="co">## 168</span>
+<span class="co">## 173</span>
+<span class="co">## 174</span>
+<span class="co">## 175</span>
+<span class="co">## 177</span>
+<span class="co">## 179</span>
+<span class="co">## 180</span>
+<span class="co">## 181</span>
+<span class="co">## 182</span>
+<span class="co">## 185</span>
+<span class="co">## 187</span>
+<span class="co">## 188</span>
+<span class="co">## 189</span>
+<span class="co">## 191</span>
+<span class="co">## 194</span>
+<span class="co">## 197</span>
+<span class="co">## 199</span>
+<span class="co">## 203</span>
+<span class="co">## 204</span>
+<span class="co">## 206</span>
+<span class="co">## 207</span>
+<span class="co">## 209</span>
+<span class="co">## 210</span>
+<span class="co">## 211</span>
+<span class="co">## 212</span>
+<span class="co">## 213</span>
+<span class="co">## 214</span>
+<span class="co">## 217</span>
+<span class="co">## 220</span>
+<span class="co">## 222</span>
+<span class="co">## 224</span>
+<span class="co">## 226</span>
+<span class="co">## 228</span>
+<span class="co">## 229</span>
+<span class="co">## 230</span>
+<span class="co">## 231</span>
+<span class="co">## 232</span>
+<span class="co">## 234</span>
+<span class="co">## 236</span>
+<span class="co">## 238</span>
+<span class="co">## 239</span>
+<span class="co">## 240</span>
+<span class="co">## 241</span>
+<span class="co">## 245</span>
+<span class="co">## 246</span>
+<span class="co">## 250</span>
+<span class="co">## 255</span>
+<span class="co">## 256</span>
+<span class="co">## 260</span>
+<span class="co">## 263</span>
+<span class="co">## 265</span>
+<span class="co">## 267</span>
+<span class="co">## 271</span>
+<span class="co">## 276</span>
+<span class="co">## 278</span>
+<span class="co">## 282</span>
+<span class="co">## 287</span>
+<span class="co">## 292</span>
+<span class="co">## 295</span>
+<span class="co">## 296</span>
+<span class="co">## 300</span>
+<span class="co">## 302</span>
+<span class="co">## 304</span>
+<span class="co">## 306</span>
+<span class="co">## 307</span>
+<span class="co">## 311</span>
+<span class="co">## 312</span>
+<span class="co">## 316</span>
+<span class="co">## 317</span>
+<span class="co">## 319</span>
+<span class="co">## 320</span>
+<span class="co">## 322</span>
+<span class="co">## 324</span>
+<span class="co">## 325</span>
+<span class="co">## 327</span>
+<span class="co">## 332</span>
+<span class="co">## 334</span>
+<span class="co">## 335</span>
+<span class="co">## 336</span>
+<span class="co">## 337</span>
+<span class="co">## 338</span>
+<span class="co">## 342</span>
+<span class="co">## 346</span>
+<span class="co">## 347</span>
+<span class="co">## 348</span>
+<span class="co">## 349</span>
+<span class="co">## 350</span>
+<span class="co">## 351</span>
+<span class="co">## 354</span>
+<span class="co">## 357</span>
+<span class="co">## 358</span>
+<span class="co">## 359</span>
+<span class="co">## 362</span>
+<span class="co">## 363</span>
+<span class="co">## 365</span>
+<span class="co">## 368</span>
+<span class="co">## 369</span>
+<span class="co">## 371</span>
+<span class="co">## 372</span>
+<span class="co">## 373</span>
+<span class="co">## 375</span>
+<span class="co">## 378</span>
+<span class="co">## 382</span>
+<span class="co">## 387</span>
+<span class="co">## 388</span>
+<span class="co">## 393</span>
+<span class="co">## 395</span>
+<span class="co">## 396</span>
+<span class="co">## 398</span>
+<span class="co">## 400</span>
+<span class="co">## 403</span>
+<span class="co">## 404</span>
+<span class="co">## 407</span>
+<span class="co">## 408</span>
+<span class="co">## 411</span>
+<span class="co">## 413</span>
+<span class="co">## 415</span>
+<span class="co">## 420</span>
+<span class="co">## 425</span>
+<span class="co">## 428</span>
+<span class="co">## 431</span></code></pre>
+<pre><code><span class="co">## 515</span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
