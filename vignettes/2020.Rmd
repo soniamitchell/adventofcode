@@ -67,9 +67,10 @@ using Formatting
 * The **ternary operator**, `?:` is related to `if-elseif-else` syntax and is 
 written as `condition ? value_if_true : value_if_false`.
 
-* Julia complains of scoping issues when calling `x += 1` inside a `for` loop (if
-`x` was defined outside of it). Rather than using `global x += 1`, putting 
-everything into a function will achieve the expected behaviour.
+* Julia complains of scoping issues when calling `results` += 1` inside a `for` 
+loop (if `results` was defined outside of it). Rather than using 
+`global results += 1`, putting everything into a function will achieve the
+expected behaviour.
 
 ### Part 2
 
@@ -133,4 +134,9 @@ everything into a function will achieve the expected behaviour.
 ### Part 1
 
 ```{julia day8-1, code=readLines("julia/src/8-1.jl")}
+```
+
+### Part 2
+
+```{julia day8-2, code=readLines("julia/src/8-2.jl")}
 ```
