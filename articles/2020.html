@@ -677,15 +677,16 @@
 <span id="cb42-13"><a href="#cb42-13"></a>        <span class="kw">end</span></span>
 <span id="cb42-14"><a href="#cb42-14"></a>    </span>
 <span id="cb42-15"><a href="#cb42-15"></a>        <span class="kw">if</span> total == invalid</span>
-<span id="cb42-16"><a href="#cb42-16"></a>            vals = dat[i:j]                         <span class="co"># Find encryption weakness</span></span>
-<span id="cb42-17"><a href="#cb42-17"></a>            weakness = minimum(vals) + maximum(vals)</span>
-<span id="cb42-18"><a href="#cb42-18"></a>            <span class="kw">return</span>(weakness)</span>
-<span id="cb42-19"><a href="#cb42-19"></a>        <span class="kw">end</span></span>
-<span id="cb42-20"><a href="#cb42-20"></a>    </span>
-<span id="cb42-21"><a href="#cb42-21"></a>    <span class="kw">end</span></span>
-<span id="cb42-22"><a href="#cb42-22"></a><span class="kw">end</span>;</span>
-<span id="cb42-23"><a href="#cb42-23"></a></span>
-<span id="cb42-24"><a href="#cb42-24"></a>findweakness(dat, invalid)</span></code></pre></div>
+<span id="cb42-16"><a href="#cb42-16"></a>            <span class="co"># Find encryption weakness</span></span>
+<span id="cb42-17"><a href="#cb42-17"></a>            vals = dat[i:j]                         </span>
+<span id="cb42-18"><a href="#cb42-18"></a>            weakness = minimum(vals) + maximum(vals)</span>
+<span id="cb42-19"><a href="#cb42-19"></a>            <span class="kw">return</span>(weakness)</span>
+<span id="cb42-20"><a href="#cb42-20"></a>        <span class="kw">end</span></span>
+<span id="cb42-21"><a href="#cb42-21"></a>    </span>
+<span id="cb42-22"><a href="#cb42-22"></a>    <span class="kw">end</span></span>
+<span id="cb42-23"><a href="#cb42-23"></a><span class="kw">end</span>;</span>
+<span id="cb42-24"><a href="#cb42-24"></a></span>
+<span id="cb42-25"><a href="#cb42-25"></a>findweakness(dat, invalid)</span></code></pre></div>
 <pre><code><span class="co">## 35602097</span></code></pre>
 </div>
 </div>
@@ -717,8 +718,9 @@
 <span id="cb48-8"><a href="#cb48-8"></a><span class="kw">end</span></span></code></pre></div>
 <pre><code><span class="co">## part1 (generic function with 1 method)</span></code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb50-1"><a href="#cb50-1"></a></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="co"># What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>day10(path) |&gt; part1</span></code></pre></div>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="co"># What is the number of 1-jolt differences multiplied by the number of 3-jolt </span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="co"># differences?</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a>day10(path) |&gt; part1</span></code></pre></div>
 <pre><code><span class="co">## 2450</span></code></pre>
 </div>
 </div>
