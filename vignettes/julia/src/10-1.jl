@@ -17,5 +17,6 @@ function part1(dat)
     ones * threes
 end
 
-# What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
+# What is the number of 1-jolt differences multiplied by the number of 3-jolt 
+# differences?
 day10(path) |> part1
