@@ -1,4 +1,4 @@
-path = joinpath(".", "inst", "2020", "day10.txt")
+path = joinpath("..", "inst", "2020", "day10.txt")
 
 # Find a chain that uses all of your adapters to connect the charging outlet to your 
 # device's built-in adapter and count the joltage differences between the charging 
