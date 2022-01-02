@@ -12,6 +12,18 @@ vignette: >
 ```{r r-setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+# Benchmark code chunks
+knitr::knit_hooks$set(
+  time = function(before, envir) {
+    t <- proc.time()['elapsed']
+    if(before) {
+      envir$.elapsed <- t
+    } else {
+      paste(signif(t - envir$.elapsed), 'sec.')
+    }
+  }
+)
+
 library(JuliaCall)
 ```
 
