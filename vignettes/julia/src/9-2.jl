@@ -19,6 +19,6 @@ function findweakness(dat, invalid)
         end
     
     end
-end
+end;
 
 findweakness(dat, invalid)
