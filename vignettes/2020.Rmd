@@ -152,3 +152,10 @@ expected behaviour.
 
 ```{julia day8-2, code=readLines("julia/src/8-2.jl")}
 ```
+
+## Day 9: [Encoding Error](https://adventofcode.com/2020/day/9)
+
+### Part 1
+
+```{julia day9-1, code=readLines("julia/src/9-1.jl")}
+```
