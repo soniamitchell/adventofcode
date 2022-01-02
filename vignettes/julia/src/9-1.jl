@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath(".", "inst", "2020", "day9.txt");
+path = joinpath("..", "inst", "2020", "day9.txt");
 dat = readlines(path);
 dat = parse.(Int64, dat);                       # convert string to numeric
 
