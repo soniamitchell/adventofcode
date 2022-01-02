@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath("..", "inst", "2020", "day8.txt");
+path = joinpath(".", "inst", "2020", "day8.txt");
 dat = split(read(path, String), "\n");      # split by new line
 dat = filter(!isempty, dat);                # remove empty last element
 dat = split.(dat, " ");                     # split by space
@@ -16,31 +16,24 @@ vals = map(val) do str
     contains.(str, "-") ? num * -1 : num    # multiply by -1 if negative
 end;
 
-# Define functions --------------------------------------------------------
-
-function boot(inst, vals)
-
-    accumulator = 0                         # initialise accumulator
-    i = 1                                   # initialise place in instruction list
-    log = []
-
-    while i ∉ log                           # stop before an instruction is run again
-        push!(log, i)                       # record i in log
-
-        if inst[i] == "acc"
-            accumulator += vals[i]          # add value to accumulator
-            i += 1                          # next instruction
-        elseif inst[i] == "jmp"
-            i += vals[i]                    # jump to a new instruction
-        elseif inst[i] == "nop"
-            i += 1                          # next instruction
-        end
-    end
-
-    accumulator
-end;
-
 # Run boot code ----------------------------------------------------------
+
+accumulator = 0;                            # initialise accumulator
+i = 1;                                      # initialise place in instruction list
+log = [];
+
+while i ∉ log                               # stop before an instruction is run again
+    push!(log, i)                           # record i in log
+
+    if inst[i] == "acc"
+        accumulator += vals[i]              # add value to accumulator
+        i += 1                              # next instruction
+    elseif inst[i] == "jmp"
+        i += vals[i]                        # jump to a new instruction
+    elseif inst[i] == "nop"
+        i += 1                              # next instruction
+    end
+end;
 
 # Immediately before any instruction is executed a second time, what value is in the 
 # accumulator?
