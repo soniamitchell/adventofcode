@@ -35,9 +35,7 @@ function boot2(inst, vals)
                 j += 1                          # next instruction
             end
         end
-        println(i)
-
     end
-end
+end;
 
 boot2(inst, vals)
