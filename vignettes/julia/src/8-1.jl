@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath(".", "inst", "2020", "day8.txt");
+path = joinpath("..", "inst", "2020", "day8.txt");
 dat = read(path, String);
 
 # Define functions --------------------------------------------------------
