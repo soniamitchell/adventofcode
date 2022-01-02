@@ -164,3 +164,10 @@ expected behaviour.
 
 ```{julia day9-2, code=readLines("julia/src/9-2.jl")}
 ```
+
+## Day 10: [Adapter Array](https://adventofcode.com/2020/day/10)
+
+### Part 1
+
+```{julia day10-1, code=readLines("julia/src/10-1.jl")}
+```
