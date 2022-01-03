@@ -11,6 +11,7 @@ function day11(dat)
 end;
 
 function checksums(dat)
+    preamble = 25
 
     # generate pairwise combination index
     cmb = combinations(1:preamble, 2) |> collect    
@@ -18,8 +19,6 @@ function checksums(dat)
     add = map(x -> dat[x[1]] + dat[x[2]], cmb)      
     
     for i in eachindex(dat)
-        preamble = 25
-
         # don't check preamble
         if i ∈ 1:preamble                           
             continue
