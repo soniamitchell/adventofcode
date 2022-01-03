@@ -38,8 +38,12 @@
 <li class="nav-item">
   <a class="nav-link" href="../articles/2021.html">2021 (R)</a>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/2020.html">2020 (Julia)</a>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--">2020</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown--">
+    <a class="dropdown-item" href="../articles/2020-julia.html">2020 (Julia)</a>
+    <a class="dropdown-item" href="../articles/2020-R.html">2020 (R)</a>
+  </div>
 </li>
 <li class="active nav-item">
   <a class="nav-link" href="../articles/2019.html">2019 (Python)</a>
@@ -93,11 +97,11 @@
 <span id="cb2-7"><a href="#cb2-7"></a>df[<span class="st">'multiply'</span>] <span class="op">=</span> df.<span class="bu">apply</span>(multiply, axis <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb2-8"><a href="#cb2-8"></a><span class="bu">print</span>(df)</span></code></pre></div>
 <pre><code><span class="co">##           0         1  multiply</span>
-<span class="co">## 0  0.654086  0.545998  0.357130</span>
-<span class="co">## 1  0.007288  0.033598  0.000245</span>
-<span class="co">## 2  0.375419  0.902741  0.338906</span>
-<span class="co">## 3  0.209113  0.866868  0.181273</span>
-<span class="co">## 4  0.397082  0.687738  0.273088</span></code></pre>
+<span class="co">## 0  0.649490  0.337078  0.218929</span>
+<span class="co">## 1  0.253530  0.422294  0.107064</span>
+<span class="co">## 2  0.057922  0.795811  0.046095</span>
+<span class="co">## 3  0.316150  0.987584  0.312225</span>
+<span class="co">## 4  0.595317  0.561427  0.334227</span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
