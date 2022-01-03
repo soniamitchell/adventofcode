@@ -97,13 +97,12 @@
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day1.txt"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day1.txt"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Count the number of times the depth increases from the previous measurement</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1832</span></code></pre>
-<p>0.014 sec.</p>
+<p>0.015 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2"></a>
@@ -120,7 +119,7 @@
 <span class="co"># Count the number of times the depth increases from the previous measurement</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">summed</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1858</span></code></pre>
-<p>0.031 sec.</p>
+<p>0.03 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -146,7 +145,7 @@
 
 <span class="va">horizontal_position</span> <span class="op">*</span> <span class="va">depth</span></code></pre></div>
 <pre><code><span class="co">## [1] 1648020</span></code></pre>
-<p>0.037 sec.</p>
+<p>0.038 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-1">Part 2<a class="anchor" aria-label="anchor" href="#part-2-1"></a>
@@ -182,8 +181,7 @@
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data</span>
-<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day3.txt"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day3.txt"</span><span class="op">)</span>, what <span class="op">=</span> <span class="st">"character"</span><span class="op">)</span>
 
 <span class="co"># Number of bits in each binary number</span>
 <span class="va">digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nchar.html" class="external-link">nchar</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>
@@ -208,7 +206,7 @@
 <span class="co"># Calculate power consumption</span>
 <span class="va">gamma_rate</span> <span class="op">*</span> <span class="va">epsilon_rate</span></code></pre></div>
 <pre><code><span class="co">## [1] 2954600</span></code></pre>
-<p>0.059 sec.</p>
+<p>0.057 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2-2"></a>
@@ -321,7 +319,7 @@
 
 <span class="fu">play_bingo</span><span class="op">(</span><span class="va">numbers</span>, <span class="va">boards</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 31424</span></code></pre>
-<p>0.49 sec.</p>
+<p>0.506 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-3">Part 2<a class="anchor" aria-label="anchor" href="#part-2-3"></a>
@@ -364,7 +362,7 @@
 <span class="co">## 98       9    82  3726</span>
 <span class="co">## 99      84    89 36120</span>
 <span class="co">## 100     82    16 23042</span></code></pre>
-<p>1.126 sec.</p>
+<p>1.284 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -410,7 +408,7 @@
 <span class="co"># Find points where at least two lines overlap</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">grid</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 6572</span></code></pre>
-<p>0.092 sec.</p>
+<p>0.106 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-4">Part 2<a class="anchor" aria-label="anchor" href="#part-2-4"></a>
@@ -450,7 +448,7 @@
 <span class="co"># Find points where at least two lines overlap</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">grid</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 21466</span></code></pre>
-<p>0.096 sec.</p>
+<p>0.109 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -484,7 +482,7 @@
 <span class="co"># How many lanternfish would there be after 80 days?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">fish</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 390923</span></code></pre>
-<p>0.068 sec.</p>
+<p>0.077 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-5">Part 2<a class="anchor" aria-label="anchor" href="#part-2-5"></a>
@@ -515,7 +513,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fish_counts</span><span class="op">$</span><span class="va">n</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span>scientific <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] "1749945484935"</span></code></pre>
-<p>0.079 sec.</p>
+<p>0.088 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -551,7 +549,7 @@
 <code class="sourceCode R"><span class="co"># How much fuel must they spend to align to that position?</span>
 <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
 <pre><code><span class="co">## [1] 1464430</span></code></pre>
-<p>0.254 sec.</p>
+<p>0.299 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-6">Part 2<a class="anchor" aria-label="anchor" href="#part-2-6"></a>
@@ -578,7 +576,7 @@
 <code class="sourceCode R"><span class="co"># How much fuel must they spend to align to that position?</span>
 <span class="va">results</span><span class="op">$</span><span class="va">total_fuel_cost</span><span class="op">[</span><span class="va">lowest</span><span class="op">]</span></code></pre></div>
 <pre><code><span class="co">## [1] 101268110</span></code></pre>
-<p>0.998 sec.</p>
+<p>1.215 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -603,7 +601,7 @@
 <span class="co"># How many times do digits 1, 4, 7, or 8 (length 2, 4, 3, and 7) appear?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 321</span></code></pre>
-<p>0.02 sec.</p>
+<p>0.023 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-7">Part 2<a class="anchor" aria-label="anchor" href="#part-2-7"></a>
@@ -719,7 +717,7 @@
 <span class="co"># What do you get if you add up all of the output values?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1028926</span></code></pre>
-<p>0.219 sec.</p>
+<p>0.256 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -773,7 +771,7 @@
 <span class="co"># What is the sum of the risk levels of all low points on your heightmap?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">lowest_points</span><span class="op">$</span><span class="va">risk</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 603</span></code></pre>
-<p>0.692 sec.</p>
+<p>0.798 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-8">Part 2<a class="anchor" aria-label="anchor" href="#part-2-8"></a>
@@ -867,7 +865,7 @@
 <span class="co"># Multiply together the sizes of the three largest basins</span>
 <span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 786780</span></code></pre>
-<p>58.38 sec.</p>
+<p>67.23 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -931,7 +929,7 @@
 <span class="co"># subsystem. What is the total syntax error score for those errors?</span>
 <span class="va">total</span></code></pre></div>
 <pre><code><span class="co">## [1] 296535</span></code></pre>
-<p>0.071 sec.</p>
+<p>0.083 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-9">Part 2<a class="anchor" aria-label="anchor" href="#part-2-9"></a>
@@ -987,7 +985,7 @@
 <span class="va">value</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span><span class="op">[</span><span class="va">index</span><span class="op">]</span>
 <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">value</span>, scientific <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] "4245130838"</span></code></pre>
-<p>0.151 sec.</p>
+<p>0.173 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1073,7 +1071,7 @@
 <span class="co"># How many total flashes are there after 100 steps?</span>
 <span class="va">count</span></code></pre></div>
 <pre><code><span class="co">## [1] 1743</span></code></pre>
-<p>7.689 sec.</p>
+<p>8.723 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-10">Part 2<a class="anchor" aria-label="anchor" href="#part-2-10"></a>
@@ -1092,7 +1090,7 @@
 
 <span class="va">count</span></code></pre></div>
 <pre><code><span class="co">## [1] 365</span></code></pre>
-<p>25.701 sec.</p>
+<p>29.242 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1151,7 +1149,7 @@
 <span class="co"># most once?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">completed_routes</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 3887</span></code></pre>
-<p>11.065 sec.</p>
+<p>12.491 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-11">Part 2<a class="anchor" aria-label="anchor" href="#part-2-11"></a>
@@ -1197,7 +1195,7 @@
 <span class="co"># system are there?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">complete</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 104834</span></code></pre>
-<p>15.505 sec.</p>
+<p>18.155 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1257,7 +1255,7 @@
 <span class="co"># your transparent paper?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">results</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 847</span></code></pre>
-<p>0.084 sec.</p>
+<p>0.092 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-12">Part 2<a class="anchor" aria-label="anchor" href="#part-2-12"></a>
@@ -1305,7 +1303,7 @@
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<p><img src="2021_files/figure-html/dat13-2-1.png" width="700">0.222 sec.</p>
+<p><img src="2021_files/figure-html/dat13-2-1.png" width="700">0.252 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1315,79 +1313,115 @@
 <h3 id="part-1-13">Part 1<a class="anchor" aria-label="anchor" href="#part-1-13"></a>
 </h3>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
+<code class="sourceCode R"><span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="va">get_template</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">path</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">path</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, <span class="st">""</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">convert_template</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">template</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>first <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">template</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>,
+             last <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">template</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">get_rules</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">path</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="va">path</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>first  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
+             last <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,
+             insert <span class="op">=</span> <span class="va">tmp</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">polymerization</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">template</span>, <span class="va">rules</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">convert_template</span><span class="op">(</span><span class="va">template</span><span class="op">)</span> |&gt;
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rules</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">template</span> <span class="op">&lt;-</span> <span class="va">tmp</span> |&gt; <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">insert</span>, <span class="va">last</span><span class="op">)</span> |&gt;
+      <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+      <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+      <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">$</span><span class="va">first</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">0</span><span class="op">)</span>
+  <span class="op">}</span>
+
+  <span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">template</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Read in data ------------------------------------------------------------</span>
+
+<span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day14-test.txt"</span><span class="op">)</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day14.txt"</span><span class="op">)</span>
 
 <span class="co"># Read in polymer template</span>
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day14-test.txt"</span><span class="op">)</span>
-<span class="va">template</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">test_template</span> <span class="op">&lt;-</span> <span class="fu">get_template</span><span class="op">(</span><span class="va">test</span><span class="op">)</span>
+<span class="va">template</span> <span class="op">&lt;-</span> <span class="fu">get_template</span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
 
 <span class="co"># Read in pair insertion rules</span>
-<span class="va">rules</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/base/scan.html" class="external-link">scan</a></span><span class="op">(</span>what <span class="op">=</span> <span class="st">"character"</span>, sep <span class="op">=</span> <span class="st">"\n"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> |&gt;
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pair"</span>, <span class="st">"insert"</span><span class="op">)</span>, <span class="st">" -&gt; "</span><span class="op">)</span>
+<span class="va">test_rules</span> <span class="op">&lt;-</span> <span class="fu">get_rules</span><span class="op">(</span><span class="va">test</span><span class="op">)</span>
+<span class="va">rules</span> <span class="op">&lt;-</span> <span class="fu">get_rules</span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
 
 <span class="co"># Run simulation ----------------------------------------------------------</span>
 
-<span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">template</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-
-<span class="co"># Apply 10 steps of pair insertion to the polymer template and find the most</span>
-<span class="co"># and least common elements in the result</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="st">""</span>
-  <span class="co"># cat("\r", i)</span>
-  <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">rules</span><span class="op">$</span><span class="va">pair</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">:</span><span class="op">(</span><span class="va">j</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>,
-                                       collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">]</span>, <span class="va">rules</span><span class="op">$</span><span class="va">insert</span><span class="op">[</span><span class="va">index</span><span class="op">]</span><span class="op">)</span>
-    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-      <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="va">current_string</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span>
-    <span class="op">}</span>
-  <span class="op">}</span>
-  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="op">}</span>
-
-<span class="co"># What do you get if you take the quantity of the most common element and</span>
-<span class="co"># subtract the quantity of the least common element?</span>
-<span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 1588</span></code></pre>
-<p>0.072 sec.</p>
-<div class="section level4">
-<h4 id="alternative-solution">Alternative solution<a class="anchor" aria-label="anchor" href="#alternative-solution"></a>
-</h4>
+<span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html" class="external-link">assert_that</a></span><span class="op">(</span><span class="fu">polymerization</span><span class="op">(</span><span class="va">test_template</span>, <span class="va">test_rules</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1588</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">template</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<code class="sourceCode R"><span class="co"># What do you get if you take the quantity of the most common element and</span>
+<span class="co"># subtract the quantity of the least common element?</span>
+<span class="fu">polymerization</span><span class="op">(</span><span class="va">template</span>, <span class="va">rules</span>, <span class="fl">10</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 2027</span></code></pre>
+<p>0.142 sec.</p>
+</div>
+<div class="section level3">
+<h3 id="part-2-13">Part 2<a class="anchor" aria-label="anchor" href="#part-2-13"></a>
+</h3>
+<p>The second part asks for 40 iterations, which would take far too long using the same method used in part 1 (keeping track of an ever-growing string). So instead, we count the frequency of each pair.</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Define functions --------------------------------------------------------</span>
 
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># cat("\r", i)</span>
-  <span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">[</span><span class="va">x</span><span class="op">:</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">]</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> |&gt;
-    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-    <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="st">"pair"</span><span class="op">)</span>
+<span class="va">polymerization2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">template</span>, <span class="va">rules</span>, <span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">first</span> <span class="op">&lt;-</span> <span class="va">template</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+  <span class="va">template</span> <span class="op">&lt;-</span> <span class="fu">convert_template</span><span class="op">(</span><span class="va">template</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 
-  <span class="va">next_string</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">pairs</span>, <span class="va">rules</span>,
-                                  by <span class="op">=</span> <span class="st">"pair"</span><span class="op">)</span> |&gt;
-    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html" class="external-link">separate</a></span><span class="op">(</span><span class="va">pair</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span>, <span class="st">"(?&lt;=[A-Z])"</span><span class="op">)</span> |&gt;
-    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">unite</a></span><span class="op">(</span><span class="va">string</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">insert</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">""</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
-    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">string</span><span class="op">)</span> |&gt;
-    <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span>collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span> |&gt;
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">current_string</span>, <span class="fl">1</span>, collapse <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">)</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">template</span>, <span class="va">rules</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"last"</span><span class="op">)</span><span class="op">)</span>
 
-  <span class="va">current_string</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="va">next_string</span>, <span class="st">""</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+    <span class="va">set1</span> <span class="op">&lt;-</span> <span class="va">tmp</span> |&gt; <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">last</span><span class="op">)</span> |&gt; <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>last <span class="op">=</span> <span class="va">insert</span><span class="op">)</span>
+    <span class="va">set2</span> <span class="op">&lt;-</span> <span class="va">tmp</span> |&gt; <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">first</span><span class="op">)</span> |&gt; <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>first <span class="op">=</span> <span class="va">insert</span><span class="op">)</span>
+    <span class="va">pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">set1</span>, <span class="va">set2</span><span class="op">)</span>
+
+    <span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">pairs</span> |&gt;
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">first</span>, <span class="va">last</span><span class="op">)</span> |&gt;
+      <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span>
+
+    <span class="va">template</span> <span class="op">&lt;-</span> <span class="va">counts</span>
+  <span class="op">}</span>
+
+  <span class="co"># Final count</span>
+  <span class="va">total</span> <span class="op">&lt;-</span> <span class="va">template</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">first</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">last</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">)</span> |&gt;
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span><span class="va">last</span> <span class="op">==</span> <span class="va">first</span> <span class="op">~</span> <span class="va">count</span> <span class="op">+</span> <span class="fl">1</span>,
+                                           <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">count</span><span class="op">)</span><span class="op">)</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">total</span><span class="op">$</span><span class="va">count</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">total</span><span class="op">$</span><span class="va">count</span><span class="op">)</span>
 <span class="op">}</span>
 
-<span class="va">freq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">current_string</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">freq</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## [1] 1588</span></code></pre>
-<p>0.143 sec.</p>
-<p>Part 1 is too slow to use the same method with part 2.</p>
-</div>
+<span class="co"># Run simulation ----------------------------------------------------------</span>
+
+<span class="co"># Apply 40 steps of pair insertion to the polymer template and find the</span>
+<span class="co"># most and least common elements in the result</span>
+
+<span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html" class="external-link">assert_that</a></span><span class="op">(</span>
+  <span class="fu">polymerization2</span><span class="op">(</span><span class="va">test_template</span>, <span class="va">test_rules</span>, <span class="fl">40</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2188189693529</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What do you get if you take the quantity of the most common element</span>
+<span class="co"># and subtract the quantity of the least common element?</span>
+
+<span class="fu">polymerization2</span><span class="op">(</span><span class="va">template</span>, <span class="va">rules</span>, <span class="fl">40</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span>scientific <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] "2265039461737"</span></code></pre>
+<p>1.005 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1404,7 +1438,7 @@
 <div class="section level3">
 <h3 id="part-1-14">Part 1<a class="anchor" aria-label="anchor" href="#part-1-14"></a>
 </h3>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day17.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -1502,7 +1536,7 @@
                 <span class="va">step</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">vy</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 79</span></code></pre>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the highest y position it reaches on this trajectory?</span>
 <span class="va">results</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">trial</span> <span class="op">==</span> <span class="va">this_trial</span><span class="op">)</span> |&gt;
@@ -1510,12 +1544,12 @@
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 3160</span></code></pre>
-<p>18.68 sec.</p>
+<p>21.098 sec.</p>
 </div>
 <div class="section level3">
-<h3 id="part-2-13">Part 2<a class="anchor" aria-label="anchor" href="#part-2-13"></a>
+<h3 id="part-2-14">Part 2<a class="anchor" aria-label="anchor" href="#part-2-14"></a>
 </h3>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day17.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -1656,14 +1690,14 @@
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y_max</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##   xv yv y_max</span>
 <span class="co">## 1 24 79  3160</span></code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the highest y position it reaches on this trajectory?</span>
 <span class="va">results</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">y_max</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">y_max</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 3160</span></code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># How many distinct initial velocity values cause the probe to be within the</span>
 <span class="co"># target area after any step?</span>
 <span class="va">results</span> |&gt;
@@ -1671,7 +1705,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1928</span></code></pre>
-<p>28.531 sec.</p>
+<p>32.08 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1680,7 +1714,7 @@
 <div class="section level3">
 <h3 id="part-1-15">Part 1<a class="anchor" aria-label="anchor" href="#part-1-15"></a>
 </h3>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day18.txt"</span><span class="op">)</span> |&gt;
@@ -1856,12 +1890,12 @@
 
 <span class="fu">check_magnitude</span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 4116</span></code></pre>
-<p>4.738 sec.</p>
+<p>5.593 sec.</p>
 </div>
 <div class="section level3">
-<h3 id="part-2-14">Part 2<a class="anchor" aria-label="anchor" href="#part-2-14"></a>
+<h3 id="part-2-15">Part 2<a class="anchor" aria-label="anchor" href="#part-2-15"></a>
 </h3>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># What is the largest magnitude of any sum of two different snailfish numbers</span>
 <span class="co"># from the homework assignment?</span>
 
@@ -1880,7 +1914,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 4638</span></code></pre>
-<p>93.021 sec.</p>
+<p>107.216 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1889,7 +1923,7 @@
 <div class="section level3">
 <h3 id="part-1-16">Part 1<a class="anchor" aria-label="anchor" href="#part-1-16"></a>
 </h3>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day19.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span> |&gt;
@@ -2067,12 +2101,12 @@
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 330</span></code></pre>
-<p>161.406 sec.</p>
+<p>185.686 sec.</p>
 </div>
 <div class="section level3">
-<h3 id="part-2-15">Part 2<a class="anchor" aria-label="anchor" href="#part-2-15"></a>
+<h3 id="part-2-16">Part 2<a class="anchor" aria-label="anchor" href="#part-2-16"></a>
 </h3>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">manhattan</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">a</span> <span class="op">-</span> <span class="va">b</span><span class="op">)</span> |&gt;
     <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">)</span>
@@ -2096,7 +2130,7 @@
 <span class="co"># What is the largest Manhattan distance between any two scanners?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 9634</span></code></pre>
-<p>1.758 sec.</p>
+<p>1.825 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2105,7 +2139,7 @@
 <div class="section level3">
 <h3 id="part-1-17">Part 1<a class="anchor" aria-label="anchor" href="#part-1-17"></a>
 </h3>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day20.txt"</span><span class="op">)</span>
 <span class="va">algorithm</span> <span class="op">&lt;-</span> <span class="va">path</span> |&gt;
@@ -2223,23 +2257,23 @@
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
 <p><img src="2021_files/figure-html/dat20-1-1.png" width="700"></p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># How many pixels are lit in the resulting image?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">img</span> <span class="op">==</span> <span class="st">"#"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 5663</span></code></pre>
-<p>8.298 sec.</p>
+<p>9.647 sec.</p>
 </div>
 <div class="section level3">
-<h3 id="part-2-16">Part 2<a class="anchor" aria-label="anchor" href="#part-2-16"></a>
+<h3 id="part-2-17">Part 2<a class="anchor" aria-label="anchor" href="#part-2-17"></a>
 </h3>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Start again with the original input image and apply the image enhancement algorithm 50 times</span>
 <span class="va">img</span> <span class="op">&lt;-</span> <span class="fu">enhance_image</span><span class="op">(</span><span class="va">input</span>, <span class="fl">50</span>, <span class="va">algorithm</span><span class="op">)</span>
 
 <span class="co"># How many pixels are lit in the resulting image?</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">img</span> <span class="op">==</span> <span class="st">"#"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 19638</span></code></pre>
-<p>410.342 sec.</p>
+<p>466.804 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2248,7 +2282,7 @@
 <div class="section level3">
 <h3 id="part-1-18">Part 1<a class="anchor" aria-label="anchor" href="#part-1-18"></a>
 </h3>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day21.txt"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="op">)</span>
@@ -2287,7 +2321,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">score1</span>, <span class="va">score2</span><span class="op">)</span> <span class="op">*</span> <span class="va">i</span> <span class="op">*</span> <span class="fl">3</span></code></pre></div>
 <pre><code><span class="co">## [1] 598416</span></code></pre>
-<p>0.044 sec.</p>
+<p>0.067 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2296,7 +2330,7 @@
 <div class="section level3">
 <h3 id="part-1-19">Part 1<a class="anchor" aria-label="anchor" href="#part-1-19"></a>
 </h3>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst"</span>, <span class="st">"2021"</span>, <span class="st">"day22.txt"</span><span class="op">)</span> |&gt;
@@ -2356,7 +2390,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">reactor</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 644257</span></code></pre>
-<p>0.135 sec.</p>
+<p>0.165 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -2381,7 +2415,7 @@
 <div class="section level3">
 <h3 id="part-1-22">Part 1<a class="anchor" aria-label="anchor" href="#part-1-22"></a>
 </h3>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Read in data ------------------------------------------------------------</span>
 
 <span class="co"># Read in cucumber positions</span>
@@ -2556,12 +2590,12 @@
 <span class="co"># What is the first step on which no sea cucumbers move?</span>
 <span class="va">i</span></code></pre></div>
 <pre><code><span class="co">## [1] 530</span></code></pre>
-<p>15.024 sec.</p>
+<p>17.259 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="test-data">Test data<a class="anchor" aria-label="anchor" href="#test-data"></a>
 </h3>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"recording.gif"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="recording.gif" alt=""><p class="caption">Test dataset</p>
