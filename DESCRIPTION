@@ -8,6 +8,7 @@ Description: My Advent of Code solutions in R, Julia, and Python.
 License: GPL-3
 Depends: R (>= 4.1)
 Imports:
+    assertthat,
     docstring,
     dplyr,
     ggplot2,
