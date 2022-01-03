@@ -205,11 +205,6 @@ calculate the number of routes.
 ```{r dat14-1, code=readLines("2021/R/14-1.R"), time = TRUE}
 ```
 
-#### Alternative solution
-
-```{r dat14-1b, code=readLines("2021/R/14-1b.R"), time = TRUE}
-```
-
 Part 1 is too slow to use the same method with part 2.
 
 ## Day 15: [Chiton](https://adventofcode.com/2021/day/15)
