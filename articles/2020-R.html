@@ -85,7 +85,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></code></pre></div>
 <div class="section level2">
-<h2 id="day-12-day-12-rain-risk">Day 12: <a href="https://adventofcode.com/2020/day/12" class="external-link">Day 12: Rain Risk</a><a class="anchor" aria-label="anchor" href="#day-12-day-12-rain-risk"></a>
+<h2 id="day-12-rain-risk">Day 12: <a href="https://adventofcode.com/2020/day/12" class="external-link">Rain Risk</a><a class="anchor" aria-label="anchor" href="#day-12-rain-risk"></a>
 </h2>
 <div class="section level3">
 <h3 id="part-1">Part 1<a class="anchor" aria-label="anchor" href="#part-1"></a>
@@ -177,6 +177,84 @@
 
 <span class="fu">evade</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 2270</span></code></pre>
+<p>0.128 sec.</p>
+</div>
+<div class="section level3">
+<h3 id="part-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Define functions --------------------------------------------------------</span>
+
+<span class="va">follow_waypoint</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html" class="external-link">R6Class</a></span><span class="op">(</span><span class="st">"waypoint"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+  ship <span class="op">=</span> <span class="cn">NULL</span>,
+  waypoint <span class="op">=</span> <span class="cn">NULL</span>,
+
+  initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">self</span><span class="op">$</span><span class="va">ship</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>
+    <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+  <span class="op">}</span>,
+
+  print <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"ship:"</span>, <span class="va">self</span><span class="op">$</span><span class="va">ship</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"\nwaypoint:"</span>, <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span>, <span class="st">"\n"</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+  <span class="op">}</span>,
+
+  move <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">inst</span>, <span class="va">value</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/switch.html" class="external-link">switch</a></span><span class="op">(</span><span class="va">inst</span>,
+           <span class="st">"N"</span> <span class="op">=</span> <span class="op">{</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="va">value</span><span class="op">}</span>,
+           <span class="st">"S"</span> <span class="op">=</span> <span class="op">{</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">value</span><span class="op">}</span>,
+           <span class="st">"E"</span> <span class="op">=</span> <span class="op">{</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">value</span><span class="op">}</span>,
+           <span class="st">"W"</span> <span class="op">=</span> <span class="op">{</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">value</span><span class="op">}</span>,
+           <span class="st">"L"</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">rotate</span><span class="op">(</span><span class="op">-</span><span class="va">value</span><span class="op">)</span>,
+           <span class="st">"R"</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">rotate</span><span class="op">(</span><span class="va">value</span><span class="op">)</span>,
+           <span class="st">"F"</span> <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">forward</span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+  <span class="op">}</span>,
+
+  rotate <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">value</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">rad</span> <span class="op">&lt;-</span> <span class="va">value</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">/</span> <span class="fl">180</span>
+    <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+    <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
+    <span class="va">newX</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span> <span class="op">+</span> <span class="va">y</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span>
+    <span class="va">newY</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span> <span class="op">-</span> <span class="va">x</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">sin</a></span><span class="op">(</span><span class="va">rad</span><span class="op">)</span>
+    <span class="va">self</span><span class="op">$</span><span class="va">waypoint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">newX</span>, <span class="va">newY</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+  <span class="op">}</span>,
+
+  forward <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">value</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">self</span><span class="op">$</span><span class="va">ship</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">ship</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">value</span><span class="op">)</span>
+    <span class="va">self</span><span class="op">$</span><span class="va">ship</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">ship</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">waypoint</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">value</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">self</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">)</span><span class="op">)</span>
+
+<span class="va">evade2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">ferry</span> <span class="op">&lt;-</span> <span class="va">follow_waypoint</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
+
+  <span class="co"># Perform evasive action</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">ferry</span><span class="op">$</span><span class="fu">move</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">inst</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">dat</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+  <span class="op">}</span>
+
+  <span class="co"># Calculate Manhattan distance</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="va">ferry</span><span class="op">$</span><span class="va">ship</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"manhattan"</span><span class="op">)</span> |&gt;
+    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="co"># Take evasive actions ----------------------------------------------------</span>
+
+<span class="fu">assertthat</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/assertthat/man/assert_that.html" class="external-link">assert_that</a></span><span class="op">(</span><span class="fu">evade2</span><span class="op">(</span><span class="va">test</span><span class="op">)</span> <span class="op">==</span> <span class="fl">286</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] TRUE</span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What is the Manhattan distance between that location and the ship's</span>
+<span class="co"># starting position?</span>
+
+<span class="fu">evade2</span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## [1] 138669</span></code></pre>
+<p>0.041 sec.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
