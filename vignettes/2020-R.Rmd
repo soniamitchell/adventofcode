@@ -35,5 +35,10 @@ library(tidyr)
 
 ### Part 1
 
-```{R day12-1, code=readLines("2020/R/12-1.R")}
+```{R day12-1, code=readLines("2020/R/12-1.R"), time = TRUE}
+```
+
+### Part 2
+
+```{R day12-2, code=readLines("2020/R/12-2.R"), time = TRUE}
 ```
