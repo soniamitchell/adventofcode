@@ -1,0 +1,33 @@
+---
+title: 'AoC 2020 (R)'
+author: "Sonia Mitchell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{AoC 2020 (R)}
+  %\usepackage[UTF-8]
+---
+
+```{r r-setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Benchmark code chunks
+knitr::knit_hooks$set(
+  time = function(before, envir) {
+    t <- proc.time()['elapsed']
+    if(before) {
+      envir$.elapsed <- t
+    } else {
+      paste(signif(t - envir$.elapsed), 'sec.')
+    }
+  }
+)
+```
+
+## Day 12: [Day 12: Rain Risk](https://adventofcode.com/2020/day/12)
+
+### Part 1
+
+```{R day12-1, code=readLines("2020/R/12-1.R")}
+```
