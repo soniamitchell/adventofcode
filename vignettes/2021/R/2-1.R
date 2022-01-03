@@ -1,7 +1,7 @@
 # Read in data
 dat <- here("inst", "2021", "day2.txt") |>
-  read.table()
-colnames(dat) <- c("direction", "value")
+  read.table() |>
+  setNames(c("direction", "value"))
 
 # Calculate the horizontal position and depth and multiply them together
 summarise_dat <- dat |>

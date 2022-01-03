@@ -1,12 +1,14 @@
 # Read in data ------------------------------------------------------------
 path <- here("inst", "2021", "day4.txt")
-raw_numbers <- scan(path, what = "character", n = 1)
+
+numbers <- scan(path, what = "character", n = 1) |>
+  strsplit(",") |>
+  unlist() |>
+  as.numeric()
+
 raw_boards <- read.table(path, skip = 1)
-
-# Tidy up data
-numbers <- as.numeric(strsplit(raw_numbers, ",")[[1]])
-
 number_of_boards <- nrow(raw_boards) / 5
+
 boards <- lapply(seq_len(number_of_boards), function(x) {
   start <- 1 + (5 * (x - 1))
   end <- start + 4

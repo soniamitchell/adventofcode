@@ -1,9 +1,6 @@
 # Read in data
-dat <- here("inst", "2021", "day5.txt") |>
-  read.table()
-
-# Tidy up data
-coordinates <- dat |>
+coordinates <- here("inst", "2021", "day5.txt") |>
+  read.table() |>
   dplyr::select(-V2) |>
   tidyr::separate(V1, c("x1", "y1")) |>
   tidyr::separate(V3, c("x2", "y2")) |>
