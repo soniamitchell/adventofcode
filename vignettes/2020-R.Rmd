@@ -25,6 +25,12 @@ knitr::knit_hooks$set(
 )
 ```
 
+```{r libraries, message=FALSE}
+library(dplyr)
+library(here)
+library(tidyr)
+```
+
 ## Day 12: [Day 12: Rain Risk](https://adventofcode.com/2020/day/12)
 
 ### Part 1
