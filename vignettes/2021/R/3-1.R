@@ -1,6 +1,5 @@
 # Read in data
-dat <- here("inst", "2021", "day3.txt") |>
-  scan(what = "character")
+dat <- scan(here("inst", "2021", "day3.txt"), what = "character")
 
 # Number of bits in each binary number
 digits <- nchar(dat[1])
