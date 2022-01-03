@@ -64,6 +64,13 @@ generate_image <- function(values) {
          byrow = TRUE)
 }
 
+viewer <- function(img) {
+  cat("\n")
+  for (i in seq_len(nrow(img))) {
+    cat(img[i, ], "\n")
+  }
+}
+
 enhance_image <- function(input, n, algorithm) {
   img <- input
   odd <- TRUE
@@ -81,6 +88,7 @@ enhance_image <- function(input, n, algorithm) {
       scan_input(pad) |>
       output_pixel(algorithm) |>
       generate_image()
+
     odd <- !odd
   }
   img

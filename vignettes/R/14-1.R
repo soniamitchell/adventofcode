@@ -1,7 +1,7 @@
 # Read in data ------------------------------------------------------------
 
 # Read in polymer template
-path <- here("inst", "2021", "day14.txt")
+path <- here("inst", "2021", "day14-test.txt")
 template <- path |>
   scan(what = "character", n = 1)
 

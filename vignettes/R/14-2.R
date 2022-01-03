@@ -6,7 +6,7 @@ current_string <- strsplit(template, "")[[1]]
 iterations <- 10
 
 generate_pairs <- function(x) {
-  tmp <- do.call(cbind, data.table::shift(x, 0:1, type = "lead"))  |>
+  tmp <- do.call(cbind, data.table::shift(x, 0:1, type = "lead")) |>
     head(-1)
   lapply(seq_len(nrow(tmp)), function(i) tmp[i, ])
 }
@@ -16,7 +16,9 @@ new_rules <- tidyr::separate(rules, pair, c("first", "last"), "(?<=[A-Z])")
 for (i in seq_len(iterations)) {
   cat("\r", i)
   # Generate list of vectors of overlapping pairs
-  pairs <- generate_pairs(current_string)
+  pairs <- generate_pairs(current_string) |>
+    do.call(what = rbind) |>
+    data.frame()
 
   for (j in seq_len(length(pairs))) {
     this_pair <- pairs[[j]]
