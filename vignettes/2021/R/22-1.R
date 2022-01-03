@@ -13,6 +13,7 @@ tidy_day22 <- function(dat, limit) {
   if(missing(limit)) {
     limit <- max(max(out), abs(min(out)))
   }
+  # Reset minimum to 1
   dplyr::mutate_if(out, is.numeric, \(z) z + limit + 1)
 }
 
