@@ -1,6 +1,6 @@
 # Read in data ------------------------------------------------------------
 
-path = joinpath("..", "inst", "2020", "day9.txt");
+path = joinpath(".", "inst", "2020", "day9.txt");
 dat = readlines(path);
                       
 # Define functions --------------------------------------------------------
@@ -52,4 +52,5 @@ end;
 
 # What is the first number that does not have this property?
 
-invalid = day11(dat) |> checksums
+dat = day11(dat) 
+invalid = checksums(dat)
