@@ -29,7 +29,7 @@ library(JuliaCall)
 
 ```{julia setup, include=FALSE}
 using Pkg
-Pkg.activate("julia")
+Pkg.activate("2020/julia")
 Pkg.instantiate()
 ```
 
