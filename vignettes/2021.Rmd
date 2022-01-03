@@ -205,7 +205,14 @@ calculate the number of routes.
 ```{r dat14-1, code=readLines("2021/R/14-1.R"), time = TRUE}
 ```
 
-Part 1 is too slow to use the same method with part 2.
+### Part 2
+
+The second part asks for 40 iterations, which would take far too long using
+the same method used in part 1 (keeping track of an ever-growing string). So
+instead, we count the frequency of each pair.
+
+```{r dat14-2, code=readLines("2021/R/14-2.R"), time = TRUE}
+```
 
 ## Day 15: [Chiton](https://adventofcode.com/2021/day/15)
 
