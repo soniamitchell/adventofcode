@@ -68,7 +68,7 @@
       <img src="" class="logo" alt=""><h1>AoC 2020 (Julia)</h1>
                         <h4 data-toc-skip class="author">Sonia Mitchell</h4>
             
-            <h4 data-toc-skip class="date">2022-01-02</h4>
+            <h4 data-toc-skip class="date">2022-01-03</h4>
       
       
       <div class="d-none name"><code>2020.Rmd</code></div>
@@ -696,31 +696,28 @@
 <div class="section level3">
 <h3 id="part-1-9">Part 1<a class="anchor" aria-label="anchor" href="#part-1-9"></a>
 </h3>
-<div class="sourceCode" id="cb44"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day10.txt"</span>)</span></code></pre></div>
-<pre><code><span class="co">## "../inst/2020/day10.txt"</span></code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb46-1"><a href="#cb46-1"></a></span>
-<span id="cb46-2"><a href="#cb46-2"></a><span class="co"># Find a chain that uses all of your adapters to connect the charging outlet to your </span></span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="co"># device's built-in adapter and count the joltage differences between the charging </span></span>
-<span id="cb46-4"><a href="#cb46-4"></a><span class="co"># outlet, the adapters, and your device</span></span>
-<span id="cb46-5"><a href="#cb46-5"></a></span>
-<span id="cb46-6"><a href="#cb46-6"></a><span class="kw">function</span> day10(path)</span>
-<span id="cb46-7"><a href="#cb46-7"></a>    dat = readlines(path)                           <span class="co"># read data</span></span>
-<span id="cb46-8"><a href="#cb46-8"></a>    dat = parse.(<span class="dt">Int64</span>, dat)                        <span class="co"># convert string to integer</span></span>
-<span id="cb46-9"><a href="#cb46-9"></a><span class="kw">end</span></span></code></pre></div>
-<pre><code><span class="co">## day10 (generic function with 1 method)</span></code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb48-1"><a href="#cb48-1"></a></span>
-<span id="cb48-2"><a href="#cb48-2"></a><span class="kw">function</span> part1(dat)</span>
-<span id="cb48-3"><a href="#cb48-3"></a>    tmp = copy(dat) |&gt; sort                         <span class="co"># sort values</span></span>
-<span id="cb48-4"><a href="#cb48-4"></a>    whole = vcat(<span class="fl">0</span>, tmp, tmp[<span class="kw">end</span>] + <span class="fl">3</span>)              <span class="co"># prepend with 0, append with +3</span></span>
-<span id="cb48-5"><a href="#cb48-5"></a>    ones = count(==(<span class="fl">1</span>), diff(sort(whole)))          <span class="co"># count number of ones</span></span>
-<span id="cb48-6"><a href="#cb48-6"></a>    threes = count(==(<span class="fl">3</span>), diff(sort(whole)))        <span class="co"># count number of threes</span></span>
-<span id="cb48-7"><a href="#cb48-7"></a>    ones * threes</span>
-<span id="cb48-8"><a href="#cb48-8"></a><span class="kw">end</span></span></code></pre></div>
-<pre><code><span class="co">## part1 (generic function with 1 method)</span></code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb50-1"><a href="#cb50-1"></a></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="co"># What is the number of 1-jolt differences multiplied by the number of 3-jolt </span></span>
-<span id="cb50-3"><a href="#cb50-3"></a><span class="co"># differences?</span></span>
-<span id="cb50-4"><a href="#cb50-4"></a>day10(path) |&gt; part1</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb44-1"><a href="#cb44-1"></a>path = joinpath(<span class="st">".."</span>, <span class="st">"inst"</span>, <span class="st">"2020"</span>, <span class="st">"day10.txt"</span>);</span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="co"># Find a chain that uses all of your adapters to connect the charging outlet to your </span></span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="co"># device's built-in adapter and count the joltage differences between the charging </span></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># outlet, the adapters, and your device</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a></span>
+<span id="cb44-7"><a href="#cb44-7"></a><span class="kw">function</span> day10(path)</span>
+<span id="cb44-8"><a href="#cb44-8"></a>    dat = readlines(path)                           <span class="co"># read data</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>    dat = parse.(<span class="dt">Int64</span>, dat)                        <span class="co"># convert string to integer</span></span>
+<span id="cb44-10"><a href="#cb44-10"></a><span class="kw">end</span>;</span>
+<span id="cb44-11"><a href="#cb44-11"></a></span>
+<span id="cb44-12"><a href="#cb44-12"></a><span class="kw">function</span> part1(dat)</span>
+<span id="cb44-13"><a href="#cb44-13"></a>    tmp = copy(dat) |&gt; sort                         <span class="co"># sort values</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>    whole = vcat(<span class="fl">0</span>, tmp, tmp[<span class="kw">end</span>] + <span class="fl">3</span>)              <span class="co"># prepend with 0, append with +3</span></span>
+<span id="cb44-15"><a href="#cb44-15"></a>    ones = count(==(<span class="fl">1</span>), diff(sort(whole)))          <span class="co"># count number of ones</span></span>
+<span id="cb44-16"><a href="#cb44-16"></a>    threes = count(==(<span class="fl">3</span>), diff(sort(whole)))        <span class="co"># count number of threes</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a>    ones * threes</span>
+<span id="cb44-18"><a href="#cb44-18"></a><span class="kw">end</span>;</span>
+<span id="cb44-19"><a href="#cb44-19"></a></span>
+<span id="cb44-20"><a href="#cb44-20"></a><span class="co"># What is the number of 1-jolt differences multiplied by the number of 3-jolt </span></span>
+<span id="cb44-21"><a href="#cb44-21"></a><span class="co"># differences?</span></span>
+<span id="cb44-22"><a href="#cb44-22"></a>day10(path) |&gt; part1</span></code></pre></div>
 <pre><code><span class="co">## 2450</span></code></pre>
 </div>
 </div>
