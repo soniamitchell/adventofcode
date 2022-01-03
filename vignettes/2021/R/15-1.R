@@ -1,28 +1,12 @@
-# Read in data ------------------------------------------------------------
+# Define functions --------------------------------------------------------
 
-# dat <- scan(here("inst", "data", "2021", "day15.txt"),
-#             what = "character") |>
-#   strsplit("") |>
-#   do.call(rbind, .) |>
-#   apply(1, as.numeric)
-
-dat <- scan(text = "1163751742
-1381373672
-2136511328
-3694931569
-7463417111
-1319128137
-1359912421
-3125421639
-1293138521
-2311944581", what = "character") |>
-  strsplit("") |>
-  do.call(what = cbind) |>
-  apply(1, as.numeric)
-
-# Functions ---------------------------------------------------------------
-
-n <- ncol(dat) + 1
+read_day15 <- function(path) {
+  path |>
+    scan(what = "character") |>
+    strsplit("") |>
+    do.call(what = "rbind") |>
+    apply(1, as.numeric)
+}
 
 path_finder <- function(start, end, dat) {
 
@@ -50,6 +34,7 @@ path_finder <- function(start, end, dat) {
         running_total <- c(running_total, tmp)
         coordinates <- c(coordinates, list(j))
       }
+
     }
 
     if (length(running_total) != 0) {
@@ -64,18 +49,23 @@ path_finder <- function(start, end, dat) {
       continue <- FALSE
   }
 
-
-
 }
 
-# Run ---------------------------------------------------------------------
+# Read in data ------------------------------------------------------------
+
+test <- here("inst", "2021", "day15-test.txt")
+path <- here("inst", "2021", "day15.txt")
+
+dat <- read_day15(test)
+# dat <- read_day15(path)
+
+# Run simulation ----------------------------------------------------------
+
+n <- ncol(dat) + 1
 
 # What is the lowest total risk of any path from the top left to the bottom right?
 start <- c(1, 1)
 end <- c(10, 10)
 
 path_finder(start, end, dat)
-
-
-
 
