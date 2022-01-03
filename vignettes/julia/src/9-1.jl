@@ -2,13 +2,15 @@
 
 path = joinpath("..", "inst", "2020", "day9.txt");
 dat = readlines(path);
-dat = parse.(Int64, dat);                       # convert string to numeric
-
-preamble = 25;
-
+                      
 # Define functions --------------------------------------------------------
 
-function checksums(dat, preamble)
+function day11(dat)
+    # convert string to numeric
+    parse.(Int64, dat)
+end;
+
+function checksums(dat)
 
     # generate pairwise combination index
     cmb = combinations(1:preamble, 2) |> collect    
@@ -16,7 +18,8 @@ function checksums(dat, preamble)
     add = map(x -> dat[x[1]] + dat[x[2]], cmb)      
     
     for i in eachindex(dat)
-    
+        preamble = 25
+
         # don't check preamble
         if i ∈ 1:preamble                           
             continue
@@ -50,4 +53,4 @@ end;
 
 # What is the first number that does not have this property?
 
-invalid = checksums(dat, preamble)
+invalid = day11(dat) |> checksums
