@@ -4,6 +4,9 @@
 #' @export
 #'
 rating <- function(dat, type) {
+  # Number of bits in each binary number
+  digits <- nchar(dat[1])
+
   # For each bit in a binary string
   for (i in seq_len(digits)) {
     # Extract the i[th] character of each string

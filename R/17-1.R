@@ -78,7 +78,8 @@ simulate_launch <- function(xrange, yrange) {
     unique()
 }
 
-#' Move one step
+#' @description Move one step
+#' @rdname day17
 #' @param status last step
 #'
 move <- function(status) {
@@ -94,7 +95,8 @@ move <- function(status) {
   data.frame(x = x, y = y, vx = vx, vy = vy)
 }
 
-#' Launch probe until target is hit or overshot
+#' @description Launch probe until target is hit or overshot
+#' @rdname day17
 #'
 launch <- function(df, trial, xrange, yrange) {
   continue <- TRUE

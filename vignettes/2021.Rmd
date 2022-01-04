@@ -26,14 +26,13 @@ knitr::knit_hooks$set(
 ```
 
 ```{r libraries, message=FALSE}
-library(docstring)
-library(dplyr)
-library(ggplot2)
+# library(dplyr)
+# library(ggplot2)
 library(here)
-library(plotly)
-library(purrr)
-library(R.utils)
-library(tidyr)
+# library(plotly)
+# library(purrr)
+# library(R.utils)
+# library(tidyr)
 ```
 
 ## Day 1: [Sonar Sweep](https://adventofcode.com/2021/day/1)
@@ -204,58 +203,119 @@ simulate_lanternfish2(dat)
 
 ### Part 1
 
-```{r day7-1, code=readLines("2021/R/7-1.R"), time = TRUE}
+```{r day7-1a, code=readLines("../R/7-1.R"), results="hide"}
+```
+
+```{r day7-1b, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day7.txt")
+dat <- read_day7(path)
+
+# How much fuel must they spend to align to that position?
+track_crabs(dat)
 ```
 
 ### Part 2
 
-```{r day7-2, code=readLines("2021/R/7-2.R"), time = TRUE}
+```{r day7-2a, code=readLines("../R/7-2.R"), results="hide"}
+```
+
+```{r day7-2b, time = TRUE}
+# How much fuel must they spend to align to that position?
+track_crabs2(dat)
 ```
 
 ## Day 8: [Seven Segment Search](https://adventofcode.com/2021/day/8)
 
 ### Part 1
 
-```{r day8-1, code=readLines("2021/R/8-1.R"), time = TRUE}
+```{r day8-1a, code=readLines("../R/8-1.R"), results="hide"}
+```
+
+```{r day8-1b, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day8.txt")
+dat <- read_day8(path)
+
+# How many times do digits 1, 4, 7, or 8 (length 2, 4, 3, and 7) appear?
+count_digits(dat)
 ```
 
 ### Part 2
 
-```{r day8-2, code=readLines("2021/R/8-2.R"), time = TRUE}
+```{r day8-2a, code=readLines("../R/8-2.R"), results="hide"}
+```
+
+```{r day8-2b, time = TRUE}
+# What do you get if you add up all of the output values?
+decode_segments(dat)
 ```
 
 ## Day 9: [Smoke Basin](https://adventofcode.com/2021/day/9)
 
 ### Part 1
 
-```{r day9-1, code=readLines("2021/R/9-1.R"), time = TRUE}
+```{r day9-1a, code=readLines("../R/9-1.R"), results="hide"}
+```
+
+```{r day9-1b, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day9.txt")
+dat <- read_day9(path)
+
+# What is the sum of the risk levels of all low points on your heightmap?
+lowest_points <- low_points(dat)
+sum(lowest_points$risk)
 ```
 
 ### Part 2
 
-```{r day9-2, code=readLines("2021/R/9-2.R"), time = TRUE}
+```{r day9-2a, code=readLines("../R/9-2.R"), results="hide"}
+```
+
+```{r day9-2b, time = TRUE}
+# Multiply together the sizes of the three largest basins
+survey_basins(dat, lowest_points)
 ```
 
 ## Day 10: [Syntax Scoring](https://adventofcode.com/2021/day/10)
 
 ### Part 1
 
-```{r day10-1, code=readLines("2021/R/10-1.R"), time = TRUE}
+```{r day10-1a, code=readLines("../R/10-1.R"), results="hide"}
+```
+
+```{r day10-1b, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day10.txt")
+dat <- read_day10(path)
+
+# Find the first illegal character in each corrupted line of the navigation
+# subsystem. What is the total syntax error score for those errors?
+tmp <- syntax_score(dat)
+tmp$total
 ```
 
 ### Part 2
 
-```{r day10-2, code=readLines("2021/R/10-2.R"), time = TRUE}
+```{r day10-2a, code=readLines("../R/10-2.R"), results="hide"}
+```
+
+```{r day10-2b, time = TRUE}
+# Find the completion string for each incomplete line, score the completion
+# strings, and sort the scores. What is the middle score?
+remove_lines <- tmp$remove_lines
+syntax_score2(dat, remove_lines)
 ```
 
 ## Day 11: [Dumbo Octopus](https://adventofcode.com/2021/day/11)
 
 ### Part 1
 
-```{r day11, code=readLines("../R/11-1.R"), results="hide"}
+```{r day11-1a, code=readLines("../R/11-1.R"), results="hide"}
 ```
 
-```{r day11-1a}
+```{r day11-1b}
 # Read in data
 test <- here("inst", "2021", "day11-test.txt")
 path <- here("inst", "2021", "day11.txt")
@@ -267,7 +327,7 @@ dat <- read_day11(path)
 assertthat::assert_that(simulate_octopus(test_dat) == 1656)
 ```
 
-```{r day11-1b, time = TRUE}
+```{r day11-1c, time = TRUE}
 # Given the starting energy levels of the dumbo octopuses in your cavern,
 # simulate 100 steps. How many total flashes are there after 100 steps?
 simulate_octopus(dat)
@@ -275,24 +335,29 @@ simulate_octopus(dat)
 
 ### Part 2
 
-```{r day11-2, code=readLines("2021/R/11-2.R"), time = TRUE}
+```{r day11-2a, code=readLines("../R/11-2.R"), results="hide"}
+```
+
+```{r day11-2b, time = TRUE}
+# What is the first step during which all octopuses flash?
+simulate_octopus2(dat)
 ```
 
 ## Day 12: [Passage Pathing](https://adventofcode.com/2021/day/12)
 
 ### Part 1
 
-```{r day12, code=readLines("../R/12-1.R"), results="hide"}
+```{r day12-1a, code=readLines("../R/12-1.R"), results="hide"}
 ```
 
-```{r day12-1, time = TRUE}
+```{r day12-1b, time = TRUE}
 # Read in data
 path <- here("inst", "2021", "day12.txt")
 dat <- read_day12(path)
 
 # How many paths through this cave system are there that visit small caves at
 # most once?
-plot_routes(dat)
+cave_routes(dat)
 ```
 
 ### Part 2
@@ -300,17 +365,23 @@ plot_routes(dat)
 We have to use a different method for Part 2, since it takes too long to 
 calculate the number of routes.
 
-```{r day12-2, code=readLines("2021/R/12-2.R"), time = TRUE}
+```{r day12-2a, code=readLines("../R/12-2.R"), results="hide"}
+```
+
+```{r day12-2b, time = TRUE}
+# If we visit a single small cave twice, how many paths through this cave
+# system are there?
+cave_routes2(dat)
 ```
 
 ## Day 13: [Transparent Origami](https://adventofcode.com/2021/day/13)
 
 ### Part 1
 
-```{r day13, code=readLines("../R/13-1.R"), results="hide"}
+```{r day13-1a, code=readLines("../R/13-1.R"), results="hide"}
 ```
 
-```{r day13-1, time = TRUE}
+```{r day13-1b, time = TRUE}
 # Read in data
 path <- here("inst", "2021", "day13.txt")
 dat <- read_day13(path)
@@ -320,22 +391,28 @@ instructions <- origami_instructions(dat)
 
 # How many dots are visible after completing just the first fold instruction on
 # your transparent paper?
-fold_left(paper, instructions[1,]$value)
+result <- fold_left(paper, instructions[1,]$value)
+sum(result > 0)
 ```
 
 ### Part 2
 
-```{r day13-2, code=readLines("2021/R/13-2.R"), time = TRUE}
+```{r day13-2a, code=readLines("../R/13-2.R"), results="hide"}
+```
+
+```{r day13-2b, time = TRUE}
+# What code do you use to activate the infrared thermal imaging camera system?
+simulate_origami(paper, instructions)
 ```
 
 ## Day 14: [Extended Polymerization](https://adventofcode.com/2021/day/14)
 
 ### Part 1
 
-```{r day14, code=readLines("../R/14-1.R"), results="hide"}
+```{r day14-1a, code=readLines("../R/14-1.R"), results="hide"}
 ```
 
-```{r day14-1a}
+```{r day14-1b, time = TRUE}
 # Read in data
 test <- here("inst", "2021", "day14-test.txt")
 path <- here("inst", "2021", "day14.txt")
@@ -352,7 +429,7 @@ rules <- get_rules(path)
 assertthat::assert_that(polymerization(test_template, test_rules, 10) == 1588)
 ```
 
-```{r day14-1b, time = TRUE}
+```{r day14-1c, time = TRUE}
 # What do you get if you take the quantity of the most common element and
 # subtract the quantity of the least common element?
 polymerization(template, rules, 10)
@@ -364,7 +441,21 @@ The second part asks for 40 iterations, which would take far too long using
 the same method used in part 1 (keeping track of an ever-growing string). So
 instead, we count the frequency of each pair.
 
-```{r day14-2, code=readLines("2021/R/14-2.R"), time = TRUE}
+```{r day14-2a, code=readLines("../R/14-2.R"), results="hide"}
+```
+
+```{r day14-2b}
+# Apply 40 steps of pair insertion to the polymer template and find the
+# most and least common elements in the result
+assertthat::assert_that(
+  polymerization2(test_template, test_rules, 40) == 2188189693529)
+```
+
+```{r day14-2c, time = TRUE}
+# What do you get if you take the quantity of the most common element
+# and subtract the quantity of the least common element?
+polymerization2(template, rules, 40) |> 
+  format(scientific = FALSE)
 ```
 
 ## Day 15: [Chiton](https://adventofcode.com/2021/day/15)
@@ -375,10 +466,10 @@ instead, we count the frequency of each pair.
 
 ### Part 1
 
-```{r day17, code=readLines("../R/17-1.R"), results="hide"}
+```{r day17-1a, code=readLines("../R/17-1.R"), results="hide"}
 ```
 
-```{r day 17-1, time = TRUE}
+```{r day 17-1b, time = TRUE}
 # Read in data
 path <- here("inst", "2021", "day17.txt")
 
@@ -393,69 +484,167 @@ simulate_launch(xrange, yrange)
 
 ### Part 2
 
-```{r day17-2, code=readLines("2021/R/17-2.R"), time = TRUE}
+```{r day17-2a, code=readLines("../R/17-2.R"), results="hide"}
+```
+
+```{r day17-2b, time = TRUE}
+velocities <- find_possibilities(xrange, yrange)
+results <- simulate_launch2(velocities, xrange, yrange)
+
+# Find the initial velocity that causes the probe to reach the highest y
+# position and still eventually be within the target area after any step
+results |>
+  dplyr::filter(y_max == max(y_max))
+
+# What is the highest y position it reaches on this trajectory?
+results |>
+  dplyr::filter(y_max == max(y_max)) |>
+  dplyr::pull(y_max) |>
+  unique()
+
+# How many distinct initial velocity values cause the probe to be within the
+# target area after any step?
+results |>
+  dplyr::select(xv, yv) |>
+  unique() |>
+  nrow()
 ```
 
 ## Day 18: [Snailfish](https://adventofcode.com/2021/day/18)
 
 ### Part 1
 
-```{r day18-1, code=readLines("2021/R/18-1.R"), time = TRUE}
+```{r day18-1a, code=readLines("../R/18-1.R"), results="hide"}
+```
+
+```{r day18-1b, time = TRUE}
+path <- here("inst", "2021", "day18.txt")
+dat <- read_day18(path)
+
+# Add up all of the snailfish numbers from the homework assignment in the
+# order they appear. What is the magnitude of the final sum?
+snailfish_maths(dat)
 ```
 
 ### Part 2
 
-```{r day18-2, code=readLines("2021/R/18-2.R"), time = TRUE}
+```{r day18-2a, code=readLines("../R/18-2.R"), results="hide"}
+```
+
+```{r day18-2b, time = TRUE}
+# What is the largest magnitude of any sum of two different snailfish numbers
+# from the homework assignment?
+snailfish_maths2(dat)
 ```
 
 ## Day 19: [Beacon Scanner](https://adventofcode.com/2021/day/19)
 
 ### Part 1
 
-```{r day19-1, code=readLines("2021/R/19-1.R"), time = TRUE}
+```{r day19-1a, code=readLines("../R/19-1.R"), results="hide"}
+```
+
+```{r day19-1b, time = TRUE}
+path <- here("inst", "2021", "day19.txt")
+scans <- read_day19(path)
+
+# How many beacons are there?
+tmp <- assemble_map(scans)
+scans <- tmp$scans
+scans[[1]] |>
+    unique() |>
+    nrow()
 ```
 
 ### Part 2
 
-```{r day19-2, code=readLines("2021/R/19-2.R"), time = TRUE}
+```{r day19-2a, code=readLines("../R/19-2.R"), results="hide"}
+```
+
+```{r day19-2b, time = TRUE}
+# What is the largest Manhattan distance between any two scanners?
+scanners <- tmp$scanners
+dist_scanners(scanners)
 ```
 
 ## Day 20: [Trench Map](https://adventofcode.com/2021/day/20)
 
 ### Part 1
 
-```{r day20-1, code=readLines("2021/R/20-1.R"), time = TRUE}
+```{r day20-1a, code=readLines("../R/20-1.R"), results="hide"}
+```
+
+```{r day20-1b, time = TRUE}
+# Start with the original input image and apply the image enhancement
+# algorithm twice, being careful to account for the infinite size of the
+# images
+path <- here("inst", "2021", "day20.txt")
+
+input <- get_input(path)
+algorithm <- get_algorithm(path)
+
+img <- enhance_image(input, 2, algorithm)
+view_image(img)
+
+# How many pixels are lit in the resulting image?
+sum(img == "#")
 ```
 
 ### Part 2
 
-```{r day20-2, code=readLines("2021/R/20-2.R"), time = TRUE}
+```{r day20-2b, time = TRUE}
+# Start again with the original input image and apply the image enhancement algorithm 50 times
+img <- enhance_image(input, 50, algorithm)
+
+# How many pixels are lit in the resulting image?
+sum(img == "#")
 ```
 
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/21)
 
 ### Part 1
 
-```{r day21-1, code=readLines("2021/R/21-1.R"), time = TRUE}
+```{r day21-1a, code=readLines("../R/21-1.R"), results="hide"}
+```
+
+```{r day21-1b, time = TRUE}
+# Play a practice game using the deterministic 100-sided die
+path <- here("inst", "2021", "day21.txt")
+dat <- read_day21(path)
+
+# The moment either player wins, what do you get if you multiply the score of
+# the losing player by the number of times the die was rolled during the game?
+deterministic(dat)
 ```
 
 ## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
 
 ### Part 1
 
-```{r day22-1, code=readLines("2021/R/22-1.R"), time = TRUE}
+```{r day22-1a, code=readLines("../R/22-1.R"), results="hide"}
+```
+
+```{r day22-1b}
+# Read in data
+test <- here("inst", "2021", "day22-test.txt")
+path <- here("inst", "2021", "day22.txt")
+
+test_dat <- readLines(test) |> read_day22(50)
+dat <- readLines(path) |> read_day22(50)
+
+# Execute the reboot steps
+assertthat::assert_that(reboot(test_dat) == 590784)
+```
+
+```{r day22-1c, time = TRUE}
+# Considering only cubes in the region x=-50..50,y=-50..50,z=-50..50, how many
+# cubes are on?
+reboot(dat)
 ```
 
 ## Day 23: [Amphipod](https://adventofcode.com/2021/day/23)
 
-### Part 1
-
 ## Day 24: [Arithmetic Logic Unit](https://adventofcode.com/2021/day/24)
-
-### Part 1
-
-```{r day24-1}
-```
 
 ## Day 25: [Sea Cucumber](https://adventofcode.com/2021/day/25)
 

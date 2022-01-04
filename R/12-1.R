@@ -22,7 +22,7 @@ read_day12 <- function(path) {
 #' @param dat data
 #' @export
 #'
-plot_routes <- function(dat) {
+cave_routes <- function(dat) {
   # Initialise routes
   completed_routes <- list()
   unfinished_routes <- dplyr::filter(dat, from == "start")

@@ -59,6 +59,5 @@ fold_left <- function(grid, value) {
   } else if (ncol(right) > ncol(left)) {
     left <- cbind(pad, left)
   }
-  result <- left | right[, ncol(right):1]
-  sum(result > 0)
+  left | right[, ncol(right):1]
 }
