@@ -29,6 +29,7 @@ knitr::knit_hooks$set(
 library(assertthat)
 library(dplyr)
 library(here)
+library(ggplot2)
 library(knitr)
 ```
 
@@ -647,10 +648,10 @@ reboot(dat)
 
 ### Part 1
 
-```{r dat25, code=readLines("../R/25-1.R"), results="hide"}
+```{r dat25-1a, code=readLines("../R/25-1.R"), results="hide"}
 ```
 
-```{r day 25-1, time = TRUE}
+```{r day 25-1b, time = TRUE}
 # Read in data
 path <- here("inst", "2021", "day25.txt")
 dat <- read_day25(path)
@@ -662,9 +663,9 @@ simulate_cucumbers(dat, cucumbers)
 
 ### Test data
 
-```{r dat25-1, code=readLines("2021/R/25-vis.R"), include = FALSE}
+```{r dat25-1c, code=readLines("2021/R/25-vis.R"), include = FALSE}
 ```
 
-```{r testing, fig.width=6, fig.height=6, fig.cap="Test dataset"}
+```{r dat25-1d, fig.width=6, fig.height=6, fig.cap="Test dataset"}
 knitr::include_graphics("recording.gif")
 ```
