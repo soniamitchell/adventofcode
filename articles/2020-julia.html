@@ -103,7 +103,7 @@
 <span id="cb4-9"><a href="#cb4-9"></a><span class="co"># What do you get if you multiply them together?</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a>prod(<span class="dt">Int</span>, numbers)</span></code></pre></div>
 <pre><code><span class="co">## 802011</span></code></pre>
-<p>2.246 sec.</p>
+<p>1.913 sec.</p>
 <div class="section level4">
 <h4 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
 </h4>
@@ -126,7 +126,7 @@
 <span id="cb8-3"><a href="#cb8-3"></a>numbers = reshape(numbers)[<span class="fl">1</span>];</span>
 <span id="cb8-4"><a href="#cb8-4"></a>res = prod(<span class="dt">Int</span>, numbers) </span></code></pre></div>
 <pre><code><span class="co">## 248607374</span></code></pre>
-<p>0.404 sec.</p>
+<p>0.361 sec.</p>
 <div class="section level4">
 <h4 id="notes-1">Notes<a class="anchor" aria-label="anchor" href="#notes-1"></a>
 </h4>
@@ -172,7 +172,7 @@
 <span id="cb12-23"><a href="#cb12-23"></a><span class="co"># How many passwords are valid according to their policies?</span></span>
 <span id="cb12-24"><a href="#cb12-24"></a>sled_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 640</span></code></pre>
-<p>0.569 sec.</p>
+<p>0.476 sec.</p>
 <div class="section level4">
 <h4 id="notes-2">Notes<a class="anchor" aria-label="anchor" href="#notes-2"></a>
 </h4>
@@ -208,7 +208,7 @@
 <span id="cb14-21"><a href="#cb14-21"></a><span class="co"># How many passwords are valid according to the new interpretation of the policies?</span></span>
 <span id="cb14-22"><a href="#cb14-22"></a>toboggan_password_check(dat)</span></code></pre></div>
 <pre><code><span class="co">## 472</span></code></pre>
-<p>0.21 sec.</p>
+<p>0.189 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -243,7 +243,7 @@
 <span id="cb16-24"><a href="#cb16-24"></a><span class="co"># down 1, how many trees would you encounter?</span></span>
 <span id="cb16-25"><a href="#cb16-25"></a>trees(<span class="fl">3</span>, <span class="fl">1</span>, dat)</span></code></pre></div>
 <pre><code><span class="co">## 237</span></code></pre>
-<p>0.358 sec.</p>
+<p>0.298 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-2">Part 2<a class="anchor" aria-label="anchor" href="#part-2-2"></a>
@@ -258,7 +258,7 @@
 <span id="cb18-8"><a href="#cb18-8"></a><span class="co"># the listed slopes?</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a>prod(results)</span></code></pre></div>
 <pre><code><span class="co">## 2106818610</span></code></pre>
-<p>0.425 sec.</p>
+<p>0.354 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -313,7 +313,7 @@
 <span id="cb20-44"><a href="#cb20-44"></a>passports = parsepassports(dat);</span>
 <span id="cb20-45"><a href="#cb20-45"></a>countpassports(passports)</span></code></pre></div>
 <pre><code><span class="co">## 182</span></code></pre>
-<p>0.665 sec.</p>
+<p>0.537 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-3">Part 2<a class="anchor" aria-label="anchor" href="#part-2-3"></a>
@@ -361,7 +361,7 @@
 <span id="cb22-41"><a href="#cb22-41"></a><span class="co"># How many passports are valid?</span></span>
 <span id="cb22-42"><a href="#cb22-42"></a>checkfields(passports)</span></code></pre></div>
 <pre><code><span class="co">## 109</span></code></pre>
-<p>0.389 sec.</p>
+<p>0.345 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -419,7 +419,7 @@
 <span id="cb24-47"><a href="#cb24-47"></a>seat_ids = findseat(dat);</span>
 <span id="cb24-48"><a href="#cb24-48"></a>maximum(seat_ids)</span></code></pre></div>
 <pre><code><span class="co">## 906</span></code></pre>
-<p>0.886 sec.</p>
+<p>0.725 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-4">Part 2<a class="anchor" aria-label="anchor" href="#part-2-4"></a>
@@ -439,7 +439,7 @@
 <span id="cb26-12"><a href="#cb26-12"></a></span>
 <span id="cb26-13"><a href="#cb26-13"></a>myseat(seats)</span></code></pre></div>
 <pre><code><span class="co">## 519</span></code></pre>
-<p>0.387 sec.</p>
+<p>0.308 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -473,7 +473,7 @@
 <span id="cb32-5"><a href="#cb32-5"></a><span class="co"># What is the sum of those counts?</span></span>
 <span id="cb32-6"><a href="#cb32-6"></a>sum(length.(unique.(dat)))</span></code></pre></div>
 <pre><code><span class="co">## 11</span></code></pre>
-<p>1.595 sec.</p>
+<p>1.35 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -544,7 +544,7 @@
 <span id="cb34-52"><a href="#cb34-52"></a><span class="co"># accumulator?</span></span>
 <span id="cb34-53"><a href="#cb34-53"></a>boot(inst, vals)</span></code></pre></div>
 <pre><code><span class="co">## 1749</span></code></pre>
-<p>0.859 sec.</p>
+<p>0.712 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-5">Part 2<a class="anchor" aria-label="anchor" href="#part-2-5"></a>
@@ -591,7 +591,7 @@
 <span id="cb36-40"><a href="#cb36-40"></a></span>
 <span id="cb36-41"><a href="#cb36-41"></a>boot2(inst, vals)</span></code></pre></div>
 <pre><code><span class="co">## 515</span></code></pre>
-<p>0.426 sec.</p>
+<p>0.352 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -678,7 +678,7 @@
 <span class="co">##  108297043768811</span></code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb40-1"><a href="#cb40-1"></a>invalid = checksums(dat)</span></code></pre></div>
 <pre><code><span class="co">## 257342611</span></code></pre>
-<p>1.459 sec.</p>
+<p>1.215 sec.</p>
 </div>
 <div class="section level3">
 <h3 id="part-2-6">Part 2<a class="anchor" aria-label="anchor" href="#part-2-6"></a>
@@ -709,7 +709,7 @@
 <span id="cb42-24"><a href="#cb42-24"></a></span>
 <span id="cb42-25"><a href="#cb42-25"></a>findweakness(dat, invalid)</span></code></pre></div>
 <pre><code><span class="co">## 35602097</span></code></pre>
-<p>0.294 sec.</p>
+<p>0.259 sec.</p>
 </div>
 </div>
 <div class="section level2">
@@ -741,7 +741,7 @@
 <span id="cb44-21"><a href="#cb44-21"></a><span class="co"># differences?</span></span>
 <span id="cb44-22"><a href="#cb44-22"></a>day10(path) |&gt; part1</span></code></pre></div>
 <pre><code><span class="co">## 2450</span></code></pre>
-<p>1.009 sec.</p>
+<p>0.843 sec.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
