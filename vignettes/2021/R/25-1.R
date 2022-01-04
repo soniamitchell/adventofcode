@@ -33,7 +33,7 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
 
   print = function(...) {
     cat("\n")
-    for (i in seq_len(nrow(self$dat))){
+    for (i in seq_len(nrow(self$dat))) {
       cat(self$dat[i, ], "\n")
     }
     invisible(self)
@@ -69,13 +69,12 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     dat[as.matrix(prev)] <- "."
 
     # Update the cucumber list
-    updated_cucumbers <- moved |>
+    self$cucumbers <- moved |>
       dplyr::select(-prev) |>
       rbind(stationary)
 
-    # Update object
+    # Update objects
     self$dat <- dat
-    self$cucumbers <- updated_cucumbers
     self$continue_east <- nrow(moved) > 0
 
     invisible(self)
@@ -111,13 +110,12 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
     dat[as.matrix(prev)] <- "."
 
     # Update the cucumber list
-    updated_cucumbers <- moved |>
+    self$cucumbers <- moved |>
       dplyr::select(-prev) |>
       rbind(stationary)
 
-    # Update object
+    # Update objects
     self$dat <- dat
-    self$cucumbers <- updated_cucumbers
     self$continue_south <-  nrow(moved) > 0
 
     # Print to console
@@ -127,15 +125,11 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
   },
 
   gg_cucumbers = function() {
-    dat <- self$dat
-    cucumbers <- self$cucumbers
-
-    rows <- seq_len(nrow(dat))
-    cols <- seq_len(ncol(dat))
-
+    rows <- seq_len(nrow(self$dat))
+    cols <- seq_len(ncol(self$dat))
     fill <- c("#489FB5", "#EDE7E3", "#FFA62B")
 
-    cucumbers |>
+    self$cucumbers |>
       dplyr::select(-id) |>
       tidyr::complete(row = rows, col = cols,
                       fill = list(type = "empty")) |>
