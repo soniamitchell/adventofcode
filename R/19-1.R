@@ -1,10 +1,10 @@
-#' Day 11: Dumbo Octopus
-#' @source <https://adventofcode.com/2021/day/11>
-#' @name day11
+#' Day 19: Beacon Scanner
+#' @source <https://adventofcode.com/2021/day/19>
+#' @name day19
 #'
 NULL
 
-#' @rdname day11
+#' @rdname day19
 #' @param path file path
 #' @export
 #'
@@ -32,7 +32,7 @@ read_day19 <- function(path) {
   })
 }
 
-#' @rdname day11
+#' @rdname day19
 #' @param scans scans
 #' @export
 #'

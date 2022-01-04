@@ -1,10 +1,10 @@
-#' Day 11: Dumbo Octopus
-#' @source <https://adventofcode.com/2021/day/11>
-#' @name day11
+#' Day 20: Trench Map
+#' @source <https://adventofcode.com/2021/day/20>
+#' @name day20
 #'
 NULL
 
-#' @rdname day11
+#' @rdname day20
 #' @param path file path
 #' @export
 #'
@@ -15,7 +15,7 @@ get_algorithm <- function(path) {
     unlist()
 }
 
-#' @rdname day11
+#' @rdname day20
 #' @export
 #'
 get_input <- function(path) {
@@ -27,7 +27,7 @@ get_input <- function(path) {
     unname()
 }
 
-#' @rdname day11
+#' @rdname day20
 #' @param img img
 #' @export
 #'
@@ -46,7 +46,7 @@ view_image <- function(img) {
     ggplot2::theme(legend.position = "none")
 }
 
-#' @rdname day11
+#' @rdname day20
 #' @param input input
 #' @param n n
 #' @param algorithm algorithm

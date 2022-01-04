@@ -1,10 +1,10 @@
-#' Day 11: Dumbo Octopus
-#' @source <https://adventofcode.com/2021/day/11>
-#' @name day11
+#' Day 18: Snailfish
+#' @source <https://adventofcode.com/2021/day/18>
+#' @name day18
 #'
 NULL
 
-#' @rdname day11
+#' @rdname day18
 #' @param path file path
 #' @export
 #'
@@ -13,7 +13,7 @@ read_day18 <- function(path) {
     readLines()
 }
 
-#' @rdname day11
+#' @rdname day18
 #' @param dat dat
 #' @export
 #'
