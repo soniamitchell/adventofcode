@@ -129,7 +129,7 @@ oxygen_generator_rating * CO2_scrubber_rating
 # Read in data
 path <- here("inst", "2021", "day4.txt")
 numbers <- get_numbers(path)
-boards <- get_boards(get_boards)
+boards <- get_boards(path)
 
 # Play bingo
 play_bingo(numbers, boards)
@@ -150,19 +150,41 @@ tail(losers)
 
 ### Part 1
 
-```{r day5-1, code=readLines("2021/R/5-1.R"), time = TRUE}
+```{r day5-1a, code=readLines("../R/5-1.R"), results="hide"}
+```
+
+```{r day5-1b, time = TRUE}
+path <- here("inst", "2021", "day5.txt")
+coordinates <- read_day5(path)
+
+# Find points where at least two lines overlap
+track_vents(coordinates)
 ```
 
 ### Part 2
 
-```{r day5-2, code=readLines("2021/R/5-2.R"), time = TRUE}
+```{r day5-2a, code=readLines("../R/5-2.R"), results="hide"}
+```
+
+```{r day5-2b, time = TRUE}
+# Find points where at least two lines overlap
+track_vents2(coordinates)
 ```
 
 ## Day 6: [Lanternfish](https://adventofcode.com/2021/day/6)
 
 ### Part 1
 
-```{r day6-1, code=readLines("2021/R/6-1.R"), time = TRUE}
+```{r day6-1a, code=readLines("../R/6-1.R"), results="hide"}
+```
+
+```{r day6-1b, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day6.txt")
+dat <- read_day6(path)
+
+# How many lanternfish would there be after 80 days?
+simulate_lanternfish(dat)
 ```
 
 ### Part 2
@@ -170,7 +192,12 @@ tail(losers)
 It takes too much memory to simulate individual fish in a vector, so generate
 a frequency table instead.
 
-```{r day6-2, code=readLines("2021/R/6-2.R"), time = TRUE}
+```{r day6-2a, code=readLines("../R/6-2.R"), results="hide"}
+```
+
+```{r day6-2b, time = TRUE}
+# How many lanternfish would there be after 256 days?
+simulate_lanternfish2(dat)
 ```
 
 ## Day 7: [The Treachery of Whales](https://adventofcode.com/2021/day/7)
