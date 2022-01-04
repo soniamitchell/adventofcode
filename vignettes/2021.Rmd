@@ -163,7 +163,25 @@ a frequency table instead.
 
 ### Part 1
 
-```{r day11-1, code=readLines("2021/R/11-1.R"), time = TRUE}
+```{r day11, code=readLines("../R/11-1.R")}
+```
+
+```{r day11-1a}
+# Read in data
+test <- here("inst", "2021", "day11-test.txt")
+path <- here("inst", "2021", "day11.txt")
+
+test_dat <- day11(test)
+dat <- day11(path)
+
+# Test simulation
+assertthat::assert_that(simulate_octopus(test_dat) == 1656)
+```
+
+```{r day11-1b, time = TRUE}
+# Given the starting energy levels of the dumbo octopuses in your cavern,
+# simulate 100 steps. How many total flashes are there after 100 steps?
+simulate_octopus(dat)
 ```
 
 ### Part 2
