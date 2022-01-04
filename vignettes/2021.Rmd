@@ -163,7 +163,7 @@ a frequency table instead.
 
 ### Part 1
 
-```{r day11, code=readLines("../R/11-1.R")}
+```{r day11, code=readLines("../R/11-1.R"), results="hide"}
 ```
 
 ```{r day11-1a}
@@ -171,8 +171,8 @@ a frequency table instead.
 test <- here("inst", "2021", "day11-test.txt")
 path <- here("inst", "2021", "day11.txt")
 
-test_dat <- day11(test)
-dat <- day11(path)
+test_dat <- read_day11(test)
+dat <- read_day11(path)
 
 # Test simulation
 assertthat::assert_that(simulate_octopus(test_dat) == 1656)
@@ -193,7 +193,17 @@ simulate_octopus(dat)
 
 ### Part 1
 
-```{r day12-1, code=readLines("2021/R/12-1.R"), time = TRUE}
+```{r day12, code=readLines("../R/12-1.R"), results="hide"}
+```
+
+```{r day12-1, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day12.txt")
+dat <- read_day12(path)
+
+# How many paths through this cave system are there that visit small caves at
+# most once?
+plot_routes(dat)
 ```
 
 ### Part 2
@@ -208,19 +218,55 @@ calculate the number of routes.
 
 ### Part 1
 
-```{r day13-1, code=readLines("2021/R/13-1.R"), time = TRUE}
+```{r day13, code=readLines("../R/13-1.R"), results="hide"}
+```
+
+```{r day13-1, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day13.txt")
+dat <- read_day13(path)
+
+paper <- origami_paper(dat)
+instructions <- origami_instructions(dat)
+
+# How many dots are visible after completing just the first fold instruction on
+# your transparent paper?
+fold_left(paper, instructions[1,]$value)
 ```
 
 ### Part 2
 
-```{r dat13-2, code=readLines("2021/R/13-2.R"), time = TRUE}
+```{r day13-2, code=readLines("2021/R/13-2.R"), time = TRUE}
 ```
 
 ## Day 14: [Extended Polymerization](https://adventofcode.com/2021/day/14)
 
 ### Part 1
 
-```{r dat14-1, code=readLines("2021/R/14-1.R"), time = TRUE}
+```{r day14, code=readLines("../R/14-1.R"), results="hide"}
+```
+
+```{r day14-1a}
+# Read in data
+test <- here("inst", "2021", "day14-test.txt")
+path <- here("inst", "2021", "day14.txt")
+
+# Read in polymer template
+test_template <- get_template(test)
+template <- get_template(path)
+
+# Read in pair insertion rules
+test_rules <- get_rules(test)
+rules <- get_rules(path)
+
+# Run simulation
+assertthat::assert_that(polymerization(test_template, test_rules, 10) == 1588)
+```
+
+```{r day14-1b, time = TRUE}
+# What do you get if you take the quantity of the most common element and
+# subtract the quantity of the least common element?
+polymerization(template, rules, 10)
 ```
 
 ### Part 2
@@ -229,7 +275,7 @@ The second part asks for 40 iterations, which would take far too long using
 the same method used in part 1 (keeping track of an ever-growing string). So
 instead, we count the frequency of each pair.
 
-```{r dat14-2, code=readLines("2021/R/14-2.R"), time = TRUE}
+```{r day14-2, code=readLines("2021/R/14-2.R"), time = TRUE}
 ```
 
 ## Day 15: [Chiton](https://adventofcode.com/2021/day/15)
@@ -240,62 +286,75 @@ instead, we count the frequency of each pair.
 
 ### Part 1
 
-```{r dat17-1, code=readLines("2021/R/17-1.R"), time = TRUE}
+```{r day17, code=readLines("../R/17-1.R"), results="hide"}
+```
+
+```{r day 17-1, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day17.txt")
+
+dat <- read_day17(path)
+xrange <- dat$xrange
+yrange <- dat$yrange
+
+# Find the initial velocity that causes the probe to reach the highest y
+# position and still eventually be within the target area after any step
+simulate_launch(xrange, yrange)
 ```
 
 ### Part 2
 
-```{r dat17-2, code=readLines("2021/R/17-2.R"), time = TRUE}
+```{r day17-2, code=readLines("2021/R/17-2.R"), time = TRUE}
 ```
 
 ## Day 18: [Snailfish](https://adventofcode.com/2021/day/18)
 
 ### Part 1
 
-```{r dat18-1, code=readLines("2021/R/18-1.R"), time = TRUE}
+```{r day18-1, code=readLines("2021/R/18-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat18-2, code=readLines("2021/R/18-2.R"), time = TRUE}
+```{r day18-2, code=readLines("2021/R/18-2.R"), time = TRUE}
 ```
 
 ## Day 19: [Beacon Scanner](https://adventofcode.com/2021/day/19)
 
 ### Part 1
 
-```{r dat19-1, code=readLines("2021/R/19-1.R"), time = TRUE}
+```{r day19-1, code=readLines("2021/R/19-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat19-2, code=readLines("2021/R/19-2.R"), time = TRUE}
+```{r day19-2, code=readLines("2021/R/19-2.R"), time = TRUE}
 ```
 
 ## Day 20: [Trench Map](https://adventofcode.com/2021/day/20)
 
 ### Part 1
 
-```{r dat20-1, code=readLines("2021/R/20-1.R"), time = TRUE}
+```{r day20-1, code=readLines("2021/R/20-1.R"), time = TRUE}
 ```
 
 ### Part 2
 
-```{r dat20-2, code=readLines("2021/R/20-2.R"), time = TRUE}
+```{r day20-2, code=readLines("2021/R/20-2.R"), time = TRUE}
 ```
 
 ## Day 21: [Dirac Dice](https://adventofcode.com/2021/day/21)
 
 ### Part 1
 
-```{r dat21-1, code=readLines("2021/R/21-1.R"), time = TRUE}
+```{r day21-1, code=readLines("2021/R/21-1.R"), time = TRUE}
 ```
 
 ## Day 22: [Reactor Reboot](https://adventofcode.com/2021/day/22)
 
 ### Part 1
 
-```{r dat22-1, code=readLines("2021/R/22-1.R"), time = TRUE}
+```{r day22-1, code=readLines("2021/R/22-1.R"), time = TRUE}
 ```
 
 ## Day 23: [Amphipod](https://adventofcode.com/2021/day/23)
@@ -306,14 +365,24 @@ instead, we count the frequency of each pair.
 
 ### Part 1
 
-```{r dat24-1}
+```{r day24-1}
 ```
 
 ## Day 25: [Sea Cucumber](https://adventofcode.com/2021/day/25)
 
 ### Part 1
 
-```{r dat25-1, code=readLines("2021/R/25-1.R"), time = TRUE}
+```{r dat25, code=readLines("../R/25-1.R"), results="hide"}
+```
+
+```{r day 25-1, time = TRUE}
+# Read in data
+path <- here("inst", "2021", "day25.txt")
+dat <- read_day25(path)
+cucumbers <- get_cucumbers(dat)
+
+# What is the first step on which no sea cucumbers move?
+simulate_cucumbers(dat, cucumbers)
 ```
 
 ### Test data

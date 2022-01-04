@@ -1,9 +1,15 @@
+# Define functions --------------------------------------------------------
 
-dat <- tidy_day22(dat)
 
-n <- max(dat)
 
-reactor <- array(FALSE, dim = c(n, n, n))
+# Read in data ------------------------------------------------------------
+
+test2 <- here("inst", "2021", "day22-test2.txt")
+test_dat2 <- readLines(test2) |> tidy_day22(1000)
+
+# Execute the reboot steps ------------------------------------------------
+
+
 
 
 

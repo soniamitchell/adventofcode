@@ -1,20 +1,58 @@
-# Read in data ------------------------------------------------------------
+#' Day 25: Sea Cucumber
+#' @source <https://adventofcode.com/2021/day/25>
+#' @name day25
+#'
+NULL
 
-# Read in cucumber positions
-dat <- readLines(here("inst", "2021", "day25.txt")) |>
-  strsplit("") |>
-  do.call(what = rbind)
+#' @description Read in cucumber positions
+#' @rdname day25
+#' @param path file path
+#' @export
+#'
+read_day25 <- function(path) {
+  path |>
+    readLines() |>
+    strsplit("") |>
+    do.call(what = rbind)
+}
 
-east_cucumbers <- which(dat == ">", arr.ind = TRUE) |>
-  data.frame() |>
-  dplyr::mutate(type = "east")
-south_cucumbers <- which(dat == "v", arr.ind = TRUE) |>
-  data.frame() |>
-  dplyr::mutate(type = "south")
-cucumbers <- rbind(east_cucumbers, south_cucumbers) |>
-  dplyr::mutate_if(is.numeric, as.double)
+#' @rdname day25
+#' @param dat dat
+#' @export
+#'
+get_cucumbers <- function(dat) {
+  east_cucumbers <- which(dat == ">", arr.ind = TRUE) |>
+    data.frame() |>
+    dplyr::mutate(type = "east")
+  south_cucumbers <- which(dat == "v", arr.ind = TRUE) |>
+    data.frame() |>
+    dplyr::mutate(type = "south")
+  rbind(east_cucumbers, south_cucumbers) |>
+    dplyr::mutate_if(is.numeric, as.double)
+}
 
-# Define functions --------------------------------------------------------
+#' @rdname day25
+#' @param dat dat
+#' @param cucumbers cucumbers
+#' @export
+#'
+simulate_cucumbers <- function(dat, cucumbers) {
+  # Initialise variables
+  track_cucumbers <- sea_cucumbers$new(dat, cucumbers)
+  continue <- TRUE
+  i <- 0
+
+  # Find somewhere safe to land your submarine
+
+  while (continue) {
+    i <- i + 1
+    # cat("\r", i)
+    track_cucumbers$move_east()
+    track_cucumbers$move_south()
+    continue <- track_cucumbers$continue_east | track_cucumbers$continue_south
+  }
+  i
+}
 
 sea_cucumbers <- R6::R6Class("cucumbers", list(
   dat = NULL,
@@ -145,23 +183,3 @@ sea_cucumbers <- R6::R6Class("cucumbers", list(
       ggplot2::theme(legend.position = "none")
   }
 ))
-
-# Run simulation ----------------------------------------------------------
-
-# Initialise variables
-track_cucumbers <- sea_cucumbers$new(dat, cucumbers)
-continue <- TRUE
-i <- 0
-
-# Find somewhere safe to land your submarine
-
-while (continue) {
-  i <- i + 1
-  # cat("\r", i)
-  track_cucumbers$move_east()
-  track_cucumbers$move_south()
-  continue <- track_cucumbers$continue_east | track_cucumbers$continue_south
-}
-
-# What is the first step on which no sea cucumbers move?
-i

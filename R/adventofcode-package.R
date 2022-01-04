@@ -14,6 +14,7 @@
 #' @import JuliaCall
 #' @rawNamespace import(plotly, except = last_plot)
 #' @importFrom purrr pluck
+#' @import R6
 #' @import reticulate
 #' @importFrom R.utils seqToIntervals
 #' @importFrom tidyr separate unite

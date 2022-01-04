@@ -8,7 +8,7 @@ NULL
 #' @param path file path
 #' @export
 #'
-day11 <- function(path) {
+read_day11 <- function(path) {
   path |>
     scan(what = "character") |>
     strsplit("") |>

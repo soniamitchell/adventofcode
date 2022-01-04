@@ -2,13 +2,14 @@
 % Please edit documentation in R/11-1.R
 \name{day11}
 \alias{day11}
+\alias{read_day11}
 \alias{simulate_octopus}
 \title{Day 11: Dumbo Octopus}
 \source{
 <https://adventofcode.com/2021/day/11>
 }
 \usage{
-day11(path)
+read_day11(path)
 
 simulate_octopus(octopus)
 }

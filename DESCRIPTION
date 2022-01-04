@@ -16,6 +16,7 @@ Imports:
     JuliaCall,
     plotly,
     purrr,
+    R6,
     reticulate,
     R.utils,
     tidyr,
