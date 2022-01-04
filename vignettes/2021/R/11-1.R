@@ -1,12 +1,12 @@
-# Read in data ------------------------------------------------------------
-
-dat <- here("inst", "2021", "day11.txt") |>
-  scan(what = "character") |>
-  strsplit("") |>
-  do.call(what = rbind) |>
-  apply(1, as.numeric)
-
 # Define functions --------------------------------------------------------
+
+day11 <- function(path) {
+  path |>
+    scan(what = "character") |>
+    strsplit("") |>
+    do.call(what = rbind) |>
+    apply(1, as.numeric)
+}
 
 find_neighbours <- function(x, y, flashing_now, flashed_previously, octopus) {
   # Index neighbours
@@ -57,19 +57,30 @@ timestep <- function(octopus) {
   list(octopus = octopus, latest_flashes = nrow(done))
 }
 
-# Run simulation ----------------------------------------------------------
-
-octopus <- dat
-count <- 0
-
-# Given the starting energy levels of the dumbo octopuses in your cavern,
-# simulate 100 steps.
-for (i in 1:100) {
-  # cat("\r", i, "of 100")
-  data <- timestep(octopus)
-  octopus <- data$octopus
-  count <- count + data$latest_flashes
+simulate_octopus <- function(octopus) {
+  count <- 0
+  for (i in 1:100) {
+    # cat("\r", i, "of 100")
+    data <- timestep(octopus)
+    octopus <- data$octopus
+    count <- count + data$latest_flashes
+  }
+  count
 }
 
-# How many total flashes are there after 100 steps?
-count
+# Read in data ------------------------------------------------------------
+
+test <- here("inst", "2021", "day11-test.txt")
+path <- here("inst", "2021", "day11.txt")
+
+test_dat <- day11(test)
+dat <- day11(path)
+
+# Run simulation ----------------------------------------------------------
+
+assertthat::assert_that(simulate_octopus(test_dat) == 1656)
+
+# Given the starting energy levels of the dumbo octopuses in your cavern,
+# simulate 100 steps. How many total flashes are there after 100 steps?
+
+simulate_octopus(dat)
