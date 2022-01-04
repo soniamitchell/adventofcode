@@ -39,7 +39,10 @@ origami_paper <- function(dat) {
 
   # Generate grid of dots
   paper <- matrix(FALSE, nrow = xlim, ncol = ylim)
-  for (i in seq_len(nrow(dots))) paper[dots$x[i], dots$y[i]] <- TRUE
+  for (i in seq_len(nrow(dots)))
+    paper[dots$x[i], dots$y[i]] <- TRUE
+
+  paper
 }
 
 #' @rdname day13
