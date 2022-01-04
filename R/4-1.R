@@ -55,7 +55,7 @@ check_for_win <- function(board) {
   check_board <- is.na(board)
   row_win <- any(rowSums(check_board) == 5)
   column_win <- any(colSums(check_board) == 5)
-  if_else(row_win | column_win, TRUE, FALSE)
+  dplyr::if_else(row_win | column_win, TRUE, FALSE)
 }
 
 update_board <- function(number, board) {

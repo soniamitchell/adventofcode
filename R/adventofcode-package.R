@@ -18,6 +18,8 @@
 #' @import reticulate
 #' @importFrom R.utils seqToIntervals
 #' @importFrom tidyr separate unite
+#' @importFrom stats optimize setNames step
+#' @importFrom utils combn data head read.table tail
 #'
 "_PACKAGE"
 

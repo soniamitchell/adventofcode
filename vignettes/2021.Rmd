@@ -26,13 +26,10 @@ knitr::knit_hooks$set(
 ```
 
 ```{r libraries, message=FALSE}
-# library(dplyr)
-# library(ggplot2)
+library(assertthat)
+library(dplyr)
 library(here)
-# library(plotly)
-# library(purrr)
-# library(R.utils)
-# library(tidyr)
+library(knitr)
 ```
 
 ## Day 1: [Sonar Sweep](https://adventofcode.com/2021/day/1)
